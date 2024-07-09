@@ -15,7 +15,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    SearchScreen(),
+    SearchScreen(onAddGame: (VideoGame ) {  },),
     LibraryScreen(),
     SettingsScreen(),
   ];
@@ -36,8 +36,8 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.library_books),
