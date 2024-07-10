@@ -72,7 +72,7 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Popolari',
+          'Nuove Uscite',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
