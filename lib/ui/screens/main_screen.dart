@@ -14,9 +14,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(
-      onAddGame: (VideoGame) {},
-    ),
+    HomeScreen(),
     ExploreScreen(),
     LibraryScreen(),
   ];
