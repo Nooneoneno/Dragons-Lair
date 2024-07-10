@@ -16,11 +16,19 @@ class GameCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: Image.asset(
-                'assets/placeholder_720x1280.svg',
-                fit: BoxFit.cover,
+                child: Padding(
+              padding: EdgeInsets.all(12.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4.0),
+                // Imposta il raggio dell'arrotondamento
+                child: Image.asset(
+                  'assets/placeholder.jpg',
+                  fit: BoxFit.cover,
+                  width: 100,
+                  height: 100,
+                ),
               ),
-            ),
+            )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
