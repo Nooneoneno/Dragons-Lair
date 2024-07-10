@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import '../../entities/video_game.dart';
+import 'package:progetto_esame/ui/screens/search_screen/new_release_widget.dart';
+import '../../../entities/video_game.dart';
 
 class SearchScreen extends StatefulWidget {
   final void Function(VideoGame) onAddGame;
@@ -52,8 +53,6 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Cerca Giochi',
-              style: Theme.of(context).textTheme.headlineMedium),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TypeAheadField<String>(
@@ -75,8 +74,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           SizedBox(height: 20),
-          Text('Nuove Uscite',
-              style: Theme.of(context).textTheme.headlineMedium),
+          NewReleasesWidget(),
           SizedBox(height: 20),
           Text('Popolari', style: Theme.of(context).textTheme.headlineMedium),
         ],

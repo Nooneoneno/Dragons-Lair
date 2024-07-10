@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progetto_esame/ui/screens/library_screen.dart';
-import 'package:progetto_esame/ui/screens/search_screen.dart';
+import 'package:progetto_esame/ui/screens/search_screen/search_screen.dart';
 import 'package:progetto_esame/ui/screens/settings_screen.dart';
 
 class MainScreen extends StatefulWidget {
