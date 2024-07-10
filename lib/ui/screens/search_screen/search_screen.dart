@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:progetto_esame/ui/screens/search_screen/new_release_widget.dart';
+import 'package:progetto_esame/ui/screens/search_screen/popular_widget.dart';
 import '../../../entities/video_game.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -50,34 +51,36 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TypeAheadField<String>(
-              textFieldConfiguration: TextFieldConfiguration(
-                controller: _searchController,
-                decoration: const InputDecoration(
-                  hintText: 'Inserisci il nome del gioco',
-                  border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.search),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TypeAheadField<String>(
+                textFieldConfiguration: TextFieldConfiguration(
+                  controller: _searchController,
+                  decoration: const InputDecoration(
+                    hintText: 'Inserisci il nome del gioco',
+                    border: OutlineInputBorder(),
+                    suffixIcon: Icon(Icons.search),
+                  ),
                 ),
+                suggestionsCallback: _getSuggestions,
+                itemBuilder: (context, suggestion) {
+                  return ListTile(
+                    title: Text(suggestion),
+                  );
+                },
+                onSuggestionSelected: _onSelected,
               ),
-              suggestionsCallback: _getSuggestions,
-              itemBuilder: (context, suggestion) {
-                return ListTile(
-                  title: Text(suggestion),
-                );
-              },
-              onSuggestionSelected: _onSelected,
             ),
-          ),
-          SizedBox(height: 20),
-          NewReleasesWidget(),
-          SizedBox(height: 20),
-          Text('Popolari', style: Theme.of(context).textTheme.headlineMedium),
-        ],
+            SizedBox(height: 20),
+            NewReleasesWidget(),
+            SizedBox(height: 20),
+            PopularWidget(),
+          ],
+        ),
       ),
     );
   }
