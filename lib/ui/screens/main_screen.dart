@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progetto_esame/ui/screens/library_screen.dart';
-import 'package:progetto_esame/ui/screens/search_screen/search_screen.dart';
-import 'package:progetto_esame/ui/screens/settings_screen.dart';
+import 'package:progetto_esame/ui/screens/home_screen/home_screen.dart';
+import 'package:progetto_esame/ui/screens/explore_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -10,14 +10,15 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    SearchScreen(onAddGame: (VideoGame ) {  },),
+    HomeScreen(
+      onAddGame: (VideoGame) {},
+    ),
+    ExploreScreen(),
     LibraryScreen(),
-    SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -30,7 +31,12 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Library'),
+        title: Text(
+          'My Library',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -40,12 +46,12 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.library_books),
-            label: 'Library',
+            icon: Icon(Icons.explore),
+            label: 'Explore',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.library_books),
+            label: 'Library',
           ),
         ],
         currentIndex: _selectedIndex,

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:progetto_esame/ui/screens/search_screen/new_release_widget.dart';
-import 'package:progetto_esame/ui/screens/search_screen/popular_widget.dart';
+import 'package:progetto_esame/ui/screens/home_screen/new_release_widget.dart';
+import 'package:progetto_esame/ui/screens/home_screen/popular_widget.dart';
 import '../../../entities/video_game.dart';
 
-class SearchScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   final void Function(VideoGame) onAddGame;
 
-  const SearchScreen({super.key, required this.onAddGame});
+  const HomeScreen({super.key, required this.onAddGame});
 
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
 List<String> videogames = [
@@ -21,7 +21,7 @@ List<String> videogames = [
   '???',
 ];
 
-class _SearchScreenState extends State<SearchScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   List<String> _getSuggestions(String query) {
