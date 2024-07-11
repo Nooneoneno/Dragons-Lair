@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:progetto_esame/ui/screens/explore_screen/explore_grid.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -16,7 +17,7 @@ List<String> videogames = [
   '???',
 ];
 
-class _ExploreScreenState extends State<ExploreScreen>{
+class _ExploreScreenState extends State<ExploreScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   List<String> _getSuggestions(String query) {
@@ -33,27 +34,40 @@ class _ExploreScreenState extends State<ExploreScreen>{
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
+    return Padding(
         padding: const EdgeInsets.all(8.0),
-        child: TypeAheadField<String>(
-          textFieldConfiguration: TextFieldConfiguration(
-            controller: _searchController,
-            decoration: const InputDecoration(
-              hintText: 'Inserisci il nome del gioco',
-              border: OutlineInputBorder(),
-              suffixIcon: Icon(Icons.search),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TypeAheadField<String>(
+              textFieldConfiguration: TextFieldConfiguration(
+                controller: _searchController,
+                decoration: const InputDecoration(
+                  hintText: 'Inserisci il nome del gioco',
+                  border: OutlineInputBorder(),
+                  suffixIcon: Icon(Icons.search),
+                ),
+              ),
+              suggestionsCallback: _getSuggestions,
+              itemBuilder: (context, suggestion) {
+                return ListTile(
+                  title: Text(suggestion),
+                );
+              },
+              onSuggestionSelected: _onSelected,
             ),
-          ),
-          suggestionsCallback: _getSuggestions,
-          itemBuilder: (context, suggestion) {
-            return ListTile(
-              title: Text(suggestion),
-            );
-          },
-          onSuggestionSelected: _onSelected,
-        ),
-      ),
-    );
+            SizedBox(height: 20),
+            Text(
+              'Categorie',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            ExploreGrid(),
+          ],
+        ));
   }
 }
