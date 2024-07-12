@@ -13,17 +13,15 @@ class ExploreGridCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4, // Aggiunge un'ombra standard
+      elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius:
-            BorderRadius.circular(8.0), // Bordi arrotondati per la Card
+            BorderRadius.circular(8.0),
       ),
       child: Stack(
         children: [
-          // Immagine di sfondo
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
-            // Bordi arrotondati per l'immagine
             child: Image.asset(
               categoryImage,
               fit: BoxFit.cover,
