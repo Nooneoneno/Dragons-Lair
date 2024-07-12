@@ -40,6 +40,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 30),
             TypeAheadField<String>(
               textFieldConfiguration: TextFieldConfiguration(
                 controller: _searchController,
@@ -57,7 +58,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
               },
               onSuggestionSelected: _onSelected,
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 15),
             Text(
               'Categorie',
               style: TextStyle(
@@ -65,7 +66,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 4),
             ExploreGrid(),
           ],
         ));
