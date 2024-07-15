@@ -20,7 +20,6 @@ class GameCard extends StatelessWidget {
               padding: EdgeInsets.all(12.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4.0),
-                // Imposta il raggio dell'arrotondamento
                 child: Image.asset(
                   'assets/placeholder.jpg',
                   fit: BoxFit.cover,

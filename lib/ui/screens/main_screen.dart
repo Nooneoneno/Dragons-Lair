@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progetto_esame/ui/screens/library_screen.dart';
 import 'package:progetto_esame/ui/screens/home_screen/home_screen.dart';
-import 'package:progetto_esame/ui/screens/explore_screen.dart';
+import 'package:progetto_esame/ui/screens/explore_screen/explore_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -14,9 +14,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(
-      onAddGame: (VideoGame) {},
-    ),
+    HomeScreen(),
     ExploreScreen(),
     LibraryScreen(),
   ];
