@@ -24,24 +24,23 @@ class CategoryGrid extends StatelessWidget {
         image: 'assets/placeholder.jpg'),
   ];
 
-  CategoryGrid({super.key});
+  CategoryGrid();
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: GridView.builder(
-          scrollDirection: Axis.vertical,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
-          ),
-          itemCount: categories.length,
-          itemBuilder: (context, index) {
-            final category = categories[index];
-            return CategoryCard(
-                categoryName: category.name, categoryImage: category.image);
-          },
-        ));
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 3 / 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+      ),
+      itemCount: categories.length,
+      itemBuilder: (context, index) {
+        return CategoryCard(categoryName: categories[index].name, categoryImage: categories[index].image);
+      },
+    );
   }
 }

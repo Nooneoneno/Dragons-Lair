@@ -9,7 +9,12 @@ class CategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(categoryName),
+        title: Text(
+          categoryName,
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ),
       body: Center(
         child: Text('Questa è la pagina per $categoryName'),
