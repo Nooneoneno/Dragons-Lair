@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:progetto_esame/entities/video_game.dart';
 import 'package:progetto_esame/ui/screens/home_screen/game_card.dart';
@@ -51,21 +52,6 @@ class NewReleasesWidget extends StatefulWidget {
 }
 
 class _NewReleasesWidgetState extends State<NewReleasesWidget> {
-  late PageController _pageController;
-  int _currentPage = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: _currentPage, viewportFraction: 0.7);
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -79,40 +65,30 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
           ),
         ),
         SizedBox(height: 10),
-        Container(
-          height: 350,
-          child: PageView.builder(
-            controller: _pageController,
-            itemCount: widget.games.length,
-            onPageChanged: (index) {
-              setState(() {
-                _currentPage = index;
-              });
-            },
-            itemBuilder: (context, index) {
-              return AnimatedBuilder(
-                animation: _pageController,
-                builder: (context, child) {
-                  double value = 1.0;
-                  if (_pageController.position.haveDimensions) {
-                    value = _pageController.page! - index;
-                    value = (1 - (value.abs() * 0.3)).clamp(0.0, 1.0);
-                  }
-                  return Center(
-                    child: SizedBox(
-                      height: Curves.easeOut.transform(value) * 350,
-                      width: Curves.easeOut.transform(value) * 250,
-                      child: child,
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: GameCard(game: widget.games[index]),
-                ),
-              );
-            },
+        CarouselSlider(
+          options: CarouselOptions(
+            height: 350.0,
+            initialPage: 0,
+            autoPlay: true,
+            viewportFraction: 0.75,
+            aspectRatio: 16/9,
+            enlargeCenterPage: true,
+            enlargeFactor: 0.3,
+            autoPlayCurve: Curves.fastOutSlowIn,
+            autoPlayInterval: Duration(seconds: 3),
           ),
+          items: widget.games.map((i) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: GameCard(game: i),
+                    ));
+              },
+            );
+          }).toList(),
         ),
       ],
     );
