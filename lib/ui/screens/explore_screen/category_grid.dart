@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:progetto_esame/entities/category.dart';
-import 'package:progetto_esame/ui/screens/explore_screen/explore_grid_cell.dart';
+import 'package:progetto_esame/ui/screens/explore_screen/category_card.dart';
 
-class ExploreGrid extends StatelessWidget {
+class CategoryGrid extends StatelessWidget {
   final List<VideoGameCategory> categories = [
     VideoGameCategory(
         name: 'Action',
@@ -24,7 +24,7 @@ class ExploreGrid extends StatelessWidget {
         image: 'assets/placeholder.jpg'),
   ];
 
-  ExploreGrid({super.key});
+  CategoryGrid({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class ExploreGrid extends StatelessWidget {
           itemCount: categories.length,
           itemBuilder: (context, index) {
             final category = categories[index];
-            return ExploreGridCell(
+            return CategoryCard(
                 categoryName: category.name, categoryImage: category.image);
           },
         ));

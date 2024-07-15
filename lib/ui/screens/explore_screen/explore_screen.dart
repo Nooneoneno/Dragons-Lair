@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:progetto_esame/ui/screens/explore_screen/explore_grid.dart';
+import 'package:progetto_esame/ui/screens/explore_screen/category_grid.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -67,7 +67,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ),
             ),
             SizedBox(height: 4),
-            ExploreGrid(),
+            CategoryGrid(),
           ],
         ));
   }
