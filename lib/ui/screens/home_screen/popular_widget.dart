@@ -4,32 +4,7 @@ import 'package:progetto_esame/ui/screens/home_screen/game_card.dart';
 import 'package:progetto_esame/ui/screens/home_screen/horizontal_game_card.dart';
 
 class PopularWidget extends StatelessWidget {
-  final List<VideoGame> games = [
-    VideoGame(
-        name: 'The Last of Us Part II',
-        genre: 'Action',
-        online: 'Co-op',
-        publisher: 'Bethesda',
-        referenceStore: 'Steam',
-        releaseDate: DateTime.now()
-    ),
-    VideoGame(
-        name: 'Cyberpunk 2077',
-        genre: 'RPG',
-        online: 'Co-op',
-        publisher: 'Bethesda',
-        referenceStore: 'Steam',
-        releaseDate: DateTime.now()
-    ),
-    VideoGame(
-        name: 'Ghost of Tsushima',
-        genre: 'Action',
-        online: 'Co-op',
-        publisher: 'Bethesda',
-        referenceStore: 'Steam',
-        releaseDate: DateTime.now()
-    ),
-  ];
+  final List<VideoGame> games = [];
 
   @override
   Widget build(BuildContext context) {

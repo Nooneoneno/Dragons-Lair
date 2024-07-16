@@ -25,7 +25,7 @@ class HorizontalGameCard extends StatelessWidget {
               ),
               SizedBox(height: 5),
               Text(
-                game.genre,
+                "GENRE PLACEHOLDER",
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey[600],

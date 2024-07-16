@@ -42,7 +42,7 @@ class GameCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    game.genre,
+                    "GENRE PLACEHOLDER",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -51,7 +51,7 @@ class GameCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    game.publisher,
+                    "PUBLISHER PLACEHOLDER",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

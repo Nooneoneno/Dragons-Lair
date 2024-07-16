@@ -1,57 +1,31 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:progetto_esame/controllers/new_release_controller.dart';
 import 'package:progetto_esame/entities/video_game.dart';
 import 'package:progetto_esame/ui/screens/home_screen/game_card.dart';
 
 class NewReleasesWidget extends StatefulWidget {
-  final List<VideoGame> games = [
-    VideoGame(
-      name: 'The Last of Us Part II',
-      genre: 'Action',
-      online: 'Co-op',
-      publisher: 'Bethesda',
-      referenceStore: 'Steam',
-      releaseDate: DateTime.now(),
-    ),
-    VideoGame(
-      name: 'Cyberpunk 2077',
-      genre: 'RPG',
-      online: 'Co-op',
-      publisher: 'Bethesda',
-      referenceStore: 'Steam',
-      releaseDate: DateTime.now(),
-    ),
-    VideoGame(
-      name: 'Ghost of Tsushima',
-      genre: 'Action',
-      online: 'Co-op',
-      publisher: 'Bethesda',
-      referenceStore: 'Steam',
-      releaseDate: DateTime.now(),
-    ),
-    VideoGame(
-      name: 'Manor Lords',
-      genre: 'Action',
-      online: 'Co-op',
-      publisher: 'Bethesda',
-      referenceStore: 'Steam',
-      releaseDate: DateTime.now(),
-    ),
-    VideoGame(
-      name: 'Grand Theft Auto V',
-      genre: 'Action',
-      online: 'Co-op',
-      publisher: 'Bethesda',
-      referenceStore: 'Steam',
-      releaseDate: DateTime.now(),
-    )
-  ];
-
+  final NewReleaseController newReleaseController = NewReleaseController();
   @override
   _NewReleasesWidgetState createState() => _NewReleasesWidgetState();
 }
 
 class _NewReleasesWidgetState extends State<NewReleasesWidget> {
+  List<VideoGame> games = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchNewReleases();
+  }
+
+  void _fetchNewReleases() async {
+    var newGames = await widget.newReleaseController.getNewRelease();
+    setState(() {
+      games = newGames;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -77,7 +51,7 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
             autoPlayCurve: Curves.fastOutSlowIn,
             autoPlayInterval: Duration(seconds: 3),
           ),
-          items: widget.games.map((i) {
+          items: games.map((i) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(

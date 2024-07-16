@@ -6,7 +6,7 @@ class ApiService {
 
   ApiService({required this.baseUrl});
 
-  Future<void> postRequest(String endpoint, String data) async {
+  Future<String> postRequest(String endpoint, String data) async {
     final url = Uri.parse('$baseUrl$endpoint');
 
     final response = await http.post(
@@ -19,9 +19,10 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      print('Response data: ${response.body}');
+      return response.body;
     } else {
       print('Failed to post data. Status code: ${response.statusCode}');
+      return "ERROR";
     }
   }
 }
