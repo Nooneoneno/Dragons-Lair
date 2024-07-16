@@ -17,7 +17,7 @@ class NewReleaseController {
 
     String endpoint = "/release_dates";
     String queryParameters =
-        "fields *; where date > $lastWeekTimestamp & date < $nowTimestamp & platform = 6; limit 500;";
+        "fields *; where date > $lastWeekTimestamp & date < $nowTimestamp & platform = 6; limit 10;";
     String rawResponse =
         await apiService.postRequest(endpoint, queryParameters);
 
@@ -37,13 +37,47 @@ class NewReleaseController {
       String queryParameters =
           "fields id, category, cover, dlcs, expanded_games, expansions, first_release_date, genres, involved_companies, language_supports, multiplayer_modes, name, platforms, release_dates, similar_games, standalone_expansions, status, storyline, summary, themes, version_title; where id = $gameId;";
 
-      String rawResponse = await apiService.postRequest(endpoint, queryParameters);
+      String rawResponse =
+          await apiService.postRequest(endpoint, queryParameters);
       if (rawResponse.isNotEmpty) {
         List<dynamic> jsonResponse = jsonDecode(rawResponse);
-        newReleaseGames.add(VideoGame.fromJson(jsonResponse[0]));
+
+        if (jsonResponse.isNotEmpty) {
+          var gameData = jsonResponse[0];
+          int coverId = gameData['cover'];
+
+          String coverUrl = await getCoverUrl(coverId);
+          print(coverUrl);
+          coverUrl = coverUrl.replaceAll('t_thumb', 't_1080p');
+
+          newReleaseGames.add(VideoGame.fromJson({
+            ...gameData,
+            'coverUrl': coverUrl,
+          }));
+        } else {
+          print('No data found for game ID: $gameId');
+        }
       } else {
-        print('No data found for game ID: $gameId');
+        print('No response for game ID: $gameId');
       }
     }
+  }
+
+  Future<String> getCoverUrl(int coverId) async {
+    String endpoint = "/covers";
+    String queryParameters = "fields url; where id = $coverId;";
+
+    String rawResponse =
+        await apiService.postRequest(endpoint, queryParameters);
+
+    if (rawResponse.isNotEmpty) {
+      List<dynamic> jsonResponse = jsonDecode(rawResponse);
+
+      if (jsonResponse.isNotEmpty) {
+        return 'https:${jsonResponse[0]['url']}'; // Prepend with https:
+      }
+    }
+
+    return ''; // Return empty string if no URL found
   }
 }

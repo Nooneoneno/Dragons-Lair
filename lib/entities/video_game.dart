@@ -2,6 +2,7 @@ class VideoGame {
   final int id;
   final int category;
   final int cover;
+  final String coverUrl;
   final List<int> dlcs;
   final List<int> expandedGames;
   final List<int> expansions;
@@ -25,6 +26,7 @@ class VideoGame {
     required this.id,
     required this.category,
     required this.cover,
+    required this.coverUrl,
     required this.dlcs,
     required this.expandedGames,
     required this.expansions,
@@ -50,6 +52,7 @@ class VideoGame {
       id: json['id'] ?? 0,
       category: json['category'] ?? 0,
       cover: json['cover'],
+      coverUrl: json['coverUrl'] ?? '',
       dlcs: List<int>.from(json['dlcs'] ?? []),
       expandedGames: List<int>.from(json['expanded_games'] ?? []),
       expansions: List<int>.from(json['expansions'] ?? []),

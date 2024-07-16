@@ -16,18 +16,25 @@ class GameCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-                child: Padding(
-              padding: EdgeInsets.all(12.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4.0),
-                child: Image.asset(
-                  'assets/placeholder.jpg',
-                  fit: BoxFit.cover,
-                  width: 100,
-                  height: 100,
-                ),
+              child: Padding(
+                padding: EdgeInsets.all(12.0),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4.0),
+                    child: Image.network(
+                      game.coverUrl, // Use the cover URL
+                      fit: BoxFit.cover,
+                      width: 100,
+                      height: 100,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/placeholder.jpg',
+                          // Placeholder in case of error
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    )),
               ),
-            )),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -42,7 +49,7 @@ class GameCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "GENRE PLACEHOLDER",
+                    "GENRE PLACEHOLDER", // Replace with actual genre
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -51,7 +58,7 @@ class GameCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "PUBLISHER PLACEHOLDER",
+                    "PUBLISHER PLACEHOLDER", // Replace with actual publisher
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
