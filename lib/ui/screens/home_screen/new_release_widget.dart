@@ -20,7 +20,7 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
   }
 
   void _fetchNewReleases() async {
-    var newGames = await widget.newReleaseController.getNewRelease();
+    var newGames = await widget.newReleaseController.fetchNewRelease();
     setState(() {
       games = newGames;
     });
