@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:progetto_esame/entities/video_game.dart';
 
 class GameCard extends StatelessWidget {
@@ -8,65 +9,74 @@ class GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 220,
-      margin: EdgeInsets.only(right: 10),
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return AspectRatio(
+      aspectRatio: 9 / 21,
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(game.coverUrl),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: Stack(
           children: [
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(12.0),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4.0),
-                    child: Image.network(
-                      game.coverUrl, // Use the cover URL
-                      fit: BoxFit.cover,
-                      width: 100,
-                      height: 100,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                          'assets/placeholder.jpg',
-                          // Placeholder in case of error
-                          fit: BoxFit.cover,
-                        );
-                      },
-                    )),
+            Positioned(
+              top: 5,
+              left: 5,
+              child: Container(
+                padding: EdgeInsets.all(8.0),
+                color: Colors.black54,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      game.humanFirstReleaseDate.day.toString(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          width: 2,
+                          color: Colors.white,
+                          margin: EdgeInsets.symmetric(horizontal: 8.0),
+                          height: 30,
+                        ),
+                      ],
+                    ),
+                    Text(
+                      DateFormat.MMMM().format(game.humanFirstReleaseDate),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(
-                    game.name,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+            Positioned(
+              bottom: 20,
+              left: 0,
+              right: 0,
+              child: Container(
+                alignment: Alignment.center,
+                color: Colors.black54,
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  game.name,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Text(
-                    "GENRE PLACEHOLDER", // Replace with actual genre
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    "PUBLISHER PLACEHOLDER", // Replace with actual publisher
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+                ),
               ),
             ),
           ],

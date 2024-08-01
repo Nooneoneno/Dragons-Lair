@@ -6,6 +6,7 @@ class VideoGame {
   final List<int> expandedGames;
   final List<int> expansions;
   final int firstReleaseDate;
+  final DateTime humanFirstReleaseDate;
   final List<int> genres;
   final List<dynamic> involvedCompanies;
   final List<dynamic> languageSupports;
@@ -29,6 +30,7 @@ class VideoGame {
     required this.expandedGames,
     required this.expansions,
     required this.firstReleaseDate,
+    required this.humanFirstReleaseDate,
     required this.genres,
     required this.involvedCompanies,
     required this.languageSupports,
@@ -46,6 +48,9 @@ class VideoGame {
   });
 
   factory VideoGame.fromJson(Map<String, dynamic> json) {
+    int releaseDateTimestamp = json['first_release_date'] ?? 0;
+    DateTime humanReleaseDate = DateTime.fromMillisecondsSinceEpoch(releaseDateTimestamp * 1000);
+
     return VideoGame(
       id: json['id'] ?? 0,
       category: json['category'] ?? 0,
@@ -54,6 +59,7 @@ class VideoGame {
       expandedGames: List<int>.from(json['expanded_games'] ?? []),
       expansions: List<int>.from(json['expansions'] ?? []),
       firstReleaseDate: json['first_release_date'] ?? 0,
+      humanFirstReleaseDate: humanReleaseDate,
       genres: List<int>.from(json['genres'] ?? []),
       involvedCompanies: List<dynamic>.from(json['involved_companies'] ?? []),
       languageSupports: List<dynamic>.from(json['language_supports'] ?? []),
