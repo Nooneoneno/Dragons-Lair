@@ -20,9 +20,9 @@ class NewReleaseController {
     final int nowTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     final int lastWeekTimestamp = getLastWeekTimestamp(nowTimestamp);
 
-    const String endpoint = "/release_dates";
+    const String endpoint = "/games";
     final String queryParameters =
-        "fields game.*, game.cover.url; sort game.hypes desc; where date > $lastWeekTimestamp & date < $nowTimestamp; limit 50;";
+        "fields *, cover.url; sort hypes desc; where first_release_date > $lastWeekTimestamp & first_release_date < $nowTimestamp; limit 25;";
     final String rawResponse =
         await apiService.postRequest(endpoint, queryParameters);
 
@@ -30,9 +30,9 @@ class NewReleaseController {
 
     final List<dynamic> jsonResponse = jsonDecode(rawResponse);
     jsonResponse.forEach((gameData) {
-      final String coverUrl = extractCoverUrl(gameData['game']['cover']);
+      final String coverUrl = extractCoverUrl(gameData['cover']);
       final VideoGame videoGame = VideoGame.fromJson({
-        ...gameData['game'],
+        ...gameData,
         'coverUrl': coverUrl,
       });
 
@@ -40,6 +40,7 @@ class NewReleaseController {
     });
 
     final List<VideoGame> uniqueReleases = uniqueReleasesMap.values.toList();
+    uniqueReleases.sort((a, b) => b.firstReleaseDate.compareTo(a.firstReleaseDate));
     return uniqueReleases;
   }
 
