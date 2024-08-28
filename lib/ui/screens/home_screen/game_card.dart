@@ -14,7 +14,9 @@ class GameCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(game.coverUrl),
+            image: game.coverUrl != null && game.coverUrl.isNotEmpty
+              ? NetworkImage(game.coverUrl)
+                : AssetImage('assets/placeholder.jpg'),
             fit: BoxFit.fill,
           ),
         ),
