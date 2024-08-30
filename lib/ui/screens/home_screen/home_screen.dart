@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:progetto_esame/ui/screens/home_screen/new_release_widget.dart';
+import 'package:progetto_esame/ui/screens/home_screen/new_release/new_release_widget.dart';
 import 'package:progetto_esame/ui/screens/home_screen/popular_widget.dart';
-import '../../../entities/video_game.dart';
 
 class HomeScreen extends StatefulWidget {
 

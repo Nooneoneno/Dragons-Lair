@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:progetto_esame/entities/video_game.dart';
-import 'package:progetto_esame/ui/screens/home_screen/game_card.dart';
 import 'package:progetto_esame/ui/screens/home_screen/horizontal_game_card.dart';
 
 class PopularWidget extends StatelessWidget {
