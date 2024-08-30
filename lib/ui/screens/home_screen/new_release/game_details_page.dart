@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:progetto_esame/entities/video_game.dart';
+import 'package:progetto_esame/ui/screens/expandable_text_widget.dart';
+import 'package:progetto_esame/ui/screens/home_screen/new_release/genre_row_widget.dart';
 
 class GameDetailsPage extends StatelessWidget {
   final VideoGame game;
@@ -11,6 +13,8 @@ class GameDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List combinedGenresAndThemes = List.from(game.genres)
+      ..addAll(game.themes);
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -32,17 +36,17 @@ class GameDetailsPage extends StatelessWidget {
         body: Stack(children: [
           game.coverUrl != null && game.coverUrl.isNotEmpty
               ? Image.network(
-            game.coverUrl,
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          )
+                  game.coverUrl,
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                )
               : Image.asset(
-            'assets/placeholder.jpg',
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          ),
+                  'assets/placeholder.jpg',
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2),
@@ -114,6 +118,8 @@ class GameDetailsPage extends StatelessWidget {
                               ),
                             ],
                           ),
+                          SizedBox(height: 8),
+                          GenreRow(genres: combinedGenresAndThemes),
                           SizedBox(height: 8),
                           Text(
                             'Release Date: ${DateFormat.yMMMMd().format(game.humanFirstReleaseDate)}',
