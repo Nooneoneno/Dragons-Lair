@@ -54,7 +54,7 @@ class GameDetailsPage extends StatelessWidget {
           DraggableScrollableSheet(
             initialChildSize: 0.33,
             minChildSize: 0.33,
-            maxChildSize: 0.94,
+            maxChildSize: 1,
             builder: (BuildContext context, ScrollController scrollController) {
               return Container(
                 decoration: BoxDecoration(
@@ -125,13 +125,7 @@ class GameDetailsPage extends StatelessWidget {
                           SizedBox(height: 16),
                           if (game.storyline != null &&
                               game.storyline.isNotEmpty)
-                            Text(
-                              game.storyline,
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 16,
-                              ),
-                            )
+                            ExpandableText(text: game.storyline)
                           else
                             Text(
                               'No description available.',
