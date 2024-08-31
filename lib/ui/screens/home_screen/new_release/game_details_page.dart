@@ -139,7 +139,7 @@ class GameDetailsPage extends StatelessWidget {
                               ])),
                           SizedBox(height: 16),
                           if (game.summary.isNotEmpty)
-                            ExpandableText(text: game.summary),
+                            ExpandableText(text: game.summary, maxLines: 2),
                           SizedBox(height: 16),
                           GenreRow(genres: combinedGenresAndThemes),
                           SizedBox(height: 8),

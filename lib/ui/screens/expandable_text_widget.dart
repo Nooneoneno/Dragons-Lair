@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class ExpandableText extends StatefulWidget {
   final String text;
+  final int maxLines;
 
-  ExpandableText({required this.text});
+  ExpandableText({required this.text, required this.maxLines});
 
   @override
   _ExpandableTextState createState() => _ExpandableTextState();
@@ -30,7 +31,7 @@ class _ExpandableTextState extends State<ExpandableText> {
         );
 
         final tp = TextPainter(
-          maxLines: 2,
+          maxLines: widget.maxLines,
           textAlign: TextAlign.left,
           textDirection: TextDirection.ltr,
           text: span,
@@ -51,7 +52,7 @@ class _ExpandableTextState extends State<ExpandableText> {
                 },
                 child: Text(
                   decodedText,
-                  maxLines: _isExpanded ? null : 2,
+                  maxLines: _isExpanded ? null : widget.maxLines,
                   overflow: _isExpanded
                       ? TextOverflow.visible
                       : TextOverflow.ellipsis,
