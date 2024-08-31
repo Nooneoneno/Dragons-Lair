@@ -14,7 +14,7 @@ class ExpandableText extends StatefulWidget {
 class _ExpandableTextState extends State<ExpandableText> {
   bool _isExpanded = false;
   bool _isOverflowing = false;
-  
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -43,16 +43,24 @@ class _ExpandableTextState extends State<ExpandableText> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              decodedText,
-              maxLines: _isExpanded ? null : 2,
-              overflow: _isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-              ),
-            ),
-            if (_isOverflowing)
+            GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isExpanded = !_isExpanded;
+                  });
+                },
+                child: Text(
+                  decodedText,
+                  maxLines: _isExpanded ? null : 2,
+                  overflow: _isExpanded
+                      ? TextOverflow.visible
+                      : TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 16,
+                  ),
+                )),
+            if (!_isExpanded && _isOverflowing)
               GestureDetector(
                 onTap: () {
                   setState(() {
@@ -63,9 +71,9 @@ class _ExpandableTextState extends State<ExpandableText> {
                   padding: EdgeInsets.all(4.0),
                   child: Center(
                     child: Text(
-                      _isExpanded ? 'Read Less' : 'Read More',
+                      'Read More',
                       style: TextStyle(
-                        color: Colors.blue,
+                        color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
