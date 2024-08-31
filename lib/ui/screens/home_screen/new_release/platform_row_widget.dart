@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
-class GenreRow extends StatelessWidget {
-  final List genres;
+class PlatformRow extends StatelessWidget {
+  final List platforms;
 
-  const GenreRow({super.key, required this.genres});
+  const PlatformRow({super.key, required this.platforms});
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 8.0,
       runSpacing: 8.0,
-      children: genres.map((genre) {
+      children: platforms.map((platform) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
           decoration: BoxDecoration(
-            color: Colors.white24,
+            color: Colors.blueGrey.withOpacity(0.3),
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: Text(
-            genre.toString(),
+            platform.toString(),
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,

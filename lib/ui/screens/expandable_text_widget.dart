@@ -1,4 +1,4 @@
-import 'dart:convert'; // Per utf8.decode
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
@@ -8,50 +8,74 @@ class ExpandableText extends StatefulWidget {
   ExpandableText({required this.text});
 
   @override
-  _GameDescriptionState createState() => _GameDescriptionState();
+  _ExpandableTextState createState() => _ExpandableTextState();
 }
 
-class _GameDescriptionState extends State<ExpandableText> {
+class _ExpandableTextState extends State<ExpandableText> {
   bool _isExpanded = false;
-
+  bool _isOverflowing = false;
+  
   @override
   Widget build(BuildContext context) {
-    final String storyline = utf8.decode(widget.text.runes.toList());
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        String decodedText = utf8.decode(widget.text.runes.toList());
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          storyline,
-          maxLines: _isExpanded ? null : 2,
-          overflow: _isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+        final span = TextSpan(
+          text: decodedText,
           style: TextStyle(
             color: Colors.white70,
             fontSize: 16,
           ),
-        ),
-        if (storyline.split('\n').length > 2)
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _isExpanded = !_isExpanded;
-              });
-            },
-            child: Padding(
-              padding: EdgeInsets.all(4.0),
-              child: Center(
-                child: Text(
-                  _isExpanded ? 'Read Less' : 'Read More',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+        );
+
+        final tp = TextPainter(
+          maxLines: 2,
+          textAlign: TextAlign.left,
+          textDirection: TextDirection.ltr,
+          text: span,
+        );
+
+        tp.layout(maxWidth: constraints.maxWidth);
+
+        _isOverflowing = tp.didExceedMaxLines;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              decodedText,
+              maxLines: _isExpanded ? null : 2,
+              overflow: _isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 16,
+              ),
+            ),
+            if (_isOverflowing)
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isExpanded = !_isExpanded;
+                  });
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Center(
+                    child: Text(
+                      _isExpanded ? 'Read Less' : 'Read More',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-      ],
+          ],
+        );
+      },
     );
   }
 }

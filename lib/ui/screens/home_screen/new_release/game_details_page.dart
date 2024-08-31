@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:progetto_esame/entities/video_game.dart';
 import 'package:progetto_esame/ui/screens/expandable_text_widget.dart';
 import 'package:progetto_esame/ui/screens/home_screen/new_release/genre_row_widget.dart';
+import 'package:progetto_esame/ui/screens/home_screen/new_release/platform_row_widget.dart';
 
 class GameDetailsPage extends StatelessWidget {
   final VideoGame game;
@@ -68,7 +69,7 @@ class GameDetailsPage extends StatelessWidget {
                     topRight: Radius.circular(20.0),
                   ),
                 ),
-                padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Stack(
                   children: [
                     SingleChildScrollView(
@@ -118,7 +119,10 @@ class GameDetailsPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 16),
+                          if (game.summary.isNotEmpty)
+                            ExpandableText(text: game.summary),
+                          SizedBox(height: 16),
                           GenreRow(genres: combinedGenresAndThemes),
                           SizedBox(height: 8),
                           Text(
@@ -128,18 +132,11 @@ class GameDetailsPage extends StatelessWidget {
                               fontSize: 18,
                             ),
                           ),
+                          SizedBox(height: 8),
+                          PlatformRow(platforms: game.platforms),
                           SizedBox(height: 16),
-                          if (game.storyline != null &&
-                              game.storyline.isNotEmpty)
-                            ExpandableText(text: game.storyline)
-                          else
-                            Text(
-                              'No description available.',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 16,
-                              ),
-                            ),
+                          if (game.storyline.isNotEmpty)
+                            ExpandableText(text: game.storyline),
                         ],
                       ),
                     ),
