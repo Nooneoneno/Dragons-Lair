@@ -22,7 +22,7 @@ class NewReleaseController {
 
     const String endpoint = "/games";
     final String queryParameters =
-        "fields *, cover.url; sort hypes desc; where first_release_date > $lastWeekTimestamp & first_release_date < $nowTimestamp; limit 25;";
+        "fields *, cover.url, genres.name, platforms.name, themes.name; sort hypes desc; where first_release_date > $lastWeekTimestamp & first_release_date < $nowTimestamp; limit 25;";
     final String rawResponse =
         await apiService.postRequest(endpoint, queryParameters);
 
