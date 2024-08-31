@@ -1,3 +1,5 @@
+import 'package:progetto_esame/entities/language_support.dart';
+
 class VideoGame {
   final int id;
   final int category;
@@ -9,7 +11,7 @@ class VideoGame {
   final DateTime humanFirstReleaseDate;
   final List<String> genres;
   final List<dynamic> involvedCompanies;
-  final List<dynamic> languageSupports;
+  final List<LanguageSupport> languageSupports;
   final List<dynamic> multiplayerModes;
   final String name;
   final List<String> platforms;
@@ -67,7 +69,10 @@ class VideoGame {
               .toList()
           : [],
       involvedCompanies: List<dynamic>.from(json['involved_companies'] ?? []),
-      languageSupports: List<dynamic>.from(json['language_supports'] ?? []),
+      languageSupports: (json['language_supports'] as List<dynamic>?)
+          ?.map((langSupport) => LanguageSupport.fromJson(langSupport))
+          .toList() ??
+          [],
       multiplayerModes: List<dynamic>.from(json['multiplayer_modes'] ?? []),
       name: json['name'] ?? '',
       platforms: json['platforms'] != null
