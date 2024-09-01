@@ -2,51 +2,47 @@ import 'package:progetto_esame/entities/language_support.dart';
 
 class VideoGame {
   final int id;
+  final List<int> ageRatings;
   final int category;
   final String coverUrl;
   final List<int> dlcs;
-  final List<int> expandedGames;
   final List<int> expansions;
   final int firstReleaseDate;
   final DateTime humanFirstReleaseDate;
   final List<String> genres;
-  final List<dynamic> involvedCompanies;
   final List<LanguageSupport> languageSupports;
-  final List<dynamic> multiplayerModes;
   final String name;
+  final int parentGame;
   final List<String> platforms;
-  final List<int> releaseDates;
-  final List<int> similarGames;
-  final List<int> standaloneExpansions;
+  final List<int> remakes;
+  final List<int> remasters;
   final int status;
   final String storyline;
   final String summary;
   final List<String> themes;
-  final String versionTitle;
+  final int lastUpdated;
 
   VideoGame({
     required this.id,
+    required this.ageRatings,
     required this.category,
     required this.coverUrl,
     required this.dlcs,
-    required this.expandedGames,
     required this.expansions,
     required this.firstReleaseDate,
     required this.humanFirstReleaseDate,
     required this.genres,
-    required this.involvedCompanies,
     required this.languageSupports,
-    required this.multiplayerModes,
     required this.name,
+    required this.parentGame,
     required this.platforms,
-    required this.releaseDates,
-    required this.similarGames,
-    required this.standaloneExpansions,
+    required this.remakes,
+    required this.remasters,
     required this.status,
     required this.storyline,
     required this.summary,
     required this.themes,
-    required this.versionTitle,
+    required this.lastUpdated,
   });
 
   factory VideoGame.fromJson(Map<String, dynamic> json) {
@@ -56,10 +52,10 @@ class VideoGame {
 
     return VideoGame(
       id: json['id'] ?? 0,
+      ageRatings: List<int>.from(json['age_ratings'] ?? []),
       category: json['category'] ?? 0,
       coverUrl: json['coverUrl'] ?? '',
       dlcs: List<int>.from(json['dlcs'] ?? []),
-      expandedGames: List<int>.from(json['expanded_games'] ?? []),
       expansions: List<int>.from(json['expansions'] ?? []),
       firstReleaseDate: json['first_release_date'] ?? 0,
       humanFirstReleaseDate: humanReleaseDate,
@@ -68,30 +64,28 @@ class VideoGame {
               .map((genre) => genre['name'] as String)
               .toList()
           : [],
-      involvedCompanies: List<dynamic>.from(json['involved_companies'] ?? []),
       languageSupports: (json['language_supports'] as List<dynamic>?)
-          ?.map((langSupport) => LanguageSupport.fromJson(langSupport))
-          .toList() ??
+              ?.map((langSupport) => LanguageSupport.fromJson(langSupport))
+              .toList() ??
           [],
-      multiplayerModes: List<dynamic>.from(json['multiplayer_modes'] ?? []),
       name: json['name'] ?? '',
+      parentGame: json['parent_game'] ?? 0,
       platforms: json['platforms'] != null
           ? (json['platforms'] as List)
-              .map((genre) => genre['name'] as String)
+              .map((platform) => platform['name'] as String)
               .toList()
           : [],
-      releaseDates: List<int>.from(json['release_dates'] ?? []),
-      similarGames: List<int>.from(json['similar_games'] ?? []),
-      standaloneExpansions: List<int>.from(json['standalone_expansions'] ?? []),
+      remakes: List<int>.from(json['remakes'] ?? []),
+      remasters: List<int>.from(json['remasters'] ?? []),
       status: json['status'] ?? 0,
       storyline: json['storyline'] ?? '',
       summary: json['summary'] ?? '',
       themes: json['themes'] != null
           ? (json['themes'] as List)
-              .map((genre) => genre['name'] as String)
+              .map((theme) => theme['name'] as String)
               .toList()
           : [],
-      versionTitle: json['version_title'] ?? '',
+      lastUpdated: json['updated_at'] ?? 0,
     );
   }
 }

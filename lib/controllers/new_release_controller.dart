@@ -40,7 +40,8 @@ class NewReleaseController {
     });
 
     final List<VideoGame> uniqueReleases = uniqueReleasesMap.values.toList();
-    uniqueReleases.sort((a, b) => b.firstReleaseDate.compareTo(a.firstReleaseDate));
+    uniqueReleases
+        .sort((a, b) => b.firstReleaseDate.compareTo(a.firstReleaseDate));
     return uniqueReleases;
   }
 

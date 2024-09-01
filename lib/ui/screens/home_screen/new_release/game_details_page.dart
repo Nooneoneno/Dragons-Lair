@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:progetto_esame/entities/video_game.dart';
 import 'package:progetto_esame/ui/screens/expandable_text_widget.dart';
+import 'package:progetto_esame/ui/screens/home_screen/new_release/expansion_list_widget.dart';
 import 'package:progetto_esame/ui/screens/home_screen/new_release/genre_row_widget.dart';
 import 'package:progetto_esame/ui/screens/home_screen/new_release/language_row_widget.dart';
 import 'package:progetto_esame/ui/screens/home_screen/new_release/platform_row_widget.dart';
@@ -13,6 +14,13 @@ class GameDetailsPage extends StatelessWidget {
   final VideoGame game;
 
   GameDetailsPage({required this.game});
+
+  void _navigateToGameDetails(BuildContext context, int gameId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => GameDetailsPage(game: game)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,15 +147,52 @@ class GameDetailsPage extends StatelessWidget {
                               ])),
                           SizedBox(height: 16),
                           if (game.summary.isNotEmpty)
-                            ExpandableText(text: game.summary, maxLines: 2),
-                          SizedBox(height: 16),
+                            Column(
+                              children: [
+                                ExpandableText(text: game.summary, maxLines: 2),
+                                SizedBox(height: 16),
+                              ],
+                            ),
                           GenreRow(genres: combinedGenresAndThemes),
                           SizedBox(height: 8),
                           PlatformRow(platforms: game.platforms),
                           if (game.storyline.isNotEmpty)
-                          StorylineText(storyline: game.storyline),
+                            StorylineText(storyline: game.storyline),
                           if (game.languageSupports.isNotEmpty)
-                          SupportedLanguages(languages: game.languageSupports)
+                            SupportedLanguages(
+                                languages: game.languageSupports),
+                          SizedBox(height: 16),
+                          if (game.dlcs.isNotEmpty)
+                            GameExpansionList(
+                                title: "DLCs",
+                                games: [game, game, game, game, game],
+                                onGameTap: (gameId) =>
+                                    _navigateToGameDetails(context, gameId)),
+                          if (game.remakes.isNotEmpty)
+                            GameExpansionList(
+                                title: "Remakes",
+                                games: [
+                                  game,
+                                  game,
+                                ],
+                                onGameTap: (gameId) =>
+                                    _navigateToGameDetails(context, gameId)),
+                          if (game.remasters.isNotEmpty)
+                            GameExpansionList(
+                                title: "Remasters",
+                                games: [
+                                  game,
+                                ],
+                                onGameTap: (gameId) =>
+                                    _navigateToGameDetails(context, gameId)),
+                          if (game.parentGame != 0)
+                            GameExpansionList(
+                                title: "Main game",
+                                games: [
+                                  game,
+                                ],
+                                onGameTap: (gameId) =>
+                                    _navigateToGameDetails(context, gameId)),
                         ],
                       ),
                     ),
