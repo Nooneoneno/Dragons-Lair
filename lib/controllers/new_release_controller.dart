@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:progetto_esame/api_service/api_service.dart';
-import 'package:progetto_esame/entities/video_game.dart';
+import 'package:progetto_esame/entities/video_game_partial.dart';
 
 class NewReleaseController {
   final ApiService apiService = ApiService(baseUrl: 'https://api.igdb.com/v4');
-  List<VideoGame> newReleaseGames = [];
+  List<VideoGamePartial> newReleaseGames = [];
 
-  Future<List<VideoGame>> fetchNewRelease() async {
+  Future<List<VideoGamePartial>> fetchNewRelease() async {
     if (newReleaseGames.isNotEmpty) {
       return newReleaseGames;
     } else {
@@ -16,22 +16,22 @@ class NewReleaseController {
     }
   }
 
-  Future<List<VideoGame>> getNewReleases() async {
+  Future<List<VideoGamePartial>> getNewReleases() async {
     final int nowTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     final int lastWeekTimestamp = getLastWeekTimestamp(nowTimestamp);
 
     const String endpoint = "/games";
     final String queryParameters =
-        "fields *, cover.url, genres.name, platforms.name, themes.name, language_supports.language.name, language_supports.language_support_type.name; sort hypes desc; where first_release_date > $lastWeekTimestamp & first_release_date < $nowTimestamp; limit 25;";
+        "fields name, cover.url, first_release_date; sort hypes desc; where first_release_date > $lastWeekTimestamp & first_release_date < $nowTimestamp; limit 25;";
     final String rawResponse =
         await apiService.postRequest(endpoint, queryParameters);
 
-    final Map<int, VideoGame> uniqueReleasesMap = {};
+    final Map<int, VideoGamePartial> uniqueReleasesMap = {};
 
     final List<dynamic> jsonResponse = jsonDecode(rawResponse);
     jsonResponse.forEach((gameData) {
       final String coverUrl = extractCoverUrl(gameData['cover']);
-      final VideoGame videoGame = VideoGame.fromJson({
+      final VideoGamePartial videoGame = VideoGamePartial.fromJson({
         ...gameData,
         'coverUrl': coverUrl,
       });
@@ -39,7 +39,7 @@ class NewReleaseController {
       uniqueReleasesMap[videoGame.id] = videoGame;
     });
 
-    final List<VideoGame> uniqueReleases = uniqueReleasesMap.values.toList();
+    final List<VideoGamePartial> uniqueReleases = uniqueReleasesMap.values.toList();
     uniqueReleases
         .sort((a, b) => b.firstReleaseDate.compareTo(a.firstReleaseDate));
     return uniqueReleases;

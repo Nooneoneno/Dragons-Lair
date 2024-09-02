@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:progetto_esame/controllers/new_release_controller.dart';
-import 'package:progetto_esame/entities/video_game.dart';
+import 'package:progetto_esame/entities/video_game_partial.dart';
 import 'package:progetto_esame/ui/screens/home_screen/new_release/game_card.dart';
 
 class NewReleasesWidget extends StatefulWidget {
@@ -11,7 +11,7 @@ class NewReleasesWidget extends StatefulWidget {
 }
 
 class _NewReleasesWidgetState extends State<NewReleasesWidget> {
-  List<VideoGame> games = [];
+  List<VideoGamePartial> games = [];
 
   @override
   void initState() {

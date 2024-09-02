@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:progetto_esame/entities/video_game.dart';
+import 'package:progetto_esame/entities/video_game_partial.dart';
 import 'package:progetto_esame/ui/screens/home_screen/new_release//game_details_page.dart';
 
 class GameCard extends StatelessWidget {
-  final VideoGame game;
+  final VideoGamePartial game;
 
   GameCard({required this.game});
 
@@ -42,7 +42,7 @@ class GameCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          game.humanFirstReleaseDate.day.toString(),
+                          game.releaseDate.day.toString(),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 30,
@@ -60,7 +60,7 @@ class GameCard extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          DateFormat.MMMM().format(game.humanFirstReleaseDate),
+                          DateFormat.MMMM().format(game.releaseDate),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 21,
