@@ -6,7 +6,6 @@ class VideoGame {
   final int category;
   final String coverUrl;
   final List<int> dlcs;
-  final List<int> expansions;
   final int firstReleaseDate;
   final DateTime humanFirstReleaseDate;
   final List<String> genres;
@@ -28,7 +27,6 @@ class VideoGame {
     required this.category,
     required this.coverUrl,
     required this.dlcs,
-    required this.expansions,
     required this.firstReleaseDate,
     required this.humanFirstReleaseDate,
     required this.genres,
@@ -49,14 +47,15 @@ class VideoGame {
     int releaseDateTimestamp = json['first_release_date'] ?? 0;
     DateTime humanReleaseDate =
         DateTime.fromMillisecondsSinceEpoch(releaseDateTimestamp * 1000);
+    List<int> dlcs = List<int>.from(json['dlcs'] ?? []);
+    dlcs.addAll(List<int>.from(json['expansions'] ?? []));
 
     return VideoGame(
       id: json['id'] ?? 0,
       ageRatings: List<int>.from(json['age_ratings'] ?? []),
       category: json['category'] ?? 0,
       coverUrl: json['coverUrl'] ?? '',
-      dlcs: List<int>.from(json['dlcs'] ?? []),
-      expansions: List<int>.from(json['expansions'] ?? []),
+      dlcs: dlcs,
       firstReleaseDate: json['first_release_date'] ?? 0,
       humanFirstReleaseDate: humanReleaseDate,
       genres: json['genres'] != null
