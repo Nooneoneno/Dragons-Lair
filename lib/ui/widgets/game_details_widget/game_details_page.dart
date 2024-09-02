@@ -5,11 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:progetto_esame/controllers/game_fetch_controller.dart';
 import 'package:progetto_esame/entities/video_game.dart';
 import 'package:progetto_esame/ui/screens/expandable_text_widget.dart';
-import 'package:progetto_esame/ui/screens/home_screen/new_release/expansion_list_widget.dart';
-import 'package:progetto_esame/ui/screens/home_screen/new_release/genre_row_widget.dart';
-import 'package:progetto_esame/ui/screens/home_screen/new_release/language_row_widget.dart';
-import 'package:progetto_esame/ui/screens/home_screen/new_release/platform_row_widget.dart';
-import 'package:progetto_esame/ui/screens/home_screen/new_release/storyline_widget.dart';
+import 'package:progetto_esame/ui/widgets/game_details_widget/expansion_list_widget.dart';
+import 'package:progetto_esame/ui/widgets/game_details_widget/genre_row_widget.dart';
+import 'package:progetto_esame/ui/widgets/game_details_widget/language_row_widget.dart';
+import 'package:progetto_esame/ui/widgets/game_details_widget/platform_row_widget.dart';
+import 'package:progetto_esame/ui/widgets/game_details_widget/storyline_widget.dart';
 
 class GameDetailsPage extends StatefulWidget {
   final int gameId;
