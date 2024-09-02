@@ -11,51 +11,132 @@ import 'package:progetto_esame/ui/screens/home_screen/new_release/language_row_w
 import 'package:progetto_esame/ui/screens/home_screen/new_release/platform_row_widget.dart';
 import 'package:progetto_esame/ui/screens/home_screen/new_release/storyline_widget.dart';
 
-class GameDetailsPage extends StatelessWidget {
+class GameDetailsPage extends StatefulWidget {
   final int gameId;
 
   GameDetailsPage({required this.gameId});
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<VideoGame>(
-        future: GameFetchController().getGame(gameId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('ERROR LOADING GAME INFO'));
-          } else if (snapshot.hasData) {
-            final game = snapshot.data!;
-            void _navigateToGameDetails(BuildContext context, int gameId) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => GameDetailsPage(gameId: game.id)),
-              );
-            }
+  _GameDetailsPageState createState() => _GameDetailsPageState();
+}
 
-            final List combinedGenresAndThemes = List.from(game.genres)
-              ..addAll(game.themes);
-            return Scaffold(
-                extendBodyBehindAppBar: true,
-                appBar: AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  actions: [
-                    IconButton(
-                      icon: Icon(Icons.share, color: Colors.white),
-                      onPressed: () {},
+class _GameDetailsPageState extends State<GameDetailsPage> {
+  late Future<VideoGame> _gameFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _gameFuture = _fetchGame();
+  }
+
+  Future<VideoGame> _fetchGame() {
+    return GameFetchController().getGame(widget.gameId);
+  }
+
+  void _navigateToGameDetails(BuildContext context, int gameId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => GameDetailsPage(gameId: gameId)),
+    );
+  }
+
+  void _retryFetching() {
+    setState(() {
+      _gameFuture = _fetchGame();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.share, color: Colors.white),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        body: FutureBuilder<VideoGame>(
+            future: GameFetchController().getGame(widget.gameId),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.8),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0),
                     ),
-                  ],
-                ),
-                body: Stack(children: [
+                  ),
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.error_outline,
+                        color: Colors.redAccent,
+                        size: 60,
+                      ),
+                      SizedBox(height: 16),
+                      Text(
+                        'Oops!',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Something went wrong while loading the game info.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white12,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        icon: Icon(Icons.refresh, color: Colors.white),
+                        label: Text(
+                          'Retry',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                        onPressed: () {
+                          _retryFetching();
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              } else if (snapshot.hasData) {
+                final game = snapshot.data!;
+
+                final List combinedGenresAndThemes = List.from(game.genres)
+                  ..addAll(game.themes);
+                return Stack(children: [
                   game.coverUrl.isNotEmpty
                       ? Image.network(
                           game.coverUrl,
@@ -180,41 +261,34 @@ class GameDetailsPage extends StatelessWidget {
                                         languages: game.languageSupports),
                                   SizedBox(height: 16),
                                   if (game.dlcs
-                                      .isNotEmpty) //TODO: mettere le cose effettive
+                                      .isNotEmpty)
                                     GameExpansionList(
                                         title: "DLCs",
-                                        games: [game, game, game, game, game],
-                                        onGameTap: (gameId) =>
+                                        gameIds: game.dlcs,
+                                        onGameTap: (dlcId) =>
                                             _navigateToGameDetails(
-                                                context, gameId)),
+                                                context, dlcId)),
                                   if (game.remakes.isNotEmpty)
                                     GameExpansionList(
                                         title: "Remakes",
-                                        games: [
-                                          game,
-                                          game,
-                                        ],
+                                        gameIds: game.remakes,
                                         onGameTap: (gameId) =>
                                             _navigateToGameDetails(
                                                 context, gameId)),
                                   if (game.remasters.isNotEmpty)
                                     GameExpansionList(
                                         title: "Remasters",
-                                        games: [
-                                          game,
-                                        ],
+                                        gameIds: game.remasters,
                                         onGameTap: (gameId) =>
                                             _navigateToGameDetails(
                                                 context, gameId)),
                                   if (game.parentGame != 0)
                                     GameExpansionList(
                                         title: "Main game",
-                                        games: [
-                                          game,
-                                        ],
-                                        onGameTap: (gameId) =>
+                                        gameIds: [game.parentGame],
+                                        onGameTap: (parentId) =>
                                             _navigateToGameDetails(
-                                                context, gameId)),
+                                                context, parentId)),
                                 ],
                               ),
                             ),
@@ -244,9 +318,9 @@ class GameDetailsPage extends StatelessWidget {
                       );
                     },
                   ),
-                ]));
-          }
-          return Center(child: Text('ERROR: No game data found'));
-        });
+                ]);
+              }
+              return Center(child: Text('ERROR: No game data found'));
+            }));
   }
 }
