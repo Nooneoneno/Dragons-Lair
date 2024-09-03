@@ -40,7 +40,7 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
           child: Text(
             'Nuove uscite',
             style: TextStyle(
-              fontSize: screenWidth * 0.06, // Dynamic font size
+              fontSize: screenWidth * 0.06,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -48,7 +48,7 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
         ),
         CarouselSlider(
           options: CarouselOptions(
-            height: screenHeight * 0.5, // Dynamic height
+            height: screenHeight * 0.5,
             initialPage: 0,
             autoPlay: true,
             viewportFraction: 0.75,
