@@ -6,6 +6,7 @@ import 'package:progetto_esame/ui/screens/home_screen/new_release/game_card.dart
 
 class NewReleasesWidget extends StatefulWidget {
   final NewReleaseController newReleaseController = NewReleaseController();
+
   @override
   _NewReleasesWidgetState createState() => _NewReleasesWidgetState();
 }
@@ -31,11 +32,12 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Nuove Uscite',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
+          child: Text(
+            'Nuove uscite',
+            style: TextStyle(
+                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
         SizedBox(height: 10),
@@ -45,7 +47,7 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
             initialPage: 0,
             autoPlay: true,
             viewportFraction: 0.75,
-            aspectRatio: 16/9,
+            aspectRatio: 21 / 9,
             enlargeCenterPage: true,
             enlargeFactor: 0.3,
             autoPlayCurve: Curves.fastOutSlowIn,
