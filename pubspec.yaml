@@ -30,9 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_typeahead: ^4.6.2
-  flutter_svg: ^1.0.0
-  carousel_slider: ^4.2.1
+  flutter_typeahead: ^5.2.0
+  flutter_svg: ^2.0.10+1
+  carousel_slider: ^5.0.0
   http: ^1.2.1
   flutter_dotenv: ^5.0.2
   intl: any
@@ -51,7 +51,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

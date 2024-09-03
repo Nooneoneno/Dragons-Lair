@@ -47,7 +47,7 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
             initialPage: 0,
             autoPlay: true,
             viewportFraction: 0.75,
-            aspectRatio: 21 / 9,
+            aspectRatio: 9 / 21,
             enlargeCenterPage: true,
             enlargeFactor: 0.3,
             autoPlayCurve: Curves.fastOutSlowIn,
