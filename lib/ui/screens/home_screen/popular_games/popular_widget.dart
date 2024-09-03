@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:progetto_esame/controllers/new_release_controller.dart';
+import 'package:progetto_esame/controllers/popular_games_controller.dart';
 import 'package:progetto_esame/entities/video_game_partial.dart';
 import 'package:progetto_esame/ui/screens/home_screen/popular_games/horizontal_game_card.dart';
-import 'package:progetto_esame/ui/screens/home_screen/new_release/game_card.dart';
 
 class PopularWidget extends StatefulWidget {
-  final NewReleaseController newReleaseController = NewReleaseController();
+  final PopularGamesController popularGamesController = PopularGamesController();
 
   @override
   _PopularGamesWidgetState createState() => _PopularGamesWidgetState();
@@ -21,7 +20,7 @@ class _PopularGamesWidgetState extends State<PopularWidget> {
   }
 
   void _fetchPopularGames() async {
-    var popularGames = await widget.newReleaseController.fetchNewRelease();
+    var popularGames = await widget.popularGamesController.fetchNewRelease();
     setState(() {
       games = popularGames;
     });
@@ -47,7 +46,7 @@ class _PopularGamesWidgetState extends State<PopularWidget> {
           ),
         ),
         SizedBox(
-          height: screenHeight * 0.5,
+          height: screenHeight * 0.6,
           child: ListView.builder(
             scrollDirection: Axis.vertical,
             itemCount: games.length,
