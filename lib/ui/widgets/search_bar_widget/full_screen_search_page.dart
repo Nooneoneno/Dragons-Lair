@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:progetto_esame/controllers/search_controller.dart';
+import 'package:progetto_esame/ui/widgets/search_bar_widget/search_bar_widget.dart';
 
 class FullScreenSearch extends StatefulWidget {
   @override
@@ -8,32 +10,28 @@ class FullScreenSearch extends StatefulWidget {
 class _FullScreenSearchState extends State<FullScreenSearch> {
   TextEditingController _searchController = TextEditingController();
   List<String> suggestions = [];
-  List<String> allItems = [
-    'Assassin\'s Creed',
-    'Battlefield',
-    'Call of Duty',
-    'Cyberpunk 2077',
-    'Dark Souls',
-    'Elden Ring',
-    'Far Cry',
-    'Fortnite',
-    'Genshin Impact',
-    'God of War',
-  ];
-
   bool _isSearchActive = false;
-
-  void _updateSuggestions(String query) {
-    setState(() {
-      suggestions = allItems
-          .where((item) => item.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-    });
-  }
+  final SearchApiController searchApiController = SearchApiController();
 
   void _onSearchTapped() {
     setState(() {
       _isSearchActive = true;
+    });
+  }
+
+  Future<void> _updateSuggestions(String query) async {
+    if (query.isEmpty) {
+      setState(() {
+        suggestions = [];
+      });
+      return;
+    }
+
+    final List<String> results =
+        await searchApiController.getSearchResults(query);
+
+    setState(() {
+      suggestions = results;
     });
   }
 
@@ -64,25 +62,15 @@ class _FullScreenSearchState extends State<FullScreenSearch> {
                   padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                   child: Column(
                     children: [
-                      TextField(
+                      SearchBarWidget(
                         controller: _searchController,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: screenWidth * 0.05,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Search...',
-                          hintStyle: TextStyle(color: Colors.white54),
-                          border: InputBorder.none,
-                        ),
                         onChanged: _updateSuggestions,
                         onTap: _onSearchTapped,
                       ),
-                      SizedBox(height: 20),
                       if (suggestions.isNotEmpty)
                         Container(
                           color: Colors.transparent,
-                          height: screenHeight * 0.3,
+                          height: screenHeight * 0.4,
                           child: ListView.builder(
                             itemCount: suggestions.length,
                             itemBuilder: (context, index) {
