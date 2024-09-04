@@ -13,10 +13,12 @@ class PopularWidget extends StatefulWidget {
 class _PopularWidgetState extends State<PopularWidget> {
   List<VideoGamePartial> games = [];
   int currentPage = 0;
+  late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
+    _pageController = PageController(initialPage: currentPage);
     _fetchPopularGames();
   }
 
@@ -24,6 +26,12 @@ class _PopularWidgetState extends State<PopularWidget> {
     var popularGames = await widget.popularGamesController.fetchNewRelease();
     setState(() {
       games = popularGames;
+    });
+  }
+
+  void _handlePageChange(int page) {
+    setState(() {
+      currentPage = page;
     });
   }
 
@@ -65,12 +73,10 @@ class _PopularWidgetState extends State<PopularWidget> {
         SizedBox(
           height: screenHeight * 0.6,
           child: PageView.builder(
+            controller: _pageController,
             itemCount: totalPages,
-            onPageChanged: (page) {
-              setState(() {
-                currentPage = page;
-              });
-            },
+            onPageChanged: _handlePageChange,
+            physics: BouncingScrollPhysics(),
             itemBuilder: (context, pageIndex) {
               int startIndex = pageIndex * itemsPerPage;
               int endIndex = (startIndex + itemsPerPage > games.length)
@@ -79,13 +85,27 @@ class _PopularWidgetState extends State<PopularWidget> {
 
               List<VideoGamePartial> currentGames = games.sublist(startIndex, endIndex);
 
-              return ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: currentGames.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
-                    child: HorizontalGameCard(game: currentGames[index]),
+              return AnimatedBuilder(
+                animation: _pageController,
+                builder: (context, child) {
+                  double value = 1.0;
+                  if (_pageController.position.haveDimensions) {
+                    value = _pageController.page! - pageIndex;
+                    value = (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
+                  }
+
+                  return Transform.scale(
+                    scale: value,
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: currentGames.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
+                          child: HorizontalGameCard(game: currentGames[index]),
+                        );
+                      },
+                    ),
                   );
                 },
               );
@@ -94,5 +114,11 @@ class _PopularWidgetState extends State<PopularWidget> {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 }
