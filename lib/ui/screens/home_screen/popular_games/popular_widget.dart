@@ -7,11 +7,12 @@ class PopularWidget extends StatefulWidget {
   final PopularGamesController popularGamesController = PopularGamesController();
 
   @override
-  _PopularGamesWidgetState createState() => _PopularGamesWidgetState();
+  _PopularWidgetState createState() => _PopularWidgetState();
 }
 
-class _PopularGamesWidgetState extends State<PopularWidget> {
+class _PopularWidgetState extends State<PopularWidget> {
   List<VideoGamePartial> games = [];
+  int currentPage = 0;
 
   @override
   void initState() {
@@ -31,29 +32,62 @@ class _PopularGamesWidgetState extends State<PopularWidget> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
+    int itemsPerPage = 10;
+    int totalPages = (games.length / itemsPerPage).ceil();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: EdgeInsets.all(screenWidth * 0.02),
-          child: Text(
-            'Giochi Popolari',
-            style: TextStyle(
-              fontSize: screenWidth * 0.06,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Giochi Popolari',
+                style: TextStyle(
+                  fontSize: screenWidth * 0.06,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              if (totalPages > 1)
+                Text(
+                  'Page ${currentPage + 1} of $totalPages',
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.03,
+                    color: Colors.white70,
+                  ),
+                ),
+            ],
           ),
         ),
         SizedBox(
           height: screenHeight * 0.6,
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: games.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
-                child: HorizontalGameCard(game: games[index]),
+          child: PageView.builder(
+            itemCount: totalPages,
+            onPageChanged: (page) {
+              setState(() {
+                currentPage = page;
+              });
+            },
+            itemBuilder: (context, pageIndex) {
+              int startIndex = pageIndex * itemsPerPage;
+              int endIndex = (startIndex + itemsPerPage > games.length)
+                  ? games.length
+                  : startIndex + itemsPerPage;
+
+              List<VideoGamePartial> currentGames = games.sublist(startIndex, endIndex);
+
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: currentGames.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
+                    child: HorizontalGameCard(game: currentGames[index]),
+                  );
+                },
               );
             },
           ),

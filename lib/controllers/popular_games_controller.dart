@@ -19,7 +19,7 @@ class PopularGamesController {
   Future<List<int>> getPopularGameIds() async {
     const String endpoint = "/popularity_primitives";
     final String queryParameters =
-        "fields game_id; sort value desc; where popularity_type=3; limit 25;";
+        "fields game_id; sort value desc; where popularity_type=3; limit 50;";
     final String rawResponse =
         await apiService.postRequest(endpoint, queryParameters);
 
@@ -42,7 +42,7 @@ class PopularGamesController {
     }
 
     final String queryParameters =
-        'fields name, cover.url, first_release_date; where id = (${gameIds.join(', ')}); limit 25;';
+        'fields name, cover.url, first_release_date; where id = (${gameIds.join(', ')}); limit 100;';
     final String rawResponse =
         await apiService.postRequest(endpoint, queryParameters);
 
