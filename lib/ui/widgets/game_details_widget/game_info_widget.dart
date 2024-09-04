@@ -72,8 +72,21 @@ class GameInfo extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 25.0,
+                      Container(
+                        height: 25,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                        ),
+                        child: Center(
+                          child: Container(
+                            width: 40,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: Colors.white54,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,27 +184,6 @@ class GameInfo extends StatelessWidget {
                             onGameTap: (parentId) =>
                                 _navigateToGameDetails(context, parentId)),
                     ],
-                  ),
-                ),
-                Positioned(
-                  top: -5,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: 25,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: Center(
-                      child: Container(
-                        width: 40,
-                        height: 5,
-                        decoration: BoxDecoration(
-                          color: Colors.white54,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
                   ),
                 ),
               ],
