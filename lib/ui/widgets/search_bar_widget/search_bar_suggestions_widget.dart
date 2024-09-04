@@ -24,14 +24,16 @@ class SearchSuggestionsList extends StatelessWidget {
         itemBuilder: (context, index) {
           final suggestion = suggestions[index];
           return ListTile(
-            leading: suggestion.coverUrl != null
-                ? Image.network(
-              suggestion.coverUrl,
+            leading: Container(
               width: 50,
               height: 50,
-              fit: BoxFit.cover,
-            )
-                : SizedBox.shrink(),
+              child: suggestion.coverUrl != null
+                  ? Image.network(
+                      suggestion.coverUrl,
+                      fit: BoxFit.cover,
+                    )
+                  : SizedBox.shrink(),
+            ),
             title: Text(
               suggestion.name,
               style: TextStyle(

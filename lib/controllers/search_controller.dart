@@ -10,7 +10,7 @@ class SearchApiController {
     if (query.length >= 2) {
       const String endpoint = "/games";
       final String queryParameters =
-          'fields name, cover.url, first_release_date; where name ~ "$query"*; limit 5;';
+          'fields name, cover.url, first_release_date; where name ~ "$query"* & category=(0,1,2,3,4,8,9,11); limit 5;';
       final String rawResponse =
           await apiService.postRequest(endpoint, queryParameters);
 

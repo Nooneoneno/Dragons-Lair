@@ -78,6 +78,7 @@ class _FullScreenSearchState extends State<FullScreenSearch> {
                         onChanged: _updateSuggestions,
                         onTap: _onSearchTapped,
                       ),
+                      SizedBox(height: 12),
                       if (suggestions.isNotEmpty)
                         SearchSuggestionsList(
                           suggestions: suggestions,
