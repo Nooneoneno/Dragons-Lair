@@ -1,22 +1,29 @@
 import 'dart:convert';
 
 import 'package:progetto_esame/api_service/api_service.dart';
+import 'package:progetto_esame/entities/video_game_partial.dart';
 
 class SearchApiController {
   final ApiService apiService = ApiService(baseUrl: 'https://api.igdb.com/v4');
 
-  Future<List<String>> getSearchResults(String query) async {
+  Future<List<VideoGamePartial>> getSearchResults(String query) async {
     if (query.length >= 2) {
       const String endpoint = "/games";
-      final String queryParameters = 'fields name; where name ~ "$query"*; limit 5;';
+      final String queryParameters =
+          'fields name, cover.url, first_release_date; where name ~ "$query"*; limit 5;';
       final String rawResponse =
           await apiService.postRequest(endpoint, queryParameters);
 
-      final List<String> searchResults = [];
+      final List<VideoGamePartial> searchResults = [];
 
       final List<dynamic> jsonResponse = jsonDecode(rawResponse);
       jsonResponse.forEach((gameData) {
-        searchResults.add(gameData['name']);
+        final String coverUrl = extractCoverUrl(gameData['cover']);
+        final VideoGamePartial videoGame = VideoGamePartial.fromJson({
+          ...gameData,
+          'coverUrl': coverUrl,
+        });
+        searchResults.add(videoGame);
       });
 
       return searchResults;

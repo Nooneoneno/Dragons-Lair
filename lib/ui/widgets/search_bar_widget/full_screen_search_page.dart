@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:progetto_esame/controllers/search_controller.dart';
+import 'package:progetto_esame/entities/video_game_partial.dart';
+import 'package:progetto_esame/ui/widgets/game_details_widget/game_details_page.dart';
+import 'package:progetto_esame/ui/widgets/search_bar_widget/search_bar_suggestions_widget.dart';
 import 'package:progetto_esame/ui/widgets/search_bar_widget/search_bar_widget.dart';
 
 class FullScreenSearch extends StatefulWidget {
@@ -9,7 +12,7 @@ class FullScreenSearch extends StatefulWidget {
 
 class _FullScreenSearchState extends State<FullScreenSearch> {
   TextEditingController _searchController = TextEditingController();
-  List<String> suggestions = [];
+  List<VideoGamePartial> suggestions = [];
   bool _isSearchActive = false;
   final SearchApiController searchApiController = SearchApiController();
 
@@ -27,12 +30,20 @@ class _FullScreenSearchState extends State<FullScreenSearch> {
       return;
     }
 
-    final List<String> results =
+    final List<VideoGamePartial> results =
         await searchApiController.getSearchResults(query);
 
     setState(() {
       suggestions = results;
     });
+  }
+
+  void _onSuggestionTap(int gameId) {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (BuildContext context, _, __) => GameDetailsPage(gameId: gameId),
+      ),
+    );
   }
 
   void _closeSearch() {
@@ -68,27 +79,9 @@ class _FullScreenSearchState extends State<FullScreenSearch> {
                         onTap: _onSearchTapped,
                       ),
                       if (suggestions.isNotEmpty)
-                        Container(
-                          color: Colors.transparent,
-                          height: screenHeight * 0.4,
-                          child: ListView.builder(
-                            itemCount: suggestions.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(
-                                  suggestions[index],
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: screenWidth * 0.045,
-                                  ),
-                                ),
-                                onTap: () {
-                                  print(
-                                      'Hai selezionato: ${suggestions[index]}');
-                                },
-                              );
-                            },
-                          ),
+                        SearchSuggestionsList(
+                          suggestions: suggestions,
+                          onSuggestionTap: _onSuggestionTap,
                         ),
                     ],
                   ),
