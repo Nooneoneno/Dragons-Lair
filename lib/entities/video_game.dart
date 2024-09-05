@@ -1,4 +1,4 @@
-import 'package:GameHub/entities/language_support.dart';
+import 'package:DragOnPlay/entities/language_support.dart';
 
 class VideoGame {
   final int id;

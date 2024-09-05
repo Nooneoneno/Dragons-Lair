@@ -1,4 +1,4 @@
-import 'package:GameHub/ui/screens/explore_screen/category_grid.dart';
+import 'package:DragOnPlay/ui/screens/explore_screen/category_grid.dart';
 import 'package:flutter/material.dart';
 
 class ExploreScreen extends StatefulWidget {

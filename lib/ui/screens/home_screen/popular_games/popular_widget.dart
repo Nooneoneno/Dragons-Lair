@@ -1,6 +1,6 @@
-import 'package:GameHub/controllers/popular_games_controller.dart';
-import 'package:GameHub/entities/video_game_partial.dart';
-import 'package:GameHub/ui/screens/home_screen/popular_games/horizontal_game_card.dart';
+import 'package:DragOnPlay/controllers/popular_games_controller.dart';
+import 'package:DragOnPlay/entities/video_game_partial.dart';
+import 'package:DragOnPlay/ui/screens/home_screen/popular_games/horizontal_game_card.dart';
 import 'package:flutter/material.dart';
 
 class PopularWidget extends StatefulWidget {

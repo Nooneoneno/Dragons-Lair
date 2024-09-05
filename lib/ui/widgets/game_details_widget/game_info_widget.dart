@@ -1,14 +1,14 @@
 import 'dart:ui';
 
-import 'package:GameHub/entities/video_game.dart';
-import 'package:GameHub/ui/screens/expandable_text_widget.dart';
-import 'package:GameHub/ui/widgets/game_details_widget/expansion_list_widget.dart';
-import 'package:GameHub/ui/widgets/game_details_widget/game_details_page.dart';
-import 'package:GameHub/ui/widgets/game_details_widget/genre_row_widget.dart';
-import 'package:GameHub/ui/widgets/game_details_widget/language_row_widget.dart';
-import 'package:GameHub/ui/widgets/game_details_widget/platform_row_widget.dart';
-import 'package:GameHub/ui/widgets/game_details_widget/storyline_widget.dart';
-import 'package:GameHub/ui/widgets/network_image_widget.dart';
+import 'package:DragOnPlay/entities/video_game.dart';
+import 'package:DragOnPlay/ui/screens/expandable_text_widget.dart';
+import 'package:DragOnPlay/ui/widgets/game_details_widget/expansion_list_widget.dart';
+import 'package:DragOnPlay/ui/widgets/game_details_widget/game_details_page.dart';
+import 'package:DragOnPlay/ui/widgets/game_details_widget/genre_row_widget.dart';
+import 'package:DragOnPlay/ui/widgets/game_details_widget/language_row_widget.dart';
+import 'package:DragOnPlay/ui/widgets/game_details_widget/platform_row_widget.dart';
+import 'package:DragOnPlay/ui/widgets/game_details_widget/storyline_widget.dart';
+import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';

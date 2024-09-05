@@ -1,5 +1,5 @@
-import 'package:GameHub/entities/category.dart';
-import 'package:GameHub/ui/screens/explore_screen/category_card.dart';
+import 'package:DragOnPlay/entities/category.dart';
+import 'package:DragOnPlay/ui/screens/explore_screen/category_card.dart';
 import 'package:flutter/material.dart';
 
 class CategoryGrid extends StatelessWidget {

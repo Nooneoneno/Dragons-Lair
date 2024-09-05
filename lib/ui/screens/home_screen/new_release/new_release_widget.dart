@@ -1,6 +1,6 @@
-import 'package:GameHub/controllers/new_release_controller.dart';
-import 'package:GameHub/entities/video_game_partial.dart';
-import 'package:GameHub/ui/screens/home_screen/new_release/game_card.dart';
+import 'package:DragOnPlay/controllers/new_release_controller.dart';
+import 'package:DragOnPlay/entities/video_game_partial.dart';
+import 'package:DragOnPlay/ui/screens/home_screen/new_release/game_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,5 @@
-import 'package:GameHub/entities/video_game_partial.dart';
-import 'package:GameHub/ui/widgets/network_image_widget.dart';
+import 'package:DragOnPlay/entities/video_game_partial.dart';
+import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class SearchSuggestionsList extends StatelessWidget {

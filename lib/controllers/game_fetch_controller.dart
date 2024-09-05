@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:GameHub/api_service/api_service.dart';
-import 'package:GameHub/entities/video_game.dart';
-import 'package:GameHub/entities/video_game_partial.dart';
+import 'package:DragOnPlay/api_service/api_service.dart';
+import 'package:DragOnPlay/entities/video_game.dart';
+import 'package:DragOnPlay/entities/video_game_partial.dart';
 
 class GameFetchController {
   final ApiService apiService = ApiService(baseUrl: 'https://api.igdb.com/v4');

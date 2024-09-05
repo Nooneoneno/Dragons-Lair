@@ -1,4 +1,4 @@
-import 'package:GameHub/entities/language_support.dart';
+import 'package:DragOnPlay/entities/language_support.dart';
 import 'package:flutter/material.dart';
 
 class SupportedLanguages extends StatefulWidget {

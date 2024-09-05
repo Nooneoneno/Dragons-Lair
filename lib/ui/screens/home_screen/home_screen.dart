@@ -1,5 +1,5 @@
-import 'package:GameHub/ui/screens/home_screen/new_release/new_release_widget.dart';
-import 'package:GameHub/ui/screens/home_screen/popular_games/popular_widget.dart';
+import 'package:DragOnPlay/ui/screens/home_screen/new_release/new_release_widget.dart';
+import 'package:DragOnPlay/ui/screens/home_screen/popular_games/popular_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

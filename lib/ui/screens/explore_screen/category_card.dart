@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:GameHub/ui/screens/explore_screen/category_page.dart';
+import 'package:DragOnPlay/ui/screens/explore_screen/category_page.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatelessWidget {

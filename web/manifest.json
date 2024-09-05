@@ -1,6 +1,6 @@
 {
-    "name": "progetto_esame",
-    "short_name": "progetto_esame",
+    "name": "DragOnPlay",
+    "short_name": "DragOnPlay",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

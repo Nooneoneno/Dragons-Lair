@@ -1,5 +1,5 @@
-import 'package:GameHub/controllers/game_fetch_controller.dart';
-import 'package:GameHub/entities/video_game_partial.dart';
+import 'package:DragOnPlay/controllers/game_fetch_controller.dart';
+import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:flutter/material.dart';
 
 class GameExpansionList extends StatelessWidget {

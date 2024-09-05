@@ -1,4 +1,4 @@
-package com.example.progetto_esame
+package com.example.DragOnPlay
 
 import io.flutter.embedding.android.FlutterActivity
 
