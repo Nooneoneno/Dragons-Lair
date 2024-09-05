@@ -26,7 +26,7 @@ class CategoriesController {
   Future<String> getCategoryCover(int category) async {
     final String endpoint = "/games";
     final String queryParameters =
-        "fields name, cover.url; sort rating desc; where genres=$category; limit 1;";
+        "fields name, cover.url; sort rating_count desc; where genres=$category; limit 1;";
     final String rawResponse =
     await apiService.postRequest(endpoint, queryParameters);
 

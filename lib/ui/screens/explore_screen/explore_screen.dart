@@ -21,65 +21,63 @@ class _ExploreScreenState extends State<ExploreScreen> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
-    return FutureBuilder<List<Category>>(
-      future: _fetchCategories(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.hasError) {
-          return Center(
-            child: Text('Error fetching categories: ${snapshot.error}'),
-          );
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(
-            child: Text('No categories available'),
-          );
-        } else {
-          final categories = snapshot.data!;
+    return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+                child: FutureBuilder<List<Category>>(
+              future: _fetchCategories(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error fetching categories: ${snapshot.error}'),
+                  );
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(
+                    child: Text('No categories available'),
+                  );
+                } else {
+                  final categories = snapshot.data!;
 
-          return CustomScrollView(
-            slivers: [
-              SliverPadding(
-                padding: EdgeInsets.all(16.0),
-                sliver: SliverToBoxAdapter(
-                  child: Text(
-                    'Explore Categories',
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.06,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              SliverGrid(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 10.0,
-                  childAspectRatio: 0.75,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final category = categories[index];
-                    return GestureDetector(
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Selected: ${category.name}')),
-                        );
-                      },
-                      child: CategoryCard(category: category),
-                    );
-                  },
-                  childCount: categories.length,
-                ),
-              ),
-            ],
-          );
-        }
-      },
-    );
+                  return CustomScrollView(
+                    slivers: [
+                      SliverGrid(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 16.0,
+                          mainAxisSpacing: 16.0,
+                          childAspectRatio: 1,
+                        ),
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final category = categories[index];
+                            return GestureDetector(
+                              onTap: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text('Selected: ${category.name}')),
+                                );
+                              },
+                              child: CategoryCard(category: category),
+                            );
+                          },
+                          childCount: categories.length,
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              },
+            ))
+          ],
+        ));
   }
 }
