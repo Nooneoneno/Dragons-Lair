@@ -1,8 +1,7 @@
+import 'package:GameHub/entities/video_game_partial.dart';
+import 'package:GameHub/ui/widgets/game_details_widget/game_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:progetto_esame/entities/video_game_partial.dart';
-import 'package:progetto_esame/ui/widgets/game_details_widget/game_details_page.dart';
-import 'package:progetto_esame/ui/widgets/network_image_widget.dart';
 
 class GameCard extends StatelessWidget {
   final VideoGamePartial game;

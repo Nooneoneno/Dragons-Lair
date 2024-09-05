@@ -1,9 +1,9 @@
+import 'package:GameHub/controllers/search_controller.dart';
+import 'package:GameHub/entities/video_game_partial.dart';
+import 'package:GameHub/ui/widgets/game_details_widget/game_details_page.dart';
+import 'package:GameHub/ui/widgets/search_bar_widget/search_bar_suggestions_widget.dart';
+import 'package:GameHub/ui/widgets/search_bar_widget/search_bar_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:progetto_esame/controllers/search_controller.dart';
-import 'package:progetto_esame/entities/video_game_partial.dart';
-import 'package:progetto_esame/ui/widgets/game_details_widget/game_details_page.dart';
-import 'package:progetto_esame/ui/widgets/search_bar_widget/search_bar_suggestions_widget.dart';
-import 'package:progetto_esame/ui/widgets/search_bar_widget/search_bar_widget.dart';
 
 class FullScreenSearch extends StatefulWidget {
   @override

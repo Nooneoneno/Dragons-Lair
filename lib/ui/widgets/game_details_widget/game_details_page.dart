@@ -1,9 +1,8 @@
+import 'package:GameHub/controllers/game_fetch_controller.dart';
+import 'package:GameHub/entities/video_game.dart';
+import 'package:GameHub/ui/widgets/game_details_widget/error_page.dart';
+import 'package:GameHub/ui/widgets/game_details_widget/game_info_widget.dart';
 import 'package:flutter/material.dart';
-
-import 'package:progetto_esame/controllers/game_fetch_controller.dart';
-import 'package:progetto_esame/entities/video_game.dart';
-import 'package:progetto_esame/ui/widgets/game_details_widget/error_page.dart';
-import 'package:progetto_esame/ui/widgets/game_details_widget/game_info_widget.dart';
 
 class GameDetailsPage extends StatefulWidget {
   final int gameId;

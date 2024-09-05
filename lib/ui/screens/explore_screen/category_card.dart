@@ -1,7 +1,7 @@
 import 'dart:ui';
 
+import 'package:GameHub/ui/screens/explore_screen/category_page.dart';
 import 'package:flutter/material.dart';
-import 'package:progetto_esame/ui/screens/explore_screen/category_page.dart';
 
 class CategoryCard extends StatelessWidget {
   final String categoryImage;

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:progetto_esame/api_service/api_service.dart';
-import 'package:progetto_esame/entities/video_game_partial.dart';
+import 'package:GameHub/api_service/api_service.dart';
+import 'package:GameHub/entities/video_game_partial.dart';
 
 class NewReleaseController {
   final ApiService apiService = ApiService(baseUrl: 'https://api.igdb.com/v4');

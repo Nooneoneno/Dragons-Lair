@@ -1,5 +1,5 @@
+import 'package:GameHub/ui/screens/explore_screen/category_grid.dart';
 import 'package:flutter/material.dart';
-import 'package:progetto_esame/ui/screens/explore_screen/category_grid.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});

@@ -1,6 +1,6 @@
+import 'package:GameHub/controllers/game_fetch_controller.dart';
+import 'package:GameHub/entities/video_game_partial.dart';
 import 'package:flutter/material.dart';
-import 'package:progetto_esame/controllers/game_fetch_controller.dart';
-import 'package:progetto_esame/entities/video_game_partial.dart';
 
 class GameExpansionList extends StatelessWidget {
   final String title;

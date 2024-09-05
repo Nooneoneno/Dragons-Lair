@@ -1,8 +1,8 @@
+import 'package:GameHub/controllers/new_release_controller.dart';
+import 'package:GameHub/entities/video_game_partial.dart';
+import 'package:GameHub/ui/screens/home_screen/new_release/game_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:progetto_esame/controllers/new_release_controller.dart';
-import 'package:progetto_esame/entities/video_game_partial.dart';
-import 'package:progetto_esame/ui/screens/home_screen/new_release/game_card.dart';
 
 class NewReleasesWidget extends StatefulWidget {
   final NewReleaseController newReleaseController = NewReleaseController();

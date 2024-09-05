@@ -1,6 +1,6 @@
+import 'package:GameHub/entities/video_game_partial.dart';
+import 'package:GameHub/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:progetto_esame/entities/video_game_partial.dart';
-import 'package:progetto_esame/ui/widgets/network_image_widget.dart';
 
 class SearchSuggestionsList extends StatelessWidget {
   final List<VideoGamePartial> suggestions;

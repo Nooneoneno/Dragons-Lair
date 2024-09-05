@@ -1,6 +1,6 @@
+import 'package:GameHub/entities/video_game_partial.dart';
+import 'package:GameHub/ui/widgets/game_details_widget/game_details_page.dart';
 import 'package:flutter/material.dart';
-import 'package:progetto_esame/entities/video_game_partial.dart';
-import 'package:progetto_esame/ui/widgets/game_details_widget/game_details_page.dart';
 
 class HorizontalGameCard extends StatelessWidget {
   final VideoGamePartial game;

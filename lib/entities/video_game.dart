@@ -1,4 +1,4 @@
-import 'package:progetto_esame/entities/language_support.dart';
+import 'package:GameHub/entities/language_support.dart';
 
 class VideoGame {
   final int id;

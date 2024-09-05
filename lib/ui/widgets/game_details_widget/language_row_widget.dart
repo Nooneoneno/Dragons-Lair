@@ -1,5 +1,5 @@
+import 'package:GameHub/entities/language_support.dart';
 import 'package:flutter/material.dart';
-import 'package:progetto_esame/entities/language_support.dart';
 
 class SupportedLanguages extends StatefulWidget {
   final List<LanguageSupport> languages;

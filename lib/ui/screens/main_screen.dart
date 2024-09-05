@@ -1,8 +1,8 @@
+import 'package:GameHub/ui/screens/explore_screen/explore_screen.dart';
+import 'package:GameHub/ui/screens/home_screen/home_screen.dart';
+import 'package:GameHub/ui/screens/library_screen.dart';
+import 'package:GameHub/ui/widgets/search_bar_widget/full_screen_search_page.dart';
 import 'package:flutter/material.dart';
-import 'package:progetto_esame/ui/screens/explore_screen/explore_screen.dart';
-import 'package:progetto_esame/ui/screens/home_screen/home_screen.dart';
-import 'package:progetto_esame/ui/screens/library_screen.dart';
-import 'package:progetto_esame/ui/widgets/search_bar_widget/full_screen_search_page.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

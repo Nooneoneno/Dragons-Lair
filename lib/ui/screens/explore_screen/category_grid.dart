@@ -1,6 +1,6 @@
+import 'package:GameHub/entities/category.dart';
+import 'package:GameHub/ui/screens/explore_screen/category_card.dart';
 import 'package:flutter/material.dart';
-import 'package:progetto_esame/entities/category.dart';
-import 'package:progetto_esame/ui/screens/explore_screen/category_card.dart';
 
 class CategoryGrid extends StatelessWidget {
   final List<VideoGameCategory> categories = [
