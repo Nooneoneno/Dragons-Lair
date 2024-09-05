@@ -11,6 +11,7 @@ import 'package:progetto_esame/ui/widgets/game_details_widget/platform_row_widge
 import 'package:progetto_esame/ui/widgets/game_details_widget/storyline_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:progetto_esame/ui/screens/expandable_text_widget.dart';
+import 'package:progetto_esame/ui/widgets/network_image_widget.dart';
 
 class GameInfo extends StatelessWidget {
   final VideoGame game;
@@ -30,19 +31,12 @@ class GameInfo extends StatelessWidget {
       ..addAll(game.themes);
 
     return Stack(children: [
-      game.coverUrl.isNotEmpty
-          ? Image.network(
-              game.coverUrl,
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.cover,
-            )
-          : Image.asset(
-              'assets/placeholder.jpg',
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.cover,
-            ),
+      NetworkImageWidget(
+        imageUrl: game.coverUrl,
+        width: double.infinity,
+        height: double.infinity,
+        boxFit: BoxFit.cover,
+      ),
       Positioned.fill(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2),
@@ -72,8 +66,21 @@ class GameInfo extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 25.0,
+                      Container(
+                        height: 25,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                        ),
+                        child: Center(
+                          child: Container(
+                            width: 40,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: Colors.white54,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,27 +178,6 @@ class GameInfo extends StatelessWidget {
                             onGameTap: (parentId) =>
                                 _navigateToGameDetails(context, parentId)),
                     ],
-                  ),
-                ),
-                Positioned(
-                  top: -5,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: 25,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: Center(
-                      child: Container(
-                        width: 40,
-                        height: 5,
-                        decoration: BoxDecoration(
-                          color: Colors.white54,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
                   ),
                 ),
               ],

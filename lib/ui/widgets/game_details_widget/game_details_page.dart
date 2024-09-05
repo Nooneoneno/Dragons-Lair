@@ -20,8 +20,7 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
   }
 
   void _retryFetching() {
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
@@ -48,7 +47,13 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
             future: _fetchGame(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return Container(
+                  decoration: BoxDecoration(color: Colors.black),
+                  child: Center(
+                      child: CircularProgressIndicator(
+                    color: Colors.white,
+                  )),
+                );
               } else if (snapshot.hasError) {
                 return ErrorPage(retryFetching: _retryFetching);
               } else if (snapshot.hasData) {
@@ -57,7 +62,14 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
                   game: game,
                 );
               }
-              return Center(child: Text('ERROR: No game data found'));
+              return Container(
+                decoration: BoxDecoration(color: Colors.black),
+                child: Center(
+                    child: Text(
+                  'ERROR: No game data found',
+                  style: TextStyle(color: Colors.white),
+                )),
+              );
             }));
   }
 }

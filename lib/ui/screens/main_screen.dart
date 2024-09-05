@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:progetto_esame/ui/screens/explore_screen/explore_screen.dart';
 import 'package:progetto_esame/ui/screens/home_screen/home_screen.dart';
 import 'package:progetto_esame/ui/screens/library_screen.dart';
+import 'package:progetto_esame/ui/widgets/search_bar_widget/full_screen_search_page.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -18,6 +19,15 @@ class _MainScreenState extends State<MainScreen> {
     ExploreScreen(),
     LibraryScreen(),
   ];
+
+  void _openSearch() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) => FullScreenSearch(),
+      ),
+    );
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -55,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
                 IconButton(
                   icon: Icon(Icons.search),
                   color: Colors.white,
-                  onPressed: () {},
+                  onPressed: _openSearch,
                 ),
               ],
             ),

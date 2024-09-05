@@ -29,21 +29,26 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
+          padding: EdgeInsets.all(screenWidth * 0.02),
           child: Text(
             'Nuove uscite',
             style: TextStyle(
-                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: screenWidth * 0.06,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
         ),
-        SizedBox(height: 10),
         CarouselSlider(
           options: CarouselOptions(
-            height: 350.0,
+            height: screenHeight * 0.5,
             initialPage: 0,
             autoPlay: true,
             viewportFraction: 0.75,
@@ -53,14 +58,14 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
             autoPlayCurve: Curves.fastOutSlowIn,
             autoPlayInterval: Duration(seconds: 3),
           ),
-          items: games.map((i) {
+          items: games.map((game) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
-                    width: MediaQuery.of(context).size.width,
+                    width: screenWidth,
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: GameCard(game: i),
+                      child: GameCard(game: game),
                     ));
               },
             );
