@@ -37,6 +37,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -58,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
                 'DragOnPlay',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 30,
+                    fontSize: width * 0.082,
                     color: Colors.white),
               ),
               actions: [
