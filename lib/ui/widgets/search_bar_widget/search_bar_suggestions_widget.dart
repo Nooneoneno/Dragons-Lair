@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progetto_esame/entities/video_game_partial.dart';
+import 'package:progetto_esame/ui/widgets/network_image_widget.dart';
 
 class SearchSuggestionsList extends StatelessWidget {
   final List<VideoGamePartial> suggestions;
@@ -27,12 +28,12 @@ class SearchSuggestionsList extends StatelessWidget {
             leading: Container(
               width: 50,
               height: 50,
-              child: suggestion.coverUrl != null
-                  ? Image.network(
-                      suggestion.coverUrl,
-                      fit: BoxFit.cover,
-                    )
-                  : SizedBox.shrink(),
+              child: NetworkImageWidget(
+                imageUrl: suggestion.coverUrl,
+                boxFit: BoxFit.fill,
+                width: 50,
+                height: 50,
+              ),
             ),
             title: Text(
               suggestion.name,
