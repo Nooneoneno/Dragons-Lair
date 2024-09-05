@@ -1,62 +1,56 @@
-import 'dart:ui';
-
-import 'package:DragOnPlay/ui/screens/explore_screen/category_page.dart';
+import 'package:DragOnPlay/entities/category.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatelessWidget {
-  final String categoryImage;
-  final String categoryName;
+  final Category category;
 
-  CategoryCard({required this.categoryImage, required this.categoryName});
+  CategoryCard({required this.category});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CategoryPage(categoryName: categoryName),
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      elevation: 4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+              child: Image.network(
+                category.imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Icon(
+                  Icons.error,
+                  color: Colors.red,
+                  size: 50,
+                ),
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
             ),
-          );
-        },
-        child: Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
           ),
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset(
-                  categoryImage,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              category.name,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
-                  child: Container(
-                    color: Colors.black.withOpacity(0.3),
-                    alignment: Alignment.center,
-                    child: Text(
-                      categoryName,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 21,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+              textAlign: TextAlign.center,
+            ),
           ),
-        ));
+        ],
+      ),
+    );
   }
 }

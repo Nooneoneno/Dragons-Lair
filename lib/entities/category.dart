@@ -1,11 +1,6 @@
-class VideoGameCategory{
+class Category {
   final String name;
-  final String slug;
-  final String image;
+  final String imageUrl;
 
-  VideoGameCategory({
-    required this.name,
-    required this.slug,
-    required this.image,
-  });
+  Category({required this.name, required this.imageUrl});
 }
