@@ -26,7 +26,7 @@ class HorizontalGameCard extends StatelessWidget {
           image: DecorationImage(
             image: game.coverUrl.isNotEmpty
                 ? NetworkImage(game.coverUrl)
-                : AssetImage('assets/placeholder.jpg') as ImageProvider,
+                : AssetImage('assets/placeholder.jpg') as ImageProvider, //TODO: gestire il caricamento
             fit: BoxFit.cover,
           ),
         ),
