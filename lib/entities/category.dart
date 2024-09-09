@@ -1,7 +1,7 @@
 class Category {
   final int id;
   final String name;
-  late String imageUrl;
+  late String? imageUrl;
 
   Category(
       {required this.id,

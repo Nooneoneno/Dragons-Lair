@@ -13,8 +13,8 @@ class CategoryCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           image: DecorationImage(
-            image: category.imageUrl.isNotEmpty
-                ? NetworkImage(category.imageUrl)
+            image: category.imageUrl!.isNotEmpty
+                ? NetworkImage(category.imageUrl!)
                 : AssetImage('assets/placeholder.jpg') as ImageProvider, //TODO: gestire il caricamento
             fit: BoxFit.cover,
           ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:DragOnPlay/api_service/api_service.dart';
 import 'package:DragOnPlay/entities/category.dart';
@@ -6,15 +7,27 @@ import 'package:DragOnPlay/entities/category.dart';
 class CategoriesController {
   final ApiService apiService = ApiService(baseUrl: 'https://api.igdb.com/v4');
 
+  Future<List<Category>> fetchExplore() async {
+    List<Category> explore = [];
+    explore.addAll(await fetchCategories());
+    sleep(Duration(seconds: 1)); //TODO: da rimuovere
+    explore.addAll(await fetchThemes());
+
+    return explore;
+  }
+
   Future<List<Category>> fetchCategories() async {
     const String endpoint = "/genres";
     final String queryParameters = "fields name; limit 500;";
-    final String rawResponse = await apiService.postRequest(endpoint, queryParameters);
+    final String rawResponse =
+    await apiService.postRequest(endpoint, queryParameters);
 
     final dynamic jsonResponse = jsonDecode(rawResponse);
 
-    List<Future<Category>> categoryFutures = jsonResponse.map<Future<Category>>((categoryData) async {
-      String imageUrl = await getCategoryCover(categoryData['id']);
+    List<Future<Category>> categoryFutures =
+    jsonResponse.map<Future<Category>>((categoryData) async {
+      int id = categoryData['id'];
+      String imageUrl = await getCover("genres=$id");
       return Category.fromJson({...categoryData, 'imageUrl': imageUrl});
     }).toList();
 
@@ -23,10 +36,30 @@ class CategoriesController {
     return categories;
   }
 
-  Future<String> getCategoryCover(int category) async {
+  Future<List<Category>> fetchThemes() async {
+    const String endpoint = "/themes";
+    final String queryParameters = "fields name; limit 500;";
+    final String rawResponse =
+    await apiService.postRequest(endpoint, queryParameters);
+
+    final dynamic jsonResponse = jsonDecode(rawResponse);
+
+    List<Future<Category>> categoryFutures =
+    jsonResponse.map<Future<Category>>((categoryData) async {
+      int id = categoryData['id'];
+      String imageUrl = await getCover("themes=$id");
+      return Category.fromJson({...categoryData, 'imageUrl': imageUrl});
+    }).toList();
+
+    List<Category> categories = await Future.wait(categoryFutures);
+    categories.sort((a, b) => a.name.compareTo(b.name));
+    return categories;
+  }
+
+  Future<String> getCover(String query) async {
     final String endpoint = "/games";
     final String queryParameters =
-        "fields name, cover.url; sort rating_count desc; where genres=$category; limit 1;";
+        "fields name, cover.url; sort rating_count desc; where $query; limit 1;";
     final String rawResponse =
     await apiService.postRequest(endpoint, queryParameters);
 
@@ -43,7 +76,8 @@ class CategoriesController {
 
   String extractCoverUrl(dynamic cover) {
     if (cover != null && cover['url'] != null) {
-      String coverUrl = cover['url'].toString().replaceAll('t_thumb', 't_1080p');
+      String coverUrl =
+      cover['url'].toString().replaceAll('t_thumb', 't_1080p');
       return "https:$coverUrl";
     }
     return '';

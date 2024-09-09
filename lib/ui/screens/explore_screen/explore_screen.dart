@@ -14,7 +14,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   List<Category> categories = [];
 
   Future<List<Category>> _fetchCategories() async {
-    return await widget.categoriesController.fetchCategories();
+    return await widget.categoriesController.fetchExplore();
   }
 
   @override
