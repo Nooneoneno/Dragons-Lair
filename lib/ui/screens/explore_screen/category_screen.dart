@@ -15,7 +15,8 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
+    return Scaffold(
+        body: Stack(children: [
       Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -26,32 +27,35 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
       ),
       Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          centerTitle: true,
           backgroundColor: Colors.transparent,
-          title: Text(
-            widget.categoryName,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 22, color: Colors.white),
+          appBar: AppBar(
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            title: Text(
+              widget.categoryName,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  color: Colors.white),
+            ),
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
           ),
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              color: Colors.white,
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-        ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0),
-          child: Column(
-            children: [
-              Expanded(child: NewReleasesForCategory(categoryId: widget.categoryId,)),
-              Expanded(child: MostRatedCategory())
-            ],
-          ),
-        ),
-      )
-    ]);
+          body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                MostRatedCategory(
+                  categoryId: widget.categoryId,
+                ),
+                NewReleasesForCategory(categoryId: widget.categoryId,)
+              ],
+            ),
+          )),
+    ]));
   }
 }
