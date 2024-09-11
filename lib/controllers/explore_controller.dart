@@ -13,7 +13,7 @@ class CategoriesController {
 
     final dynamic jsonResponse = jsonDecode(rawResponse);
     return jsonResponse.map<Category>((categoryData) {
-      return Category.fromJson({...categoryData, 'imageUrl': '', 'categoryType': CategoryType.category});
+      return Category.fromJson({...categoryData, 'imageUrl': '', 'categoryType': CategoryType.genre});
     }).toList();
   }
 
@@ -40,31 +40,17 @@ class CategoriesController {
               : i + batchSize);
 
       List<Future<Category>> futureCategories = batch.map((category) async {
-        String imageUrl = await getCover("genres=${category.id}");
+        String imageUrl = "";
+        if (category.categoryType == CategoryType.genre) {
+          imageUrl = await getCover("genres=${category.id}");
+        } else {
+          imageUrl = await getCover("themes=${category.id}");
+        }
         category.imageUrl = imageUrl;
         return category;
       }).toList();
 
       for (var futureCategory in await Future.wait(futureCategories)) {
-        yield futureCategory;
-      }
-    }
-  }
-
-  Stream<Category> fetchThemeImages(List<Category> themes) async* {
-    const int batchSize = 4;
-
-    for (int i = 0; i < themes.length; i += batchSize) {
-      final batch = themes.sublist(
-          i, i + batchSize > themes.length ? themes.length : i + batchSize);
-
-      List<Future<Category>> futureThemes = batch.map((theme) async {
-        String imageUrl = await getCover("themes=${theme.id}");
-        theme.imageUrl = imageUrl;
-        return theme;
-      }).toList();
-
-      for (var futureCategory in await Future.wait(futureThemes)) {
         yield futureCategory;
       }
     }

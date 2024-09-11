@@ -1,13 +1,14 @@
 import 'package:DragOnPlay/controllers/popular_games_controller.dart';
+import 'package:DragOnPlay/entities/category.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/home_screen/popular_games/horizontal_game_card.dart';
 import 'package:flutter/material.dart';
 
 class PopularCategoryWidget extends StatefulWidget {
   final PopularGamesController popularGamesController = PopularGamesController();
-  final int categoryId;
+  final Category category;
 
-  PopularCategoryWidget({super.key, required this.categoryId});
+  PopularCategoryWidget({super.key, required this.category});
 
   @override
   _PopularCategoryWidgetState createState() => _PopularCategoryWidgetState();
@@ -26,7 +27,7 @@ class _PopularCategoryWidgetState extends State<PopularCategoryWidget> {
   }
 
   void _fetchPopularGames() async {
-    var popularGames = await widget.popularGamesController.fetchPopularPlayedGames(200, widget.categoryId);
+    var popularGames = await widget.popularGamesController.fetchPopularPlayedGames(200, widget.category);
     setState(() {
       games = popularGames;
     });
@@ -45,7 +46,7 @@ class _PopularCategoryWidgetState extends State<PopularCategoryWidget> {
 
     int itemsPerPage = 25;
     int totalPages = (games.length / itemsPerPage).ceil();
-    print(widget.categoryId);
+    print(widget.category.id);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

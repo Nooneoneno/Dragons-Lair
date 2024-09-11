@@ -1,4 +1,4 @@
-enum CategoryType { category, theme }
+enum CategoryType { genre, theme }
 
 class Category {
   final int id;

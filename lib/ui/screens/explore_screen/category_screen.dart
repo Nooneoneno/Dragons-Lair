@@ -1,13 +1,13 @@
+import 'package:DragOnPlay/entities/category.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/most_rated_category_widget.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/new_release_category_widget.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/popular_games_category_widget.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatefulWidget {
-  final int categoryId;
-  final String categoryName;
+  final Category category;
 
-  CategoryScreen({required this.categoryId, required this.categoryName});
+  CategoryScreen({required this.category});
 
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
@@ -33,7 +33,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             centerTitle: true,
             backgroundColor: Colors.transparent,
             title: Text(
-              widget.categoryName,
+              widget.category.name,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
@@ -51,10 +51,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
             child: Column(
               children: [
                 MostRatedCategory(
-                  categoryId: widget.categoryId,
+                  categoryId: widget.category.id,
                 ),
                 PopularCategoryWidget(
-                  categoryId: widget.categoryId,
+                  category: widget.category,
                 )
               ],
             ),

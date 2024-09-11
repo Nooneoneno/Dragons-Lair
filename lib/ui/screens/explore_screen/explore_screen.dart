@@ -23,14 +23,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
     _loadCategories();
   }
 
-  void _navigateToCategoryPage(
-      BuildContext context, int categoryId, String categoryName) {
+  void _navigateToCategoryPage(BuildContext context, Category category) {
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => CategoryScreen(
-                categoryId: categoryId,
-                categoryName: categoryName,
+                category: category,
               )),
     );
   }
@@ -59,11 +57,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
       setState(() {
         categories = [...loadedCategories, ...loadedThemes];
-        categories.sort((a, b) => a.name.compareTo(b.name));
         isLoading = false;
       });
 
-      _loadImages(loadedCategories, loadedThemes);
+      _loadImages();
     } on SocketException {
       // Handles the case user is offline
       setState(() {
@@ -79,21 +76,20 @@ class _ExploreScreenState extends State<ExploreScreen> {
     }
   }
 
-  Future<void> _loadImages(
-      List<Category> loadedCategories, List<Category> loadedThemes) async {
-    await for (final updatedCategory
-        in widget.categoriesController.fetchCategoryImages(loadedCategories)) {
-      setState(() {
-        int index = categories.indexWhere((cat) => cat.id == updatedCategory.id);
-        categories[index] = updatedCategory;
-      });
-    }
+  Future<void> _loadImages() async {
+    Set<int> updatedCategoryIds = {};
 
-    await for (final updatedTheme
-        in widget.categoriesController.fetchThemeImages(loadedThemes)) {
+    await for (final updatedCategory
+        in widget.categoriesController.fetchCategoryImages(categories)) {
       setState(() {
-        int index = categories.indexWhere((cat) => cat.id == updatedTheme.id);
-        categories[index] = updatedTheme;
+        int index = categories.indexWhere((cat) =>
+            cat.id == updatedCategory.id &&
+            updatedCategory.categoryType == cat.categoryType);
+
+        if (index != -1 && !updatedCategoryIds.contains(updatedCategory.id)) {
+          categories[index] = updatedCategory;
+          updatedCategoryIds.add(updatedCategory.id);
+        }
       });
     }
   }
@@ -150,8 +146,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         final category = categories[index];
                         return GestureDetector(
                           onTap: () {
-                            _navigateToCategoryPage(
-                                context, category.id, category.name);
+                            _navigateToCategoryPage(context, category);
                           },
                           child: CategoryCard(category: category),
                         );

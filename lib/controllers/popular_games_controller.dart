@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:DragOnPlay/api_service/api_service.dart';
+import 'package:DragOnPlay/entities/category.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 
 class PopularGamesController {
@@ -63,16 +64,21 @@ class PopularGamesController {
     return uniqueReleases;
   }
 
-  Future<List<VideoGamePartial>> fetchPopularPlayedGames(int limit, int categoryId) async {
+  Future<List<VideoGamePartial>> fetchPopularPlayedGames(int limit, Category category) async {
     const String endpoint = "/games";
     final List<int> gameIds = await getPopularGameIds(2, limit);
 
     if (gameIds.isEmpty) {
       return [];
     }
+    String queryFilter = "";
+    if(category.categoryType == CategoryType.genre)
+      queryFilter = "genres=${category.id}";
+    else
+      queryFilter = "themes=${category.id}";
 
     final String queryParameters =
-        'fields name, cover.url, first_release_date; where id = (${gameIds.join(', ')}) & genres=$categoryId; limit $limit;';
+        'fields name, cover.url, first_release_date; where id = (${gameIds.join(', ')}) & $queryFilter; limit $limit;';
     final String rawResponse =
     await apiService.postRequest(endpoint, queryParameters);
 
