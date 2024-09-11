@@ -49,7 +49,7 @@ class MostRatedCategory extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: mostRated.length,
               itemBuilder: (context, index) {
-                return NewReleaseCard(videogame: mostRated[index]);
+                return NewReleaseCard(game: mostRated[index]);
               },
             ),
           ),

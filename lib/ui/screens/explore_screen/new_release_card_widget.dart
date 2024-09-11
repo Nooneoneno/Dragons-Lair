@@ -2,9 +2,9 @@ import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:flutter/material.dart';
 
 class NewReleaseCard extends StatelessWidget {
-  final VideoGamePartial videogame;
+  final VideoGamePartial game;
 
-  const NewReleaseCard({super.key, required this.videogame});
+  const NewReleaseCard({super.key, required this.game});
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +21,18 @@ class NewReleaseCard extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
-                  image: NetworkImage(videogame.coverUrl),
+                  image: game.coverUrl.isNotEmpty
+                      ? NetworkImage(game.coverUrl)
+                      : AssetImage('assets/placeholder.jpg') as ImageProvider,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
             SizedBox(height: 8),
             Text(
-              videogame.name,
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              game.name,
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

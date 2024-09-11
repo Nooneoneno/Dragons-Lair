@@ -46,7 +46,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           padding: EdgeInsets.symmetric(vertical: 8.0),
           child: Column(
             children: [
-              Expanded(child: NewReleasesForCategory()),
+              Expanded(child: NewReleasesForCategory(categoryId: widget.categoryId,)),
               Expanded(child: MostRatedCategory())
             ],
           ),
