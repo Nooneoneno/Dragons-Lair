@@ -13,7 +13,7 @@ class CategoriesController {
 
     final dynamic jsonResponse = jsonDecode(rawResponse);
     return jsonResponse.map<Category>((categoryData) {
-      return Category.fromJson({...categoryData, 'imageUrl': ''});
+      return Category.fromJson({...categoryData, 'imageUrl': '', 'categoryType': CategoryType.category});
     }).toList();
   }
 
@@ -25,7 +25,7 @@ class CategoriesController {
 
     final dynamic jsonResponse = jsonDecode(rawResponse);
     return jsonResponse.map<Category>((categoryData) {
-      return Category.fromJson({...categoryData, 'imageUrl': ''});
+      return Category.fromJson({...categoryData, 'imageUrl': '', 'categoryType': CategoryType.theme});
     }).toList();
   }
 

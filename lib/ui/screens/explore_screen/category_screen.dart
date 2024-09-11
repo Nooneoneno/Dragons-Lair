@@ -1,5 +1,6 @@
 import 'package:DragOnPlay/ui/screens/explore_screen/most_rated_category_widget.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/new_release_category_widget.dart';
+import 'package:DragOnPlay/ui/screens/explore_screen/popular_games_category_widget.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -52,7 +53,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 MostRatedCategory(
                   categoryId: widget.categoryId,
                 ),
-                NewReleasesForCategory(categoryId: widget.categoryId,)
+                PopularCategoryWidget(
+                  categoryId: widget.categoryId,
+                )
               ],
             ),
           )),

@@ -3,14 +3,17 @@ import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/home_screen/popular_games/horizontal_game_card.dart';
 import 'package:flutter/material.dart';
 
-class PopularWidget extends StatefulWidget {
+class PopularCategoryWidget extends StatefulWidget {
   final PopularGamesController popularGamesController = PopularGamesController();
+  final int categoryId;
+
+  PopularCategoryWidget({super.key, required this.categoryId});
 
   @override
-  _PopularWidgetState createState() => _PopularWidgetState();
+  _PopularCategoryWidgetState createState() => _PopularCategoryWidgetState();
 }
 
-class _PopularWidgetState extends State<PopularWidget> {
+class _PopularCategoryWidgetState extends State<PopularCategoryWidget> {
   List<VideoGamePartial> games = [];
   int currentPage = 0;
   late PageController _pageController;
@@ -23,7 +26,7 @@ class _PopularWidgetState extends State<PopularWidget> {
   }
 
   void _fetchPopularGames() async {
-    var popularGames = await widget.popularGamesController.fetchPopularGames();
+    var popularGames = await widget.popularGamesController.fetchPopularPlayedGames(200, widget.categoryId);
     setState(() {
       games = popularGames;
     });
@@ -40,8 +43,9 @@ class _PopularWidgetState extends State<PopularWidget> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    int itemsPerPage = 10;
+    int itemsPerPage = 25;
     int totalPages = (games.length / itemsPerPage).ceil();
+    print(widget.categoryId);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +56,7 @@ class _PopularWidgetState extends State<PopularWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Giochi Popolari',
+                'I più giocati',
                 style: TextStyle(
                   fontSize: screenWidth * 0.06,
                   fontWeight: FontWeight.bold,
