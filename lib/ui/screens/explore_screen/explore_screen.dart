@@ -104,8 +104,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
         children: [
           if (isLoading)
             Expanded(
-              child: Center(
-                  child: CircularProgressIndicator()),
+              child: Center(child: CircularProgressIndicator()),
             )
           else if (errorMessage != null)
             Expanded(
@@ -126,8 +125,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
           else if (categories.isEmpty)
             Expanded(
               child: Center(
-                child: Text(
-                    'No categories available'),
+                child: Text('No categories available'),
               ),
             )
           else

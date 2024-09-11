@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ErrorPage extends StatelessWidget {
+class RetryPage extends StatelessWidget {
   final Function() retryFetching;
 
-  const ErrorPage({super.key, required this.retryFetching});
+  const RetryPage({super.key, required this.retryFetching});
 
   @override
   Widget build(BuildContext context) {

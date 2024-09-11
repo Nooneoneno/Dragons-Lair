@@ -1,6 +1,6 @@
 import 'package:DragOnPlay/controllers/game_fetch_controller.dart';
 import 'package:DragOnPlay/entities/video_game.dart';
-import 'package:DragOnPlay/ui/widgets/game_details_widget/error_page.dart';
+import 'package:DragOnPlay/ui/widgets/retry_page.dart';
 import 'package:DragOnPlay/ui/widgets/game_details_widget/game_info_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +54,7 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
                   )),
                 );
               } else if (snapshot.hasError) {
-                return ErrorPage(retryFetching: _retryFetching);
+                return RetryPage(retryFetching: _retryFetching);
               } else if (snapshot.hasData) {
                 final game = snapshot.data!;
                 return GameInfo(
