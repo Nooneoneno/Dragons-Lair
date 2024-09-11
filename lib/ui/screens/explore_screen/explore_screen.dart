@@ -1,6 +1,7 @@
 import 'dart:io';
+import 'package:DragOnPlay/ui/screens/explore_screen/category_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:DragOnPlay/controllers/categories_controller.dart';
+import 'package:DragOnPlay/controllers/explore_controller.dart';
 import 'package:DragOnPlay/entities/category.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/category_card.dart';
 
@@ -20,6 +21,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
   void initState() {
     super.initState();
     _loadCategories();
+  }
+
+  void _navigateToCategoryPage(BuildContext context, int categoryId, String categoryName) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CategoryScreen(categoryId: categoryId, categoryName: categoryName,)),
+    );
   }
 
   Future<void> _loadCategories() async {
@@ -144,10 +152,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         final category = categories[index];
                         return GestureDetector(
                           onTap: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content: Text('Selected: ${category.name}')),
-                            );
+                            _navigateToCategoryPage(context, category.id, category.name);
                           },
                           child: CategoryCard(category: category),
                         );
