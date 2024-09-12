@@ -1,3 +1,4 @@
+import 'package:DragOnPlay/ui/screens/explore_screen/catalog_item_widget.dart';
 import 'package:DragOnPlay/ui/screens/home_screen/popular_games/horizontal_game_card.dart';
 import 'package:flutter/material.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
@@ -23,7 +24,7 @@ class _GameCatalogState extends State<GameCatalog> {
 
     List<VideoGamePartial> fetchedGames = List.generate(
       50,
-          (index) => VideoGamePartial(
+      (index) => VideoGamePartial(
         id: index,
         name: 'Game ${index + 1}',
         coverUrl: 'https://via.placeholder.com/150',
@@ -76,7 +77,7 @@ class _GameCatalogState extends State<GameCatalog> {
               } else if (snapshot.hasError) {
                 return Center(
                   child: Text(
-                    'EFailed to load new releases. Please check your connection.',
+                    'Failed to load new releases. Please check your connection.',
                     style: TextStyle(color: Colors.red, fontSize: 16),
                   ),
                 );
@@ -92,37 +93,50 @@ class _GameCatalogState extends State<GameCatalog> {
                 int totalPages = (games.length / itemsPerPage).ceil();
 
                 return SizedBox(
-                  height: screenHeight * 0.88,
-                  child: PageView.builder(
-                    controller: _pageController,
-                    itemCount: totalPages,
-                    onPageChanged: _handlePageChange,
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, pageIndex) {
-                      int startIndex = pageIndex * itemsPerPage;
-                      int endIndex = (startIndex + itemsPerPage > games.length)
-                          ? games.length
-                          : startIndex + itemsPerPage;
+                    height: screenHeight * 0.88,
+                    child: PageView.builder(
+                        controller: _pageController,
+                        itemCount: totalPages,
+                        onPageChanged: _handlePageChange,
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (context, pageIndex) {
+                          int startIndex = pageIndex * itemsPerPage;
+                          int endIndex =
+                              (startIndex + itemsPerPage > games.length)
+                                  ? games.length
+                                  : startIndex + itemsPerPage;
 
-                      List<VideoGamePartial> currentGames =
-                      games.sublist(startIndex, endIndex);
+                          List<VideoGamePartial> currentGames =
+                              games.sublist(startIndex, endIndex);
 
-                      return ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: currentGames.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: screenHeight * 0.01),
-                            child: HorizontalGameCard(
-                              game: currentGames[index],
-                            ),
+                          return AnimatedBuilder(
+                            animation: _pageController,
+                            builder: (context, child) {
+                              double value = 1.0;
+                              if (_pageController.position.haveDimensions) {
+                                value = _pageController.page! - pageIndex;
+                                value =
+                                    (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
+                              }
+
+                              return Transform.scale(
+                                scale: value,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: currentGames.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: screenHeight * 0.01),
+                                      child: CatalogItem(
+                                          game: currentGames[index]),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
                           );
-                        },
-                      );
-                    },
-                  ),
-                );
+                        }));
               }
             },
           ),
