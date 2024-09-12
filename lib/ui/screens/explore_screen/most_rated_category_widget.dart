@@ -42,7 +42,7 @@ class MostRatedCategory extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Top Rated',
+                  '''Critics' Top Rated''',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -53,8 +53,12 @@ class MostRatedCategory extends StatelessWidget {
                   height: 8,
                 ),
                 Container(
-                  height: (screenHeight * 0.5) + (8 * 8),
+                  constraints: BoxConstraints(
+                    maxHeight: (screenHeight * 0.4) + (6 * 8),
+                  ),
                   child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     itemCount: mostRated.length,
                     itemBuilder: (context, index) {
@@ -67,6 +71,7 @@ class MostRatedCategory extends StatelessWidget {
                     },
                   ),
                 ),
+
               ],
             ),
           );
