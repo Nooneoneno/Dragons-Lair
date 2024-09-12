@@ -14,39 +14,46 @@ class CatalogItem extends StatefulWidget {
 class _CatalogItemState extends State<CatalogItem> {
   bool _isExpanded = false;
 
-
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(_isExpanded){
+        if (_isExpanded) {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => GameDetailsPage(gameId: widget.game.id),
             ),
           );
-        }else{
+        } else {
           setState(() {
             _isExpanded = !_isExpanded;
           });
         }
       },
       child: Container(
-        height: _isExpanded ? 100 : 40,
+        height: _isExpanded ? 120 : 30,
         margin: EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          image: DecorationImage(
-            image: widget.game.coverUrl.isNotEmpty
-                ? NetworkImage(widget.game.coverUrl)
-                : AssetImage('assets/placeholder.jpg') as ImageProvider, //TODO: gestire il caricamento
-            fit: BoxFit.cover,
-          ),
+          color: !_isExpanded ? Colors.amberAccent : Colors.transparent,
         ),
         child: Stack(
           children: [
+            if (_isExpanded)
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    image: DecorationImage(
+                      image: widget.game.coverUrl.isNotEmpty
+                          ? NetworkImage(widget.game.coverUrl)
+                          : AssetImage('assets/placeholder.jpg') as ImageProvider, //TODO: gestire il caricamento
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(

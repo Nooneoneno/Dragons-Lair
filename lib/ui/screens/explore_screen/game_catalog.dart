@@ -1,10 +1,12 @@
+import 'package:DragOnPlay/controllers/catalog_controller.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/catalog_item_widget.dart';
-import 'package:DragOnPlay/ui/screens/home_screen/popular_games/horizontal_game_card.dart';
 import 'package:flutter/material.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 
 class GameCatalog extends StatefulWidget {
-  GameCatalog({Key? key}) : super(key: key);
+  final CatalogController catalogController = CatalogController();
+  final int categoryId;
+  GameCatalog({super.key, required this.categoryId});
 
   @override
   _GameCatalogState createState() => _GameCatalogState();
@@ -17,22 +19,12 @@ class _GameCatalogState extends State<GameCatalog> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
+    _fetchGames();
   }
 
   Future<List<VideoGamePartial>> _fetchGames() async {
-    await Future.delayed(Duration(seconds: 2));
 
-    List<VideoGamePartial> fetchedGames = List.generate(
-      50,
-      (index) => VideoGamePartial(
-        id: index,
-        name: 'Game ${index + 1}',
-        coverUrl: '',
-        firstReleaseDate: 0,
-        releaseDate: DateTime(2022),
-        rating: 95,
-      ),
-    );
+    List<VideoGamePartial> fetchedGames = await widget.catalogController.getCatalog(widget.categoryId);
 
     if (fetchedGames.isEmpty) {
       return [];

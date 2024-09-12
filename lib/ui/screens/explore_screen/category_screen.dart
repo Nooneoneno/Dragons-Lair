@@ -53,7 +53,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 MostRatedCategory(
                   categoryId: widget.category.id,
                 ),
-                GameCatalog()
+                GameCatalog(categoryId: widget.category.id,)
               ],
             ),
           )),
