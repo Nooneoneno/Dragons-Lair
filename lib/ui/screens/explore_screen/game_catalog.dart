@@ -27,7 +27,7 @@ class _GameCatalogState extends State<GameCatalog> {
       (index) => VideoGamePartial(
         id: index,
         name: 'Game ${index + 1}',
-        coverUrl: 'https://via.placeholder.com/150',
+        coverUrl: '',
         firstReleaseDate: 0,
         releaseDate: DateTime(2022),
         rating: 95,
@@ -92,8 +92,10 @@ class _GameCatalogState extends State<GameCatalog> {
                 List<VideoGamePartial> games = snapshot.data!;
                 int totalPages = (games.length / itemsPerPage).ceil();
 
-                return SizedBox(
-                    height: screenHeight * 0.88,
+                return Container(
+                    constraints: BoxConstraints(
+                      maxHeight: screenHeight * 0.6,
+                    ),
                     child: PageView.builder(
                         controller: _pageController,
                         itemCount: totalPages,
