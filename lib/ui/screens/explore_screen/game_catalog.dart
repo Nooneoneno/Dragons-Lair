@@ -19,18 +19,6 @@ class _GameCatalogState extends State<GameCatalog> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
-    _fetchGames();
-  }
-
-  Future<List<VideoGamePartial>> _fetchGames() async {
-
-    List<VideoGamePartial> fetchedGames = await widget.catalogController.getCatalog(widget.categoryId);
-
-    if (fetchedGames.isEmpty) {
-      return [];
-    }
-
-    return fetchedGames;
   }
 
   void _handlePageChange(int page) {
@@ -57,8 +45,8 @@ class _GameCatalogState extends State<GameCatalog> {
             textAlign: TextAlign.start,
           ),
           SizedBox(height: 8),
-          FutureBuilder<List<VideoGamePartial>>(
-            future: _fetchGames(),
+          StreamBuilder<List<VideoGamePartial>>(
+            stream: widget.catalogController.getCatalog(widget.categoryId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -73,7 +61,7 @@ class _GameCatalogState extends State<GameCatalog> {
                     style: TextStyle(color: Colors.red, fontSize: 16),
                   ),
                 );
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              } else if (!snapshot.hasData) {
                 return Center(
                   child: Text(
                     'No games available for this category.',
@@ -81,7 +69,8 @@ class _GameCatalogState extends State<GameCatalog> {
                   ),
                 );
               } else {
-                List<VideoGamePartial> games = snapshot.data!;
+                List<VideoGamePartial> games = [];
+                games.addAll(snapshot.data!);
                 int totalPages = (games.length / itemsPerPage).ceil();
 
                 return Container(
