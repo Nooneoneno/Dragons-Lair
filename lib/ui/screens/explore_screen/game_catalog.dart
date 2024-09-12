@@ -24,7 +24,7 @@ class _GameCatalogState extends State<GameCatalog> {
 
   @override
   Widget build(BuildContext context) {
-    int itemsPerPage = 10;
+    int itemsPerPage = 20;
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Padding(
@@ -72,7 +72,7 @@ class _GameCatalogState extends State<GameCatalog> {
 
                 return Container(
                     constraints: BoxConstraints(
-                      maxHeight: screenHeight * 0.6,
+                      maxHeight: screenHeight * 0.7,
                     ),
                     child: PageView.builder(
                         controller: _pageController,

@@ -54,7 +54,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   categoryId: widget.category.id,
                 ),
                 SizedBox(height: 12),
-                GameCatalog(categoryId: widget.category.id,)
+                GameCatalog(categoryId: widget.category.id,),
+                SizedBox(height: 12),
               ],
             ),
           )),
