@@ -23,7 +23,7 @@ class _PopularWidgetState extends State<PopularWidget> {
   }
 
   void _fetchPopularGames() async {
-    var popularGames = await widget.popularGamesController.fetchPopularGames();
+    var popularGames = await widget.popularGamesController.fetchPopularGames(50, 0);
     setState(() {
       games = popularGames;
     });

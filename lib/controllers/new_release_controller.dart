@@ -5,18 +5,8 @@ import 'package:DragOnPlay/entities/video_game_partial.dart';
 
 class NewReleaseController {
   final ApiService apiService = ApiService(baseUrl: 'https://api.igdb.com/v4');
-  List<VideoGamePartial> newReleaseGames = [];
 
   Future<List<VideoGamePartial>> fetchNewRelease() async {
-    if (newReleaseGames.isNotEmpty) {
-      return newReleaseGames;
-    } else {
-      newReleaseGames = await getNewReleases();
-      return newReleaseGames;
-    }
-  }
-
-  Future<List<VideoGamePartial>> getNewReleases() async {
     final int nowTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     final int lastWeekTimestamp = getLastWeekTimestamp(nowTimestamp);
 

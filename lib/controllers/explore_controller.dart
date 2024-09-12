@@ -17,18 +17,6 @@ class CategoriesController {
     }).toList();
   }
 
-  Future<List<Category>> fetchThemesWithoutImages() async {
-    const String endpoint = "/themes";
-    final String queryParameters = "fields id, name; limit 500;";
-    final String rawResponse =
-        await apiService.postRequest(endpoint, queryParameters);
-
-    final dynamic jsonResponse = jsonDecode(rawResponse);
-    return jsonResponse.map<Category>((categoryData) {
-      return Category.fromJson({...categoryData, 'imageUrl': '', 'categoryType': CategoryType.theme});
-    }).toList();
-  }
-
   Stream<Category> fetchCategoryImages(List<Category> categories) async* {
     const int batchSize = 4;
 
