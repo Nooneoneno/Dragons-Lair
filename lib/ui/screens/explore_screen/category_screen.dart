@@ -53,6 +53,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 MostRatedCategory(
                   categoryId: widget.category.id,
                 ),
+                SizedBox(height: 12),
                 GameCatalog(categoryId: widget.category.id,)
               ],
             ),

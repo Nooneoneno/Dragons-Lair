@@ -32,11 +32,11 @@ class _CatalogItemState extends State<CatalogItem> {
         }
       },
       child: Container(
-        height: _isExpanded ? 120 : 30,
+        height: _isExpanded ? 120 : 40,
         margin: EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: !_isExpanded ? Colors.amberAccent : Colors.transparent,
+          color: !_isExpanded ? Colors.purpleAccent : Colors.transparent,
         ),
         child: Stack(
           children: [
@@ -45,34 +45,42 @@ class _CatalogItemState extends State<CatalogItem> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.black.withOpacity(0.6),
+                        Colors.black.withOpacity(0.3),
+                      ],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                    ),
                     image: DecorationImage(
                       image: widget.game.coverUrl.isNotEmpty
                           ? NetworkImage(widget.game.coverUrl)
-                          : AssetImage('assets/placeholder.jpg') as ImageProvider, //TODO: gestire il caricamento
+                          : AssetImage(
+                          'assets/placeholder.jpg') as ImageProvider,
+                      //TODO: gestire il caricamento
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
-            Positioned.fill(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.black.withOpacity(0.6),
-                      Colors.black.withOpacity(0.3),
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.black.withOpacity(0.6),
+                        Colors.black.withOpacity(0.3),
+                      ],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              bottom: 8,
-              left: 8,
-              right: 8,
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               child: Text(
                 widget.game.name,
                 maxLines: 1,
