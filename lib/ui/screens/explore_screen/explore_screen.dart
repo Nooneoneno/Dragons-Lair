@@ -43,11 +43,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
       List<Category> loadedCategories =
           await widget.categoriesController.fetchCategoriesWithoutImages();
-      List<Category> loadedThemes =
-          await widget.categoriesController.fetchThemesWithoutImages();
 
       // If categories is empty handles the error
-      if (loadedCategories.isEmpty && loadedThemes.isEmpty) {
+      if (loadedCategories.isEmpty) {
         setState(() {
           errorMessage = 'No categories available';
           isLoading = false;
@@ -56,7 +54,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
       }
 
       setState(() {
-        categories = [...loadedCategories, ...loadedThemes];
+        categories = [...loadedCategories];
+        categories.sort((a, b) => a.name.compareTo(b.name));
         isLoading = false;
       });
 
@@ -77,19 +76,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
   }
 
   Future<void> _loadImages() async {
-    Set<int> updatedCategoryIds = {};
-
     await for (final updatedCategory
         in widget.categoriesController.fetchCategoryImages(categories)) {
       setState(() {
         int index = categories.indexWhere((cat) =>
             cat.id == updatedCategory.id &&
             updatedCategory.categoryType == cat.categoryType);
-
-        if (index != -1 && !updatedCategoryIds.contains(updatedCategory.id)) {
-          categories[index] = updatedCategory;
-          updatedCategoryIds.add(updatedCategory.id);
-        }
+        categories[index] = updatedCategory;
       });
     }
   }

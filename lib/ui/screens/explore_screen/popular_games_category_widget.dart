@@ -46,7 +46,6 @@ class _PopularCategoryWidgetState extends State<PopularCategoryWidget> {
 
     int itemsPerPage = 25;
     int totalPages = (games.length / itemsPerPage).ceil();
-    print(widget.category.id);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
