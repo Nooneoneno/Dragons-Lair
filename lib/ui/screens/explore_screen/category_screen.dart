@@ -1,4 +1,6 @@
 import 'package:DragOnPlay/entities/category.dart';
+import 'package:DragOnPlay/entities/video_game_partial.dart';
+import 'package:DragOnPlay/ui/screens/explore_screen/game_catalog.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/most_rated_category_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -51,6 +53,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 MostRatedCategory(
                   categoryId: widget.category.id,
                 ),
+                GameCatalog()
               ],
             ),
           )),
