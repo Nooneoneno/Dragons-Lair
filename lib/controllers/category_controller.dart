@@ -38,7 +38,7 @@ class CategoryController {
   Future<List<VideoGamePartial>> getMostRated(int categoryId) async {
     const String endpoint = "/games";
     final String queryParameters =
-        "fields name, cover.url, first_release_date; sort rating_count desc; where genres=$categoryId; limit 3;";
+        "fields name, cover.url, first_release_date; sort rating_count desc; where genres=$categoryId; limit 500;";
     final String rawResponse =
     await apiService.postRequest(endpoint, queryParameters);
 
