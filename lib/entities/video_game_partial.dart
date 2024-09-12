@@ -4,6 +4,7 @@ class VideoGamePartial {
   final String coverUrl;
   final int firstReleaseDate;
   final DateTime releaseDate;
+  final double rating;
 
   VideoGamePartial({
     required this.id,
@@ -11,6 +12,7 @@ class VideoGamePartial {
     required this.coverUrl,
     required this.firstReleaseDate,
     required this.releaseDate,
+    required this.rating,
   });
 
   factory VideoGamePartial.fromJson(Map<String, dynamic> json) {
@@ -19,10 +21,15 @@ class VideoGamePartial {
         DateTime.fromMillisecondsSinceEpoch(releaseDateTimestamp * 1000);
 
     return VideoGamePartial(
-        id: json['id'] ?? 0,
-        name: json['name'] ?? 0,
-        coverUrl: json['coverUrl'] ?? '',
-        firstReleaseDate: releaseDateTimestamp,
-        releaseDate: humanReleaseDate);
+      id: json['id'] ?? 0,
+      name: json['name'] ?? 0,
+      coverUrl: json['coverUrl'] ?? '',
+      firstReleaseDate: releaseDateTimestamp,
+      releaseDate: humanReleaseDate,
+      rating: json['aggregated_rating'] != null
+          ? double.parse(
+              (json['aggregated_rating'] as double).toStringAsFixed(1))
+          : 0.0,
+    );
   }
 }

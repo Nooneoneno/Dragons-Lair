@@ -56,7 +56,7 @@ class HorizontalGameCardWithRating extends StatelessWidget {
             bottom: 10,
             right: 10,
             child: Text(
-              'Rating: ${4.5}',
+              'Rating: ${game.rating}',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.white70,
