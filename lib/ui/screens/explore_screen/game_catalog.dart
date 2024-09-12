@@ -6,6 +6,7 @@ import 'package:DragOnPlay/entities/video_game_partial.dart';
 class GameCatalog extends StatefulWidget {
   final CatalogController catalogController = CatalogController();
   final int categoryId;
+
   GameCatalog({super.key, required this.categoryId});
 
   @override
@@ -21,10 +22,6 @@ class _GameCatalogState extends State<GameCatalog> {
     _pageController = PageController(initialPage: 0);
   }
 
-  void _handlePageChange(int page) {
-    // handle fetching in case there are other games
-  }
-
   @override
   Widget build(BuildContext context) {
     int itemsPerPage = 10;
@@ -36,7 +33,7 @@ class _GameCatalogState extends State<GameCatalog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Catalogo",
+            "Catalogo: A-Z",
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -80,7 +77,6 @@ class _GameCatalogState extends State<GameCatalog> {
                     child: PageView.builder(
                         controller: _pageController,
                         itemCount: totalPages,
-                        onPageChanged: _handlePageChange,
                         physics: BouncingScrollPhysics(),
                         itemBuilder: (context, pageIndex) {
                           int startIndex = pageIndex * itemsPerPage;
