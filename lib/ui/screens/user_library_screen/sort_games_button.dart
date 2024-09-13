@@ -10,9 +10,8 @@ class SortGamesButton extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
       decoration: BoxDecoration(
-        color: Colors.grey[900],
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(color: Colors.white70),
       ),
       child: DropdownButton<String>(
         value: selectedFilter,
