@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:DragOnPlay/entities/video_game.dart';
+import 'package:DragOnPlay/entities/video_game_partial.dart';
+import 'package:DragOnPlay/controllers/hive_controller.dart';
 import 'package:DragOnPlay/ui/screens/expandable_text_widget.dart';
 import 'package:DragOnPlay/ui/widgets/game_details_widget/expansion_list_widget.dart';
 import 'package:DragOnPlay/ui/widgets/game_details_widget/game_details_page.dart';
@@ -10,7 +12,6 @@ import 'package:DragOnPlay/ui/widgets/game_details_widget/platform_row_widget.da
 import 'package:DragOnPlay/ui/widgets/game_details_widget/storyline_widget.dart';
 import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 class GameInfo extends StatelessWidget {
@@ -23,6 +24,16 @@ class GameInfo extends StatelessWidget {
       context,
       MaterialPageRoute(builder: (context) => GameDetailsPage(gameId: gameId)),
     );
+  }
+
+  void addGameToLibrary() async {
+    await HiveController.addGameToLibrary(VideoGamePartial(
+        id: game.id,
+        name: game.name,
+        coverUrl: game.coverUrl,
+        firstReleaseDate: game.firstReleaseDate,
+        releaseDate: game.humanFirstReleaseDate,
+        rating: 4));
   }
 
   @override
@@ -106,14 +117,12 @@ class GameInfo extends StatelessWidget {
                               IconButton(
                                 icon: Icon(Icons.playlist_add,
                                     color: Colors.white),
-                                onPressed: () {
-                                  Fluttertoast.showToast(
-                                    msg: "Game added to your library!",
-                                    toastLength: Toast.LENGTH_LONG,
-                                    gravity: ToastGravity.TOP,
-                                    backgroundColor: Colors.white,
-                                    textColor: Colors.black87,
-                                    fontSize: 16.0,
+                                onPressed: () async {
+                                  addGameToLibrary();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(
+                                            '${game.name} aggiunto alla libreria!')),
                                   );
                                 },
                               ),
