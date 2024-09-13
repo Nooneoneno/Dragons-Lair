@@ -82,6 +82,7 @@ class _SupportedLanguagesState extends State<SupportedLanguages> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(height: 8),
                       Text(
                         entry.key,
                         style: TextStyle(

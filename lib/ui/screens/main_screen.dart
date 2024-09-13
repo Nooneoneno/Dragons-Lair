@@ -57,10 +57,10 @@ class _MainScreenState extends State<MainScreen> {
               centerTitle: true,
               backgroundColor: Colors.transparent,
               title: Text(
-                'DragOnPlay',
+                'DragOn Play',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: width * 0.082,
+                    fontSize: 28,
                     color: Colors.white),
               ),
               actions: [
