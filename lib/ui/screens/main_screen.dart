@@ -1,6 +1,6 @@
 import 'package:DragOnPlay/ui/screens/explore_screen/explore_screen.dart';
 import 'package:DragOnPlay/ui/screens/home_screen/home_screen.dart';
-import 'package:DragOnPlay/ui/screens/library_screen.dart';
+import 'package:DragOnPlay/ui/screens/user_library_screen/library_screen.dart';
 import 'package:DragOnPlay/ui/widgets/search_bar_widget/full_screen_search_page.dart';
 import 'package:flutter/material.dart';
 
