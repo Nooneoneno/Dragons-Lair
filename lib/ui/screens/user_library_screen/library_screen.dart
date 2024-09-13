@@ -1,7 +1,7 @@
 import 'package:DragOnPlay/controllers/hive_controller.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/user_library_screen/all_games_list.dart';
 import 'package:DragOnPlay/ui/screens/user_library_screen/game_library_list.dart';
+import 'package:DragOnPlay/ui/screens/user_library_screen/sort_games_button.dart';
 import 'package:flutter/material.dart';
 
 class UserLibraryScreen extends StatefulWidget {

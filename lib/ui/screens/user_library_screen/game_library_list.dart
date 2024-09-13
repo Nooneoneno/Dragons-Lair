@@ -1,40 +1,44 @@
+import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:flutter/material.dart';
+import 'package:DragOnPlay/controllers/hive_controller.dart';
 
-class SortGamesButton extends StatelessWidget {
-  final Function(String?) applyFilter;
-  final String selectedFilter;
-  const SortGamesButton({super.key, required this.applyFilter, required this.selectedFilter});
+class GameLibraryListView extends StatelessWidget {
+  final List<VideoGamePartial> library;
+  final Function onRemoveGame;
+
+  const GameLibraryListView({
+    super.key,
+    required this.library,
+    required this.onRemoveGame,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-      decoration: BoxDecoration(
-        color: Colors.grey[900],
-        borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(color: Colors.white70),
-      ),
-      child: DropdownButton<String>(
-        value: selectedFilter,
-        dropdownColor: Colors.grey[900],
-        iconEnabledColor: Colors.white,
-        underline: SizedBox(),
-        items: [
-          DropdownMenuItem(
-            child: Text('Alphabetical', style: TextStyle(color: Colors.white)),
-            value: 'Alphabetical',
+    return ListView.builder(
+      itemCount: library.length,
+      itemBuilder: (context, index) {
+        final game = library[index];
+        return ListTile(
+          title: Text(
+            game.name,
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
           ),
-          DropdownMenuItem(
-            child: Text('Category', style: TextStyle(color: Colors.white)),
-            value: 'Category',
+          subtitle: Text(
+            game.releaseDate.toString(),
+            style: TextStyle(color: Colors.white30),
           ),
-          DropdownMenuItem(
-            child: Text('Platform', style: TextStyle(color: Colors.white)),
-            value: 'Platform',
+          trailing: IconButton(
+            icon: Icon(
+              Icons.delete_forever_rounded,
+              color: Colors.redAccent,
+            ),
+            onPressed: () async {
+              await HiveController.removeGameFromLibrary(game.id);
+              onRemoveGame();
+            },
           ),
-        ],
-        onChanged: applyFilter,
-      ),
+        );
+      },
     );
   }
 }
