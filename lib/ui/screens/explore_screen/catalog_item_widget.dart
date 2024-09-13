@@ -32,7 +32,7 @@ class _CatalogItemState extends State<CatalogItem> {
         }
       },
       child: Container(
-        height: _isExpanded ? 120 : 40,
+        height: _isExpanded ? 120 : 46,
         margin: EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -79,8 +79,9 @@ class _CatalogItemState extends State<CatalogItem> {
                 ),
               ),
             ),
-            Padding(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            Positioned(
+              left: 8,
+                bottom: 8,
                 child: Text(
                   widget.game.name,
                   maxLines: 1,
