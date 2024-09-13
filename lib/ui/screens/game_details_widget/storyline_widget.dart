@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../screens/expandable_text_widget.dart';
+import '../../widgets/expandable_text_widget.dart';
 
 class StorylineText extends StatelessWidget {
   final String storyline;

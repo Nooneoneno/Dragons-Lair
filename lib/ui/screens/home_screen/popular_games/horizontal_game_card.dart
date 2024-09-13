@@ -1,5 +1,5 @@
 import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/widgets/game_details_widget/game_details_page.dart';
+import 'package:DragOnPlay/ui/screens/game_details_widget/game_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalGameCard extends StatelessWidget {

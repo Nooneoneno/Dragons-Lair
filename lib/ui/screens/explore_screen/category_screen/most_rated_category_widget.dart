@@ -1,6 +1,6 @@
 import 'package:DragOnPlay/controllers/category_controller.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/explore_screen/horizontal_game_card_with_rating_widget.dart';
+import 'package:DragOnPlay/ui/screens/explore_screen/category_screen/horizontal_game_card_with_rating_widget.dart';
 import 'package:flutter/material.dart';
 
 class MostRatedCategory extends StatelessWidget {

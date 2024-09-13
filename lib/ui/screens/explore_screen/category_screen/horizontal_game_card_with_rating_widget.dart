@@ -1,12 +1,11 @@
 import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/widgets/game_details_widget/game_details_page.dart';
+import 'package:DragOnPlay/ui/screens/game_details_widget/game_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalGameCardWithRating extends StatelessWidget {
   final VideoGamePartial game;
 
-  const HorizontalGameCardWithRating({Key? key, required this.game})
-      : super(key: key);
+  const HorizontalGameCardWithRating({super.key, required this.game});
 
   @override
   Widget build(BuildContext context) {
