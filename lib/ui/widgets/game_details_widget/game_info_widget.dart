@@ -14,10 +14,24 @@ import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class GameInfo extends StatelessWidget {
+class GameInfo extends StatefulWidget {
   final VideoGame game;
 
   const GameInfo({super.key, required this.game});
+
+  @override
+  _GameInfoState createState() => _GameInfoState();
+}
+
+class _GameInfoState extends State<GameInfo> {
+  bool isInLibrary = false;
+  bool isInPreferred = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfGameInLibrary();
+  }
 
   void _navigateToGameDetails(BuildContext context, int gameId) {
     Navigator.push(
@@ -26,24 +40,40 @@ class GameInfo extends StatelessWidget {
     );
   }
 
-  void addGameToLibrary() async {
-    await HiveController.addGameToLibrary(VideoGamePartial(
-        id: game.id,
-        name: game.name,
-        coverUrl: game.coverUrl,
-        firstReleaseDate: game.firstReleaseDate,
-        releaseDate: game.humanFirstReleaseDate,
-        rating: 4));
+  void _checkIfGameInLibrary() async {
+    bool exists = await HiveController.isGameInLibrary(widget.game.id);
+    setState(() {
+      isInLibrary = exists;
+    });
+  }
+
+  void _toggleGameInLibrary() async {
+    if (isInLibrary) {
+      await HiveController.removeGameFromLibrary(widget.game.id);
+    } else {
+      await HiveController.addGameToLibrary(VideoGamePartial(
+        id: widget.game.id,
+        name: widget.game.name,
+        coverUrl: widget.game.coverUrl,
+        firstReleaseDate: widget.game.firstReleaseDate,
+        releaseDate: widget.game.humanFirstReleaseDate,
+        rating: 4,
+      ));
+    }
+
+    setState(() {
+      isInLibrary = !isInLibrary;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final List combinedGenresAndThemes = List.from(game.genres)
-      ..addAll(game.themes);
+    final List combinedGenresAndThemes = List.from(widget.game.genres)
+      ..addAll(widget.game.themes);
 
     return Stack(children: [
       NetworkImageWidget(
-        imageUrl: game.coverUrl,
+        imageUrl: widget.game.coverUrl,
         width: double.infinity,
         height: double.infinity,
         boxFit: BoxFit.cover,
@@ -98,7 +128,7 @@ class GameInfo extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              game.name,
+                              widget.game.name,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 28,
@@ -110,21 +140,32 @@ class GameInfo extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               IconButton(
-                                icon: Icon(Icons.favorite_border_outlined,
-                                    color: Colors.white),
-                                onPressed: () {},
+                                icon: AnimatedSwitcher(
+                                  duration: Duration(milliseconds: 300),
+                                  transitionBuilder: (Widget child, Animation<double> animation) {
+                                    return ScaleTransition(scale: animation, child: child);
+                                  },
+                                  child: Icon(
+                                    isInPreferred ? Icons.favorite : Icons.favorite_border_outlined,
+                                    key: ValueKey<bool>(isInPreferred),
+                                    color: isInPreferred ? Colors.pinkAccent : Colors.white,
+                                  ),
+                                ),
+                                onPressed: (){},
                               ),
                               IconButton(
-                                icon: Icon(Icons.playlist_add,
-                                    color: Colors.white),
-                                onPressed: () async {
-                                  addGameToLibrary();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text(
-                                            '${game.name} aggiunto alla libreria!')),
-                                  );
-                                },
+                                icon: AnimatedSwitcher(
+                                  duration: Duration(milliseconds: 300),
+                                  transitionBuilder: (Widget child, Animation<double> animation) {
+                                    return ScaleTransition(scale: animation, child: child);
+                                  },
+                                  child: Icon(
+                                    isInLibrary ? Icons.playlist_remove : Icons.playlist_add,
+                                    key: ValueKey<bool>(isInLibrary),
+                                    color: isInLibrary ? Colors.redAccent : Colors.green,
+                                  ),
+                                ),
+                                onPressed: _toggleGameInLibrary,
                               ),
                             ],
                           ),
@@ -139,51 +180,51 @@ class GameInfo extends StatelessWidget {
                                 fontSize: 18,
                               ),
                               children: [
-                            TextSpan(
-                                text: DateFormat.yMMMMd()
-                                    .format(game.humanFirstReleaseDate),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
-                          ])),
+                                TextSpan(
+                                    text: DateFormat.yMMMMd()
+                                        .format(widget.game.humanFirstReleaseDate),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
+                              ])),
                       SizedBox(height: 16),
-                      if (game.summary.isNotEmpty)
+                      if (widget.game.summary.isNotEmpty)
                         Column(
                           children: [
-                            ExpandableText(text: game.summary, maxLines: 2),
+                            ExpandableText(text: widget.game.summary, maxLines: 2),
                             SizedBox(height: 16),
                           ],
                         ),
                       GenreRow(genres: combinedGenresAndThemes),
                       SizedBox(height: 8),
-                      PlatformRow(platforms: game.platforms),
-                      if (game.storyline.isNotEmpty)
-                        StorylineText(storyline: game.storyline),
-                      if (game.languageSupports.isNotEmpty)
-                        SupportedLanguages(languages: game.languageSupports),
+                      PlatformRow(platforms: widget.game.platforms),
+                      if (widget.game.storyline.isNotEmpty)
+                        StorylineText(storyline: widget.game.storyline),
+                      if (widget.game.languageSupports.isNotEmpty)
+                        SupportedLanguages(languages: widget.game.languageSupports),
                       SizedBox(height: 16),
-                      if (game.dlcs.isNotEmpty)
+                      if (widget.game.dlcs.isNotEmpty)
                         GameExpansionList(
                             title: "DLCs",
-                            gameIds: game.dlcs,
+                            gameIds: widget.game.dlcs,
                             onGameTap: (dlcId) =>
                                 _navigateToGameDetails(context, dlcId)),
-                      if (game.remakes.isNotEmpty)
+                      if (widget.game.remakes.isNotEmpty)
                         GameExpansionList(
                             title: "Remakes",
-                            gameIds: game.remakes,
+                            gameIds: widget.game.remakes,
                             onGameTap: (gameId) =>
                                 _navigateToGameDetails(context, gameId)),
-                      if (game.remasters.isNotEmpty)
+                      if (widget.game.remasters.isNotEmpty)
                         GameExpansionList(
                             title: "Remasters",
-                            gameIds: game.remasters,
+                            gameIds: widget.game.remasters,
                             onGameTap: (gameId) =>
                                 _navigateToGameDetails(context, gameId)),
-                      if (game.parentGame != 0)
+                      if (widget.game.parentGame != 0)
                         GameExpansionList(
                             title: "Main game",
-                            gameIds: [game.parentGame],
+                            gameIds: [widget.game.parentGame],
                             onGameTap: (parentId) =>
                                 _navigateToGameDetails(context, parentId)),
                     ],
