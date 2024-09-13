@@ -1,9 +1,25 @@
+import 'package:hive/hive.dart';
+
+part 'video_game_partial.g.dart';
+
+@HiveType(typeId: 0)
 class VideoGamePartial {
+  @HiveField(0)
   final int id;
+
+  @HiveField(1)
   final String name;
+
+  @HiveField(2)
   final String coverUrl;
+
+  @HiveField(3)
   final int firstReleaseDate;
+
+  @HiveField(4)
   final DateTime releaseDate;
+
+  @HiveField(5)
   final double rating;
 
   VideoGamePartial({

@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:DragOnPlay/entities/video_game.dart';
+import 'package:DragOnPlay/entities/video_game_partial.dart';
+import 'package:DragOnPlay/controllers/hive_controller.dart';
 import 'package:DragOnPlay/ui/screens/expandable_text_widget.dart';
 import 'package:DragOnPlay/ui/widgets/game_details_widget/expansion_list_widget.dart';
 import 'package:DragOnPlay/ui/widgets/game_details_widget/game_details_page.dart';
@@ -10,13 +12,26 @@ import 'package:DragOnPlay/ui/widgets/game_details_widget/platform_row_widget.da
 import 'package:DragOnPlay/ui/widgets/game_details_widget/storyline_widget.dart';
 import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
-class GameInfo extends StatelessWidget {
+class GameInfo extends StatefulWidget {
   final VideoGame game;
 
   const GameInfo({super.key, required this.game});
+
+  @override
+  _GameInfoState createState() => _GameInfoState();
+}
+
+class _GameInfoState extends State<GameInfo> {
+  bool isInFavourite = false;
+  bool isInLibrary = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkGameState();
+  }
 
   void _navigateToGameDetails(BuildContext context, int gameId) {
     Navigator.push(
@@ -25,14 +40,61 @@ class GameInfo extends StatelessWidget {
     );
   }
 
+  void _checkGameState() async {
+    bool inLibrary = await HiveController.isGameInLibrary(widget.game.id);
+    bool inFavourite = await HiveController.isGameInFavourite(widget.game.id);
+    setState(() {
+      isInFavourite = inFavourite;
+      isInLibrary = inLibrary;
+    });
+  }
+
+  void _toggleGameInFavourite() async {
+    if (isInFavourite) {
+      await HiveController.removeGameFromFavourite(widget.game.id);
+    } else {
+      await HiveController.addGameToFavourite(VideoGamePartial(
+        id: widget.game.id,
+        name: widget.game.name,
+        coverUrl: widget.game.coverUrl,
+        firstReleaseDate: widget.game.firstReleaseDate,
+        releaseDate: widget.game.humanFirstReleaseDate,
+        rating: 4,
+      ));
+    }
+
+    setState(() {
+      isInFavourite = !isInFavourite;
+    });
+  }
+
+  void _toggleGameInLibrary() async {
+    if (isInLibrary) {
+      await HiveController.removeGameFromLibrary(widget.game.id);
+    } else {
+      await HiveController.addGameToLibrary(VideoGamePartial(
+        id: widget.game.id,
+        name: widget.game.name,
+        coverUrl: widget.game.coverUrl,
+        firstReleaseDate: widget.game.firstReleaseDate,
+        releaseDate: widget.game.humanFirstReleaseDate,
+        rating: 4,
+      ));
+    }
+
+    setState(() {
+      isInLibrary = !isInLibrary;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final List combinedGenresAndThemes = List.from(game.genres)
-      ..addAll(game.themes);
+    final List combinedGenresAndThemes = List.from(widget.game.genres)
+      ..addAll(widget.game.themes);
 
     return Stack(children: [
       NetworkImageWidget(
-        imageUrl: game.coverUrl,
+        imageUrl: widget.game.coverUrl,
         width: double.infinity,
         height: double.infinity,
         boxFit: BoxFit.cover,
@@ -87,7 +149,7 @@ class GameInfo extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              game.name,
+                              widget.game.name,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 28,
@@ -99,23 +161,44 @@ class GameInfo extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               IconButton(
-                                icon: Icon(Icons.favorite_border_outlined,
-                                    color: Colors.white),
-                                onPressed: () {},
+                                icon: AnimatedSwitcher(
+                                  duration: Duration(milliseconds: 300),
+                                  transitionBuilder: (Widget child,
+                                      Animation<double> animation) {
+                                    return ScaleTransition(
+                                        scale: animation, child: child);
+                                  },
+                                  child: Icon(
+                                    isInFavourite
+                                        ? Icons.favorite
+                                        : Icons.favorite_border_outlined,
+                                    key: ValueKey<bool>(isInFavourite),
+                                    color: isInFavourite
+                                        ? Colors.pinkAccent
+                                        : Colors.white,
+                                  ),
+                                ),
+                                onPressed: _toggleGameInFavourite,
                               ),
                               IconButton(
-                                icon: Icon(Icons.playlist_add,
-                                    color: Colors.white),
-                                onPressed: () {
-                                  Fluttertoast.showToast(
-                                    msg: "Game added to your library!",
-                                    toastLength: Toast.LENGTH_LONG,
-                                    gravity: ToastGravity.TOP,
-                                    backgroundColor: Colors.white,
-                                    textColor: Colors.black87,
-                                    fontSize: 16.0,
-                                  );
-                                },
+                                icon: AnimatedSwitcher(
+                                  duration: Duration(milliseconds: 300),
+                                  transitionBuilder: (Widget child,
+                                      Animation<double> animation) {
+                                    return ScaleTransition(
+                                        scale: animation, child: child);
+                                  },
+                                  child: Icon(
+                                    isInLibrary
+                                        ? Icons.playlist_remove
+                                        : Icons.playlist_add,
+                                    key: ValueKey<bool>(isInLibrary),
+                                    color: isInLibrary
+                                        ? Colors.redAccent
+                                        : Colors.green,
+                                  ),
+                                ),
+                                onPressed: _toggleGameInLibrary,
                               ),
                             ],
                           ),
@@ -132,49 +215,51 @@ class GameInfo extends StatelessWidget {
                               children: [
                             TextSpan(
                                 text: DateFormat.yMMMMd()
-                                    .format(game.humanFirstReleaseDate),
+                                    .format(widget.game.humanFirstReleaseDate),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white)),
                           ])),
                       SizedBox(height: 16),
-                      if (game.summary.isNotEmpty)
+                      if (widget.game.summary.isNotEmpty)
                         Column(
                           children: [
-                            ExpandableText(text: game.summary, maxLines: 2),
+                            ExpandableText(
+                                text: widget.game.summary, maxLines: 2),
                             SizedBox(height: 16),
                           ],
                         ),
                       GenreRow(genres: combinedGenresAndThemes),
                       SizedBox(height: 8),
-                      PlatformRow(platforms: game.platforms),
-                      if (game.storyline.isNotEmpty)
-                        StorylineText(storyline: game.storyline),
-                      if (game.languageSupports.isNotEmpty)
-                        SupportedLanguages(languages: game.languageSupports),
+                      PlatformRow(platforms: widget.game.platforms),
+                      if (widget.game.storyline.isNotEmpty)
+                        StorylineText(storyline: widget.game.storyline),
+                      if (widget.game.languageSupports.isNotEmpty)
+                        SupportedLanguages(
+                            languages: widget.game.languageSupports),
                       SizedBox(height: 16),
-                      if (game.dlcs.isNotEmpty)
+                      if (widget.game.dlcs.isNotEmpty)
                         GameExpansionList(
                             title: "DLCs",
-                            gameIds: game.dlcs,
+                            gameIds: widget.game.dlcs,
                             onGameTap: (dlcId) =>
                                 _navigateToGameDetails(context, dlcId)),
-                      if (game.remakes.isNotEmpty)
+                      if (widget.game.remakes.isNotEmpty)
                         GameExpansionList(
                             title: "Remakes",
-                            gameIds: game.remakes,
+                            gameIds: widget.game.remakes,
                             onGameTap: (gameId) =>
                                 _navigateToGameDetails(context, gameId)),
-                      if (game.remasters.isNotEmpty)
+                      if (widget.game.remasters.isNotEmpty)
                         GameExpansionList(
                             title: "Remasters",
-                            gameIds: game.remasters,
+                            gameIds: widget.game.remasters,
                             onGameTap: (gameId) =>
                                 _navigateToGameDetails(context, gameId)),
-                      if (game.parentGame != 0)
+                      if (widget.game.parentGame != 0)
                         GameExpansionList(
                             title: "Main game",
-                            gameIds: [game.parentGame],
+                            gameIds: [widget.game.parentGame],
                             onGameTap: (parentId) =>
                                 _navigateToGameDetails(context, parentId)),
                     ],

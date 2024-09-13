@@ -17,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
   static final List<Widget> _widgetOptions = <Widget>[
     ExploreScreen(),
     HomeScreen(),
-    LibraryScreen(),
+    UserLibraryScreen(),
   ];
 
   void _openSearch() {
