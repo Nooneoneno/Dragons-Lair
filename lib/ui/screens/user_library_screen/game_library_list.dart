@@ -3,25 +3,25 @@ import 'package:DragOnPlay/ui/screens/user_library_screen/list_item.dart';
 import 'package:flutter/material.dart';
 
 class GameLibraryListView extends StatelessWidget {
-  final List<VideoGamePartial> library;
-  final Function onRemoveGame;
+  final List<VideoGamePartial> collection;
+  final Function(int) onRemoveGame;
 
   const GameLibraryListView({
     super.key,
-    required this.library,
+    required this.collection,
     required this.onRemoveGame,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: library.length,
+      itemCount: collection.length,
       padding: EdgeInsets.symmetric(vertical: 8.0),
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: ListItem(
-            game: library[index],
+            game: collection[index],
             onRemoveGame: onRemoveGame,
           ),
         );

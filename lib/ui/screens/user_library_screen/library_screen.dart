@@ -1,7 +1,6 @@
 import 'package:DragOnPlay/controllers/hive_controller.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/user_library_screen/game_library_list.dart';
-import 'package:DragOnPlay/ui/screens/user_library_screen/sort_games_button.dart';
 import 'package:flutter/material.dart';
 
 class UserLibraryScreen extends StatefulWidget {
@@ -9,20 +8,28 @@ class UserLibraryScreen extends StatefulWidget {
   _UserLibraryScreenState createState() => _UserLibraryScreenState();
 }
 
-class _UserLibraryScreenState extends State<UserLibraryScreen> {
+class _UserLibraryScreenState extends State<UserLibraryScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   List<VideoGamePartial> _library = [];
-  String _selectedFilter = 'Alphabetical';
+  List<VideoGamePartial> _favourites = [];
 
   @override
   void initState() {
     super.initState();
     _loadLibrary();
+    _loadFavourites();
+    _tabController = TabController(length: 2, vsync: this);
   }
 
-  void _applyFilter(String? value) {
-    setState(() {
-      _selectedFilter = value!;
-    });
+  void _removeGame(int id) async {
+    await HiveController.removeGameFromLibrary(id);
+    _loadLibrary();
+  }
+
+  void _removeFavourite(int id) async {
+    await HiveController.removeGameFromFavourite(id);
+    _loadFavourites();
   }
 
   void _loadLibrary() async {
@@ -32,28 +39,77 @@ class _UserLibraryScreenState extends State<UserLibraryScreen> {
     });
   }
 
+  void _loadFavourites() async {
+    final favourites = await HiveController.getGameFavourite();
+    setState(() {
+      _favourites = favourites;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent,
-        body: _library.isEmpty
-            ? Center(
-                child: Text(
-                'Your library is empty!',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-              ))
-            : Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SortGamesButton(
-                          applyFilter: _applyFilter,
-                          selectedFilter: _selectedFilter),
-                      Expanded(
-                          child: GameLibraryListView(
-                              library: _library, onRemoveGame: _loadLibrary)),
-                    ])));
+      backgroundColor: Colors.transparent,
+      body: (_library.isEmpty && _favourites.isEmpty)
+          ? Center(
+              child: Text(
+              'Your library is empty!',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            ))
+          : Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TabBar(
+                    indicatorColor: Colors.white,
+                    labelColor: Colors.white,
+                    dividerColor: Colors.transparent,
+                    controller: _tabController,
+                    tabs: [
+                      Tab(icon: Icon(Icons.library_books), text: 'Library'),
+                      Tab(icon: Icon(Icons.favorite), text: 'Favourites'),
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        _library.isEmpty
+                            ? Center(
+                                child: Text(
+                                'No games in your library! :(',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ))
+                            : GameLibraryListView(
+                                collection: _library,
+                                onRemoveGame: _removeGame),
+                        _favourites.isEmpty
+                            ? Center(
+                                child: Text(
+                                'No games in your favourites! :(',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ))
+                            : GameLibraryListView(
+                                collection: _favourites,
+                                onRemoveGame: _removeFavourite),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 }

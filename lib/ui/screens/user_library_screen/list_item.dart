@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class ListItem extends StatelessWidget {
   final VideoGamePartial game;
-  final Function onRemoveGame;
+  final Function(int) onRemoveGame;
 
   const ListItem({super.key, required this.game, required this.onRemoveGame});
 
@@ -69,8 +69,7 @@ class ListItem extends StatelessWidget {
               right: 8,
               child: GestureDetector(
                 onTap: () async {
-                  await HiveController.removeGameFromLibrary(game.id);
-                  onRemoveGame();
+                  onRemoveGame(game.id);
                 },
                 child: Container(
                   padding: EdgeInsets.all(2.0),
