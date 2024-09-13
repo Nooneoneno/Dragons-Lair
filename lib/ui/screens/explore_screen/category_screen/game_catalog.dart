@@ -1,7 +1,7 @@
 import 'package:DragOnPlay/controllers/catalog_controller.dart';
+import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/category_screen/catalog_item_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:DragOnPlay/entities/video_game_partial.dart';
 
 class GameCatalog extends StatefulWidget {
   final CatalogController catalogController = CatalogController();

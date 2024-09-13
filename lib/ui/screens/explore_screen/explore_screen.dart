@@ -1,9 +1,10 @@
 import 'dart:io';
-import 'package:DragOnPlay/ui/screens/explore_screen/category_screen/category_screen.dart';
-import 'package:flutter/material.dart';
+
 import 'package:DragOnPlay/controllers/explore_controller.dart';
 import 'package:DragOnPlay/entities/category.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/category_card.dart';
+import 'package:DragOnPlay/ui/screens/explore_screen/category_screen/category_screen.dart';
+import 'package:flutter/material.dart';
 
 class ExploreScreen extends StatefulWidget {
   final CategoriesController categoriesController = CategoriesController();

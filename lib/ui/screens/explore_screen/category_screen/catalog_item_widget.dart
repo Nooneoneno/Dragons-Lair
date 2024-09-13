@@ -1,6 +1,6 @@
+import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/game_details_widget/game_details_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:DragOnPlay/entities/video_game_partial.dart';
 
 class CatalogItem extends StatefulWidget {
   final VideoGamePartial game;
