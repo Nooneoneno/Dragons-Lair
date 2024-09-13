@@ -15,6 +15,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(VideoGamePartialAdapter());
   await Hive.openBox('userLibrary');
+  await Hive.openBox('userFavourites');
 
   runApp(MyApp());
 }

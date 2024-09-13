@@ -24,13 +24,13 @@ class GameInfo extends StatefulWidget {
 }
 
 class _GameInfoState extends State<GameInfo> {
+  bool isInFavourite = false;
   bool isInLibrary = false;
-  bool isInPreferred = false;
 
   @override
   void initState() {
     super.initState();
-    _checkIfGameInLibrary();
+    _checkGameState();
   }
 
   void _navigateToGameDetails(BuildContext context, int gameId) {
@@ -40,10 +40,31 @@ class _GameInfoState extends State<GameInfo> {
     );
   }
 
-  void _checkIfGameInLibrary() async {
-    bool exists = await HiveController.isGameInLibrary(widget.game.id);
+  void _checkGameState() async {
+    bool inLibrary = await HiveController.isGameInLibrary(widget.game.id);
+    bool inFavourite = await HiveController.isGameInFavourite(widget.game.id);
     setState(() {
-      isInLibrary = exists;
+      isInFavourite = inFavourite;
+      isInLibrary = inLibrary;
+    });
+  }
+
+  void _toggleGameInFavourite() async {
+    if (isInFavourite) {
+      await HiveController.removeGameFromFavourite(widget.game.id);
+    } else {
+      await HiveController.addGameToFavourite(VideoGamePartial(
+        id: widget.game.id,
+        name: widget.game.name,
+        coverUrl: widget.game.coverUrl,
+        firstReleaseDate: widget.game.firstReleaseDate,
+        releaseDate: widget.game.humanFirstReleaseDate,
+        rating: 4,
+      ));
+    }
+
+    setState(() {
+      isInFavourite = !isInFavourite;
     });
   }
 
@@ -142,27 +163,39 @@ class _GameInfoState extends State<GameInfo> {
                               IconButton(
                                 icon: AnimatedSwitcher(
                                   duration: Duration(milliseconds: 300),
-                                  transitionBuilder: (Widget child, Animation<double> animation) {
-                                    return ScaleTransition(scale: animation, child: child);
+                                  transitionBuilder: (Widget child,
+                                      Animation<double> animation) {
+                                    return ScaleTransition(
+                                        scale: animation, child: child);
                                   },
                                   child: Icon(
-                                    isInPreferred ? Icons.favorite : Icons.favorite_border_outlined,
-                                    key: ValueKey<bool>(isInPreferred),
-                                    color: isInPreferred ? Colors.pinkAccent : Colors.white,
+                                    isInFavourite
+                                        ? Icons.favorite
+                                        : Icons.favorite_border_outlined,
+                                    key: ValueKey<bool>(isInFavourite),
+                                    color: isInFavourite
+                                        ? Colors.pinkAccent
+                                        : Colors.white,
                                   ),
                                 ),
-                                onPressed: (){},
+                                onPressed: _toggleGameInFavourite,
                               ),
                               IconButton(
                                 icon: AnimatedSwitcher(
                                   duration: Duration(milliseconds: 300),
-                                  transitionBuilder: (Widget child, Animation<double> animation) {
-                                    return ScaleTransition(scale: animation, child: child);
+                                  transitionBuilder: (Widget child,
+                                      Animation<double> animation) {
+                                    return ScaleTransition(
+                                        scale: animation, child: child);
                                   },
                                   child: Icon(
-                                    isInLibrary ? Icons.playlist_remove : Icons.playlist_add,
+                                    isInLibrary
+                                        ? Icons.playlist_remove
+                                        : Icons.playlist_add,
                                     key: ValueKey<bool>(isInLibrary),
-                                    color: isInLibrary ? Colors.redAccent : Colors.green,
+                                    color: isInLibrary
+                                        ? Colors.redAccent
+                                        : Colors.green,
                                   ),
                                 ),
                                 onPressed: _toggleGameInLibrary,
@@ -180,18 +213,19 @@ class _GameInfoState extends State<GameInfo> {
                                 fontSize: 18,
                               ),
                               children: [
-                                TextSpan(
-                                    text: DateFormat.yMMMMd()
-                                        .format(widget.game.humanFirstReleaseDate),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                              ])),
+                            TextSpan(
+                                text: DateFormat.yMMMMd()
+                                    .format(widget.game.humanFirstReleaseDate),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                          ])),
                       SizedBox(height: 16),
                       if (widget.game.summary.isNotEmpty)
                         Column(
                           children: [
-                            ExpandableText(text: widget.game.summary, maxLines: 2),
+                            ExpandableText(
+                                text: widget.game.summary, maxLines: 2),
                             SizedBox(height: 16),
                           ],
                         ),
@@ -201,7 +235,8 @@ class _GameInfoState extends State<GameInfo> {
                       if (widget.game.storyline.isNotEmpty)
                         StorylineText(storyline: widget.game.storyline),
                       if (widget.game.languageSupports.isNotEmpty)
-                        SupportedLanguages(languages: widget.game.languageSupports),
+                        SupportedLanguages(
+                            languages: widget.game.languageSupports),
                       SizedBox(height: 16),
                       if (widget.game.dlcs.isNotEmpty)
                         GameExpansionList(
