@@ -18,9 +18,12 @@ class SearchSuggestionsList extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      color: Colors.transparent,
-      height: screenHeight * 0.7,
+      constraints: BoxConstraints(
+        maxHeight: screenHeight * 0.6,
+      ),
       child: ListView.builder(
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+        shrinkWrap: true,
         itemCount: suggestions.length,
         itemBuilder: (context, index) {
           final suggestion = suggestions[index];
