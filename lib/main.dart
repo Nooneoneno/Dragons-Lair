@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'storage/videogame_partial.dart';
+import 'entities/video_game_partial.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +13,7 @@ void main() async {
 
   // Initialize Hive storage
   await Hive.initFlutter();
-  Hive.registerAdapter(GameAdapter());
+  Hive.registerAdapter(VideoGamePartialAdapter());
   await Hive.openBox('userLibrary');
 
   runApp(MyApp());
