@@ -2,12 +2,25 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String baseUrl;
+  static ApiService? _instance;
+  String baseUrl;
 
-  ApiService({required this.baseUrl});
+  ApiService._internal({required this.baseUrl});
 
-  Future<String> postRequest(String endpoint, String data) async {
-    final url = Uri.parse('$baseUrl$endpoint');
+
+  static void initialize({required String baseUrl}) {
+    _instance ??= ApiService._internal(baseUrl: baseUrl);
+  }
+
+  static ApiService get instance {
+    if (_instance == null) {
+      throw Exception('ApiService is not initialized. Call initialize first.');
+    }
+    return _instance!;
+  }
+
+  static Future<String> postRequest(String endpoint, String data) async {
+    final url = Uri.parse('${instance.baseUrl}$endpoint');
 
     final response = await http.post(
       url,
