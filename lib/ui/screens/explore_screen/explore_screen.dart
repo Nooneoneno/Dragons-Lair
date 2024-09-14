@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:DragOnPlay/controllers/explore_controller.dart';
+import 'package:DragOnPlay/controllers/api_controller.dart';
 import 'package:DragOnPlay/entities/category.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/category_card.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/category_screen/category_screen.dart';
 import 'package:flutter/material.dart';
 
 class ExploreScreen extends StatefulWidget {
-  final CategoriesController categoriesController = CategoriesController();
+  final ApiController apiController = ApiController();
 
   @override
   _ExploreScreenState createState() => _ExploreScreenState();
@@ -42,8 +42,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
         categories = [];
       });
 
-      List<Category> loadedCategories =
-          await widget.categoriesController.fetchCategoriesWithoutImages();
+      List<Category> loadedCategories = await widget.apiController.getCategoriesName();
 
       // If categories is empty handles the error
       if (loadedCategories.isEmpty) {
@@ -78,7 +77,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   Future<void> _loadImages() async {
     await for (final updatedCategory
-        in widget.categoriesController.fetchCategoryImages(categories)) {
+        in widget.apiController.fetchCategoryImages(categories)) {
       setState(() {
         int index = categories.indexWhere((cat) =>
             cat.id == updatedCategory.id &&

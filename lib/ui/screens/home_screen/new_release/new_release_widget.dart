@@ -1,11 +1,11 @@
-import 'package:DragOnPlay/controllers/new_release_controller.dart';
+import 'package:DragOnPlay/controllers/api_controller.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/home_screen/new_release/game_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class NewReleasesWidget extends StatefulWidget {
-  final NewReleaseController newReleaseController = NewReleaseController();
+  final ApiController apiController = ApiController();
 
   @override
   _NewReleasesWidgetState createState() => _NewReleasesWidgetState();
@@ -21,7 +21,7 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
   }
 
   void _fetchNewReleases() async {
-    var newGames = await widget.newReleaseController.fetchNewRelease();
+    var newGames = await widget.apiController.fetchNewRelease();
     setState(() {
       games = newGames;
     });

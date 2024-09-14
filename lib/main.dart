@@ -1,3 +1,4 @@
+import 'package:DragOnPlay/api_service/api_handler.dart';
 import 'package:DragOnPlay/ui/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,6 +11,9 @@ void main() async {
 
   // Initialize .env file
   await dotenv.load(fileName: ".env");
+
+  // Initialize API service
+  ApiHandler.initialize(baseUrl: 'https://api.igdb.com/v4');
 
   // Initialize Hive storage
   await Hive.initFlutter();

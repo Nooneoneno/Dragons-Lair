@@ -1,4 +1,4 @@
-import 'package:DragOnPlay/controllers/game_fetch_controller.dart';
+import 'package:DragOnPlay/controllers/api_controller.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class GameExpansionList extends StatelessWidget {
 
   Future<VideoGamePartial> _fetchGamePartial(int id) async {
     try {
-      return await GameFetchController().getPartialGame(id);
+      return await ApiController().getPartialGame(id);
     } catch (e) {
       throw Exception("Failed to load game details");
     }

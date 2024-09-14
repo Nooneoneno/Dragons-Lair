@@ -1,4 +1,4 @@
-import 'package:DragOnPlay/controllers/search_controller.dart';
+import 'package:DragOnPlay/controllers/api_controller.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/game_details_widget/game_details_screen.dart';
 import 'package:DragOnPlay/ui/widgets/search_bar_widget/search_bar_suggestions_widget.dart';
@@ -11,10 +11,10 @@ class FullScreenSearch extends StatefulWidget {
 }
 
 class _FullScreenSearchState extends State<FullScreenSearch> {
+  final ApiController apiController = ApiController();
   TextEditingController _searchController = TextEditingController();
   List<VideoGamePartial> suggestions = [];
   bool _isSearchActive = false;
-  final SearchApiController searchApiController = SearchApiController();
 
   void _onSearchTapped() {
     setState(() {
@@ -31,7 +31,7 @@ class _FullScreenSearchState extends State<FullScreenSearch> {
     }
 
     final List<VideoGamePartial> results =
-        await searchApiController.getSearchResults(query);
+        await apiController.getSearchResults(query);
 
     setState(() {
       suggestions = results;
