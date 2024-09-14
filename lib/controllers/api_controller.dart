@@ -1,235 +1,98 @@
-import 'dart:convert';
-
+import 'package:DragOnPlay/api_service/api_handler.dart';
 import 'package:DragOnPlay/api_service/api_service.dart';
+import 'package:DragOnPlay/controllers/utility.dart';
 import 'package:DragOnPlay/entities/category.dart';
 import 'package:DragOnPlay/entities/video_game.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 
 class ApiController {
-  final ApiService apiService = ApiService(baseUrl: 'https://api.igdb.com/v4');
+  Future<VideoGamePartial> getPartialGame(int id) async {
+    final videoGamePartialJson = Utility.parseJson(await ApiService.fetchGamePartial(query: "where id=$id;"));
 
-  Future<VideoGame> getGame(int id) async {
-    const String endpoint = "/games";
-    final String queryParameters =
-        "fields *, cover.url, genres.name, platforms.name, themes.name, language_supports.language.name, language_supports.language_support_type.name; where id=$id;";
-    final String rawResponse =
-        await apiService.postRequest(endpoint, queryParameters);
-
-    final dynamic jsonResponse = jsonDecode(rawResponse);
-    if (jsonResponse.isEmpty) {
-      throw Exception("No game found with the given ID.");
-    }
-
-    final dynamic gameData = jsonResponse[0];
-    final String coverUrl = extractCoverUrl(gameData['cover']);
-    final VideoGame videoGame = VideoGame.fromJson({
-      ...gameData,
-      'coverUrl': coverUrl,
+    return VideoGamePartial.fromJson({
+      ...videoGamePartialJson[0],
+      'coverUrl': Utility.extractCoverUrl(videoGamePartialJson[0]['cover']),
     });
-
-    return videoGame;
   }
 
-  Future<VideoGamePartial> getPartialGame(int id) async {
-    const String endpoint = "/games";
-    final String queryParameters =
-        "fields name, cover.url, first_release_date; where id=$id;";
-    final String rawResponse =
-        await apiService.postRequest(endpoint, queryParameters);
+  Future<VideoGame> getGame(int id) async {
+    final videoGameJson = Utility.parseJson(await ApiService.fetchGame(query: "where id=$id;"));
 
-    final dynamic jsonResponse = jsonDecode(rawResponse);
-    if (jsonResponse.isEmpty) {
-      throw Exception("No game found with the given ID.");
-    }
-
-    final dynamic gameData = jsonResponse[0];
-    final String coverUrl = extractCoverUrl(gameData['cover']);
-    final VideoGamePartial videoGame = VideoGamePartial.fromJson({
-      ...gameData,
-      'coverUrl': coverUrl,
+    return VideoGame.fromJson({
+      ...videoGameJson[0],
+      'coverUrl': Utility.extractCoverUrl(videoGameJson[0]['cover']),
     });
-
-    return videoGame;
   }
 
   Future<List<VideoGamePartial>> getSearchResults(String query) async {
-    if (query.length >= 2) {
-      const String endpoint = "/games";
-      final String queryParameters =
-          'fields name, cover.url, first_release_date; sort rating desc; where name ~ "$query"* & category=(0,1,2,3,4,8,9,11); limit 10;';
-      final String rawResponse =
-          await apiService.postRequest(endpoint, queryParameters);
+    if (query.length < 2) return [];
 
-      final List<VideoGamePartial> searchResults = [];
-
-      final List<dynamic> jsonResponse = jsonDecode(rawResponse);
-      jsonResponse.forEach((gameData) {
-        final String coverUrl = extractCoverUrl(gameData['cover']);
-        final VideoGamePartial videoGame = VideoGamePartial.fromJson({
-          ...gameData,
-          'coverUrl': coverUrl,
-        });
-        searchResults.add(videoGame);
-      });
-
-      return searchResults;
-    }
-    return [];
+    final rawResponse = await ApiService.fetchGamePartial(
+        sort: 'sort rating desc;',
+        query: 'where name ~ "$query"* & category=(0,1,2,3,4,8,9,11);',
+        limit: 'limit 10;');
+    return Utility.mapToVideoGamePartialList(rawResponse);
   }
 
   Stream<List<VideoGamePartial>> getCatalog(int categoryId) async* {
-    const String endpoint = "/games";
-    int offset = 0;
     const int limit = 500;
-    List<VideoGamePartial> catalog = [];
+    int offset = 0;
     bool hasMoreData = true;
+    List<VideoGamePartial> catalog = [];
 
     while (hasMoreData) {
-      final String queryParameters =
-          "fields name, cover.url, first_release_date; sort name asc; where genres=$categoryId; limit $limit; offset ${offset * limit};";
-      final String rawResponse =
-          await apiService.postRequest(endpoint, queryParameters);
-
-      final List<dynamic> jsonResponse = jsonDecode(rawResponse);
+      final List<dynamic> jsonResponse = Utility.parseJson(
+          await ApiService.fetchGamePartial(
+              sort: 'sort name asc;',
+              query: 'where genres=$categoryId;',
+              limit: 'limit $limit;',
+              offset: 'offset ${offset * limit};'));
 
       if (jsonResponse.isEmpty) {
         hasMoreData = false;
       } else {
-        for (var gameData in jsonResponse) {
-          final String coverUrl = extractCoverUrl(gameData['cover']);
-          final VideoGamePartial videoGame = VideoGamePartial.fromJson({
-            ...gameData,
-            'coverUrl': coverUrl,
-          });
-
-          catalog.add(videoGame);
-        }
+        catalog.addAll(Utility.mapJsonToVideoGamePartials(jsonResponse));
         yield catalog;
-        offset += 1;
+        offset++;
       }
     }
   }
 
   Future<List<VideoGamePartial>> getMostRated(int categoryId) async {
-    const String endpoint = "/games";
-    final String queryParameters =
-        "fields name, cover.url, first_release_date, aggregated_rating; sort aggregated_rating desc; where genres=$categoryId & aggregated_rating >= 75; limit 500;";
-    final String rawResponse =
-        await apiService.postRequest(endpoint, queryParameters);
-
-    List<VideoGamePartial> mostRatedGames = [];
-
-    final List<dynamic> jsonResponse = jsonDecode(rawResponse);
-    jsonResponse.forEach((gameData) {
-      final String coverUrl = extractCoverUrl(gameData['cover']);
-      final VideoGamePartial videoGame = VideoGamePartial.fromJson({
-        ...gameData,
-        'coverUrl': coverUrl,
-      });
-
-      mostRatedGames.add(videoGame);
-    });
-
-    return mostRatedGames;
-  }
-
-  Future<List<int>> getPopularGameIds(
-      int popularityType, int limit, int offset) async {
-    const String endpoint = "/popularity_primitives";
-    final String queryParameters =
-        "fields game_id; sort value desc; where popularity_type=$popularityType; limit $limit; offset $offset;";
-    final String rawResponse =
-        await apiService.postRequest(endpoint, queryParameters);
-
-    final List<int> gameIds = [];
-
-    final List<dynamic> jsonResponse = jsonDecode(rawResponse);
-    jsonResponse.forEach((gameData) {
-      gameIds.add(gameData['game_id']);
-    });
-
-    return gameIds;
+    final rawResponse = await ApiService.fetchGamePartial(
+        sort: 'sort aggregated_rating desc;',
+        query: 'where genres=$categoryId & aggregated_rating >= 75;',
+        limit: 'limit 500;');
+    return Utility.mapToVideoGamePartialList(rawResponse);
   }
 
   Future<List<VideoGamePartial>> fetchPopularGames(
       int limit, int offset) async {
-    const String endpoint = "/games";
-    final List<int> gameIds = await getPopularGameIds(3, limit, offset);
+    final gameIds = await ApiService.fetchPopularGameIds(3, limit, offset);
+    if (gameIds.isEmpty) return [];
 
-    if (gameIds.isEmpty) {
-      return [];
-    }
-
-    final String queryParameters =
-        'fields name, cover.url, first_release_date; where id = (${gameIds.join(', ')}); limit $limit;';
-    final String rawResponse =
-        await apiService.postRequest(endpoint, queryParameters);
-
-    final List<dynamic> jsonResponse = jsonDecode(rawResponse);
-    final Map<int, VideoGamePartial> uniqueReleasesMap = {};
-
-    for (var gameData in jsonResponse) {
-      final String coverUrl = extractCoverUrl(gameData['cover']);
-      final VideoGamePartial videoGame = VideoGamePartial.fromJson({
-        ...gameData,
-        'coverUrl': coverUrl,
-      });
-      uniqueReleasesMap[videoGame.id] = videoGame;
-    }
-    final List<VideoGamePartial> uniqueReleases =
-        uniqueReleasesMap.values.toList();
-
-    return uniqueReleases;
+    final videoGamePartialJsonList = await ApiService.fetchGamePartial(
+        query: 'where id = (${gameIds.join(', ')});', limit: 'limit $limit;');
+    return Utility.mapToUniqueVideoGamePartialList(videoGamePartialJsonList);
   }
 
   Future<List<VideoGamePartial>> fetchNewRelease() async {
-    final int nowTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-    final int lastWeekTimestamp = getLastWeekTimestamp(nowTimestamp);
+    final nowTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+    final lastWeekTimestamp = nowTimestamp - (7 * 24 * 60 * 60);
 
-    const String endpoint = "/games";
-    final String queryParameters =
-        "fields name, cover.url, first_release_date; sort hypes desc; where first_release_date > $lastWeekTimestamp & first_release_date < $nowTimestamp; limit 25;";
-    final String rawResponse =
-        await apiService.postRequest(endpoint, queryParameters);
-
-    final Map<int, VideoGamePartial> uniqueReleasesMap = {};
-
-    final List<dynamic> jsonResponse = jsonDecode(rawResponse);
-    jsonResponse.forEach((gameData) {
-      final String coverUrl = extractCoverUrl(gameData['cover']);
-      final VideoGamePartial videoGame = VideoGamePartial.fromJson({
-        ...gameData,
-        'coverUrl': coverUrl,
-      });
-
-      uniqueReleasesMap[videoGame.id] = videoGame;
-    });
-
-    final List<VideoGamePartial> uniqueReleases =
-        uniqueReleasesMap.values.toList();
-    uniqueReleases
-        .sort((a, b) => b.firstReleaseDate.compareTo(a.firstReleaseDate));
-    return uniqueReleases;
+    final videoGamePartialJsonList = await ApiService.fetchGamePartial(
+        sort: 'sort hypes desc;',
+        query:
+            'where first_release_date > $lastWeekTimestamp & first_release_date < $nowTimestamp;',
+        limit: 'limit 25;');
+    return Utility.mapToUniqueVideoGamePartialList(videoGamePartialJsonList);
   }
 
-  int getLastWeekTimestamp(int nowTimestamp) {
-    final DateTime now =
-        DateTime.fromMillisecondsSinceEpoch(nowTimestamp * 1000);
-    final DateTime twoWeeksAgo = now.subtract(Duration(days: 14));
-    final DateTime midnightTwoWeeksAgo =
-        DateTime(twoWeeksAgo.year, twoWeeksAgo.month, twoWeeksAgo.day);
+  Future<List<Category>> getCategoriesName() async {
+    final rawResponse =
+        await ApiHandler.postRequest("/genres", "fields id, name; limit 500;");
 
-    return midnightTwoWeeksAgo.millisecondsSinceEpoch ~/ 1000;
-  }
-
-  Future<List<Category>> fetchCategoriesWithoutImages() async {
-    const String endpoint = "/genres";
-    final String queryParameters = "fields id, name; limit 500;";
-    final String rawResponse =
-        await apiService.postRequest(endpoint, queryParameters);
-
-    final dynamic jsonResponse = jsonDecode(rawResponse);
-    return jsonResponse.map<Category>((categoryData) {
+    return Utility.parseJson(rawResponse).map<Category>((categoryData) {
       return Category.fromJson({
         ...categoryData,
         'imageUrl': '',
@@ -238,57 +101,37 @@ class ApiController {
     }).toList();
   }
 
+  Future<Category> _fetchCategoryImage(Category category) async {
+    final query = "genres=${category.id}";
+    final imageUrl = await getCover(query);
+
+    category.imageUrl = imageUrl;
+    return category;
+  }
+
   Stream<Category> fetchCategoryImages(List<Category> categories) async* {
     const int batchSize = 4;
-
     for (int i = 0; i < categories.length; i += batchSize) {
       final batch = categories.sublist(
           i,
           i + batchSize > categories.length
               ? categories.length
               : i + batchSize);
+      final futureCategories = batch.map(_fetchCategoryImage).toList();
 
-      List<Future<Category>> futureCategories = batch.map((category) async {
-        String imageUrl = "";
-        if (category.categoryType == CategoryType.genre) {
-          imageUrl = await getCover("genres=${category.id}");
-        } else {
-          imageUrl = await getCover("themes=${category.id}");
-        }
-        category.imageUrl = imageUrl;
-        return category;
-      }).toList();
-
-      for (var futureCategory in await Future.wait(futureCategories)) {
-        yield futureCategory;
-      }
+      yield* Stream.fromIterable(await Future.wait(futureCategories));
     }
   }
 
   Future<String> getCover(String query) async {
-    final String endpoint = "/games";
-    final String queryParameters =
-        "fields name, cover.url; sort rating desc; where $query; limit 1;";
-    final String rawResponse =
-        await apiService.postRequest(endpoint, queryParameters);
+    final videoGamePartialJsonList = Utility.parseJson(
+        await ApiService.fetchGamePartial(
+            sort: 'sort rating desc;',
+            query: 'where $query;',
+            limit: 'limit 1;'));
 
-    final dynamic jsonResponse = jsonDecode(rawResponse);
-    if (jsonResponse.isEmpty) {
-      return '';
-    }
-
-    final dynamic gameData = jsonResponse[0];
-    return (gameData['cover'] != null && gameData['cover'].isNotEmpty)
-        ? extractCoverUrl(gameData['cover'])
+    return videoGamePartialJsonList.isNotEmpty
+        ? Utility.extractCoverUrl(videoGamePartialJsonList[0]['cover'])
         : '';
-  }
-
-  String extractCoverUrl(dynamic cover) {
-    if (cover != null && cover['url'] != null) {
-      String coverUrl =
-          cover['url'].toString().replaceAll('t_thumb', 't_1080p');
-      return "https:$coverUrl";
-    }
-    return '';
   }
 }

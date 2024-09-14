@@ -42,8 +42,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
         categories = [];
       });
 
-      List<Category> loadedCategories =
-          await widget.apiController.fetchCategoriesWithoutImages();
+      List<Category> loadedCategories = await widget.apiController.getCategoriesName();
 
       // If categories is empty handles the error
       if (loadedCategories.isEmpty) {
