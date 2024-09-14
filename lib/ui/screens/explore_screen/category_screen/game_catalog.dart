@@ -1,10 +1,10 @@
-import 'package:DragOnPlay/controllers/catalog_controller.dart';
+import 'package:DragOnPlay/controllers/api_controller.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/category_screen/catalog_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class GameCatalog extends StatefulWidget {
-  final CatalogController catalogController = CatalogController();
+  final ApiController apiController = ApiController();
   final int categoryId;
 
   GameCatalog({super.key, required this.categoryId});
@@ -43,7 +43,7 @@ class _GameCatalogState extends State<GameCatalog> {
           ),
           SizedBox(height: 8),
           StreamBuilder<List<VideoGamePartial>>(
-            stream: widget.catalogController.getCatalog(widget.categoryId),
+            stream: widget.apiController.getCatalog(widget.categoryId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(

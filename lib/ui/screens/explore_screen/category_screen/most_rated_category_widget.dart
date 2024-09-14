@@ -1,11 +1,11 @@
-import 'package:DragOnPlay/controllers/category_controller.dart';
+import 'package:DragOnPlay/controllers/api_controller.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/category_screen/horizontal_game_card_with_rating_widget.dart';
 import 'package:flutter/material.dart';
 
 class MostRatedCategory extends StatelessWidget {
+  final ApiController apiController = ApiController();
   final int categoryId;
-  final CategoryController categoryController = CategoryController();
 
   MostRatedCategory({super.key, required this.categoryId});
 
@@ -15,7 +15,7 @@ class MostRatedCategory extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return FutureBuilder<List<VideoGamePartial>>(
-      future: categoryController.getMostRated(categoryId),
+      future: apiController.getMostRated(categoryId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());

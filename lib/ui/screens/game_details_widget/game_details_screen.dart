@@ -1,4 +1,4 @@
-import 'package:DragOnPlay/controllers/game_fetch_controller.dart';
+import 'package:DragOnPlay/controllers/api_controller.dart';
 import 'package:DragOnPlay/entities/video_game.dart';
 import 'package:DragOnPlay/ui/screens/common_screens/retry_page.dart';
 import 'package:DragOnPlay/ui/screens/game_details_widget/game_info_widget.dart';
@@ -15,7 +15,7 @@ class GameDetailsPage extends StatefulWidget {
 
 class _GameDetailsPageState extends State<GameDetailsPage> {
   Future<VideoGame> _fetchGame() {
-    return GameFetchController().getGame(widget.gameId);
+    return ApiController().getGame(widget.gameId);
   }
 
   void _retryFetching() {
