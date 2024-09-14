@@ -1,4 +1,4 @@
-import 'package:DragOnPlay/controllers/hive_controller.dart';
+import 'package:DragOnPlay/controllers/storage_controller.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/user_library_screen/game_library_list.dart';
 import 'package:flutter/material.dart';
