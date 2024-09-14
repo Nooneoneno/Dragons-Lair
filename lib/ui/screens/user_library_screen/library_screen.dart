@@ -2,6 +2,7 @@ import 'package:DragOnPlay/controllers/storage_controller.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/user_library_screen/game_library_list.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class UserLibraryScreen extends StatefulWidget {
   @override
@@ -76,28 +77,15 @@ class _UserLibraryScreenState extends State<UserLibraryScreen>
                     child: TabBarView(
                       controller: _tabController,
                       children: [
-                        _library.isEmpty
-                            ? Center(
-                                child: Text(
-                                'No games in your library! :(',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              ))
-                            : GameLibraryListView(
+                        GameLibraryListView(
                                 collection: _library,
-                                onRemoveGame: _removeGame),
-                        _favourites.isEmpty
-                            ? Center(
-                                child: Text(
-                                'No games in your favourites! :(',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              ))
-                            : GameLibraryListView(
+                                onRemoveGame: _removeGame,
+                                userBox: Hive.box('userLibrary'),
+                              ),
+                        GameLibraryListView(
                                 collection: _favourites,
-                                onRemoveGame: _removeFavourite),
+                                onRemoveGame: _removeFavourite,
+                                userBox: Hive.box('userFavourites')),
                       ],
                     ),
                   ),
