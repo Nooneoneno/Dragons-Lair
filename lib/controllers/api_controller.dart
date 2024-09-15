@@ -85,7 +85,10 @@ class ApiController {
         query:
             'where first_release_date > $lastWeekTimestamp & first_release_date < $nowTimestamp;',
         limit: 'limit 25;');
-    return Utility.mapToUniqueVideoGamePartialList(videoGamePartialJsonList);
+
+    List<VideoGamePartial> newReleases = Utility.mapToUniqueVideoGamePartialList(videoGamePartialJsonList);
+    newReleases.sort((a, b) => b.firstReleaseDate.compareTo(a.firstReleaseDate));
+    return newReleases;
   }
 
   Future<List<Category>> getCategoriesName() async {
