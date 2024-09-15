@@ -79,9 +79,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     await for (final updatedCategory
         in widget.apiController.fetchCategoryImages(categories)) {
       setState(() {
-        int index = categories.indexWhere((cat) =>
-            cat.id == updatedCategory.id &&
-            updatedCategory.categoryType == cat.categoryType);
+        int index = categories.indexWhere((cat) => cat.id == updatedCategory.id);
         categories[index] = updatedCategory;
       });
     }
