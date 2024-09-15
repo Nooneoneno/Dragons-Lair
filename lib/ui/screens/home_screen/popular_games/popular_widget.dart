@@ -85,14 +85,15 @@ class _PopularWidgetState extends State<PopularWidget> {
               controller: _pageController,
               itemCount: totalPages,
               onPageChanged: _handlePageChange,
-              physics: ClampingScrollPhysics(), // Migliora la gestione dello scroll
+              physics: ClampingScrollPhysics(),
               itemBuilder: (context, pageIndex) {
                 int startIndex = pageIndex * itemsPerPage;
                 int endIndex = (startIndex + itemsPerPage > games.length)
                     ? games.length
                     : startIndex + itemsPerPage;
 
-                List<VideoGamePartial> currentGames = games.sublist(startIndex, endIndex);
+                List<VideoGamePartial> currentGames =
+                    games.sublist(startIndex, endIndex);
 
                 return AnimatedBuilder(
                   animation: _pageController,
@@ -110,8 +111,10 @@ class _PopularWidgetState extends State<PopularWidget> {
                         itemCount: currentGames.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
-                            child: HorizontalGameCard(game: currentGames[index]),
+                            padding: EdgeInsets.symmetric(
+                                vertical: screenHeight * 0.01),
+                            child:
+                                HorizontalGameCard(game: currentGames[index]),
                           );
                         },
                       ),
