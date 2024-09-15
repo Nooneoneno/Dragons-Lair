@@ -110,7 +110,7 @@ class _GameInfoState extends State<GameInfo> {
       DraggableScrollableSheet(
         initialChildSize: 0.33,
         minChildSize: 0.33,
-        maxChildSize: 1,
+        maxChildSize: 0.88,
         builder: (BuildContext context, ScrollController scrollController) {
           return Container(
             decoration: BoxDecoration(
@@ -121,151 +121,146 @@ class _GameInfoState extends State<GameInfo> {
               ),
             ),
             padding: EdgeInsets.all(16.0),
-            child: Stack(
-              children: [
-                SingleChildScrollView(
-                  controller: scrollController,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 25,
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 25,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                    child: Center(
+                      child: Container(
+                        width: 40,
+                        height: 5,
                         decoration: BoxDecoration(
-                          color: Colors.transparent,
+                          color: Colors.white54,
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Center(
-                          child: Container(
-                            width: 40,
-                            height: 5,
-                            decoration: BoxDecoration(
-                              color: Colors.white54,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 12,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.game.name,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Expanded(
-                            child: Text(
-                              widget.game.name,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
+                          IconButton(
+                            icon: AnimatedSwitcher(
+                              duration: Duration(milliseconds: 300),
+                              transitionBuilder:
+                                  (Widget child, Animation<double> animation) {
+                                return ScaleTransition(
+                                    scale: animation, child: child);
+                              },
+                              child: Icon(
+                                isInFavourite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border_outlined,
+                                key: ValueKey<bool>(isInFavourite),
+                                color: isInFavourite
+                                    ? Colors.pinkAccent
+                                    : Colors.white,
                               ),
                             ),
+                            onPressed: _toggleGameInFavourite,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                icon: AnimatedSwitcher(
-                                  duration: Duration(milliseconds: 300),
-                                  transitionBuilder: (Widget child,
-                                      Animation<double> animation) {
-                                    return ScaleTransition(
-                                        scale: animation, child: child);
-                                  },
-                                  child: Icon(
-                                    isInFavourite
-                                        ? Icons.favorite
-                                        : Icons.favorite_border_outlined,
-                                    key: ValueKey<bool>(isInFavourite),
-                                    color: isInFavourite
-                                        ? Colors.pinkAccent
-                                        : Colors.white,
-                                  ),
-                                ),
-                                onPressed: _toggleGameInFavourite,
+                          IconButton(
+                            icon: AnimatedSwitcher(
+                              duration: Duration(milliseconds: 300),
+                              transitionBuilder:
+                                  (Widget child, Animation<double> animation) {
+                                return ScaleTransition(
+                                    scale: animation, child: child);
+                              },
+                              child: Icon(
+                                isInLibrary
+                                    ? Icons.playlist_remove
+                                    : Icons.playlist_add,
+                                key: ValueKey<bool>(isInLibrary),
+                                color: isInLibrary
+                                    ? Colors.redAccent
+                                    : Colors.green,
                               ),
-                              IconButton(
-                                icon: AnimatedSwitcher(
-                                  duration: Duration(milliseconds: 300),
-                                  transitionBuilder: (Widget child,
-                                      Animation<double> animation) {
-                                    return ScaleTransition(
-                                        scale: animation, child: child);
-                                  },
-                                  child: Icon(
-                                    isInLibrary
-                                        ? Icons.playlist_remove
-                                        : Icons.playlist_add,
-                                    key: ValueKey<bool>(isInLibrary),
-                                    color: isInLibrary
-                                        ? Colors.redAccent
-                                        : Colors.green,
-                                  ),
-                                ),
-                                onPressed: _toggleGameInLibrary,
-                              ),
-                            ],
+                            ),
+                            onPressed: _toggleGameInLibrary,
                           ),
                         ],
                       ),
-                      SizedBox(height: 8),
-                      RichText(
-                          text: TextSpan(
-                              text: 'Release Date: ',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 18,
-                              ),
-                              children: [
-                            TextSpan(
-                                text: DateFormat.yMMMMd()
-                                    .format(widget.game.humanFirstReleaseDate),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
-                          ])),
-                      SizedBox(height: 16),
-                      if (widget.game.summary.isNotEmpty)
-                        Column(
-                          children: [
-                            ExpandableText(
-                                text: widget.game.summary, maxLines: 2),
-                            SizedBox(height: 16),
-                          ],
-                        ),
-                      GenreRow(genres: combinedGenresAndThemes),
-                      SizedBox(height: 8),
-                      PlatformRow(platforms: widget.game.platforms),
-                      if (widget.game.storyline.isNotEmpty)
-                        StorylineText(storyline: widget.game.storyline),
-                      if (widget.game.languageSupports.isNotEmpty)
-                        SupportedLanguages(
-                            languages: widget.game.languageSupports),
-                      SizedBox(height: 16),
-                      if (widget.game.dlcs.isNotEmpty)
-                        GameExpansionList(
-                            title: "DLCs",
-                            gameIds: widget.game.dlcs,
-                            onGameTap: (dlcId) =>
-                                _navigateToGameDetails(context, dlcId)),
-                      if (widget.game.remakes.isNotEmpty)
-                        GameExpansionList(
-                            title: "Remakes",
-                            gameIds: widget.game.remakes,
-                            onGameTap: (gameId) =>
-                                _navigateToGameDetails(context, gameId)),
-                      if (widget.game.remasters.isNotEmpty)
-                        GameExpansionList(
-                            title: "Remasters",
-                            gameIds: widget.game.remasters,
-                            onGameTap: (gameId) =>
-                                _navigateToGameDetails(context, gameId)),
-                      if (widget.game.parentGame != 0)
-                        GameExpansionList(
-                            title: "Main game",
-                            gameIds: [widget.game.parentGame],
-                            onGameTap: (parentId) =>
-                                _navigateToGameDetails(context, parentId)),
                     ],
                   ),
-                ),
-              ],
+                  SizedBox(height: 8),
+                  RichText(
+                      text: TextSpan(
+                          text: 'Release Date: ',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 18,
+                          ),
+                          children: [
+                        TextSpan(
+                            text: DateFormat.yMMMMd()
+                                .format(widget.game.humanFirstReleaseDate),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white)),
+                      ])),
+                  SizedBox(height: 16),
+                  if (widget.game.summary.isNotEmpty)
+                    Column(
+                      children: [
+                        ExpandableText(text: widget.game.summary, maxLines: 4),
+                        SizedBox(height: 16),
+                      ],
+                    ),
+                  GenreRow(genres: combinedGenresAndThemes),
+                  SizedBox(height: 8),
+                  PlatformRow(platforms: widget.game.platforms),
+                  if (widget.game.storyline.isNotEmpty)
+                    StorylineText(storyline: widget.game.storyline),
+                  if (widget.game.languageSupports.isNotEmpty)
+                    SupportedLanguages(languages: widget.game.languageSupports),
+                  SizedBox(height: 16),
+                  if (widget.game.dlcs.isNotEmpty)
+                    GameExpansionList(
+                        title: "DLCs",
+                        gameIds: widget.game.dlcs,
+                        onGameTap: (dlcId) =>
+                            _navigateToGameDetails(context, dlcId)),
+                  if (widget.game.remakes.isNotEmpty)
+                    GameExpansionList(
+                        title: "Remakes",
+                        gameIds: widget.game.remakes,
+                        onGameTap: (gameId) =>
+                            _navigateToGameDetails(context, gameId)),
+                  if (widget.game.remasters.isNotEmpty)
+                    GameExpansionList(
+                        title: "Remasters",
+                        gameIds: widget.game.remasters,
+                        onGameTap: (gameId) =>
+                            _navigateToGameDetails(context, gameId)),
+                  if (widget.game.parentGame != 0)
+                    GameExpansionList(
+                        title: "Main game",
+                        gameIds: [widget.game.parentGame],
+                        onGameTap: (parentId) =>
+                            _navigateToGameDetails(context, parentId)),
+                ],
+              ),
             ),
           );
         },

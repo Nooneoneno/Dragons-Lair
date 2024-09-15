@@ -23,7 +23,7 @@ class StorylineText extends StatelessWidget {
             ),
           ),
           SizedBox(height: 8),
-          ExpandableText(text: storyline, maxLines: 6,)
+          ExpandableText(text: storyline, maxLines: 8,)
         ],
       ),
     );
