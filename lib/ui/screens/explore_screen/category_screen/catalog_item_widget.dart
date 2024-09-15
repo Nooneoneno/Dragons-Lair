@@ -36,7 +36,17 @@ class _CatalogItemState extends State<CatalogItem> {
         margin: EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: !_isExpanded ? Colors.purpleAccent : Colors.transparent,
+          gradient: !_isExpanded
+              ? LinearGradient(
+                  colors: [
+                    Colors.purpleAccent,
+                    Colors.blueAccent,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : null,
+          color: _isExpanded ? Colors.transparent : null,
         ),
         child: Stack(
           children: [
@@ -80,10 +90,12 @@ class _CatalogItemState extends State<CatalogItem> {
               ),
             ),
             Positioned(
-              left: 8,
+                left: 8,
                 bottom: 8,
                 child: Text(
-                  widget.game.name,
+                  widget.game.name.length > 34
+                      ? '${widget.game.name.substring(0, 34)}...'
+                      : widget.game.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -91,7 +103,8 @@ class _CatalogItemState extends State<CatalogItem> {
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
-                )),
+                )
+            ),
             Positioned(
               right: 8,
               top: _isExpanded ? 8 : 0,

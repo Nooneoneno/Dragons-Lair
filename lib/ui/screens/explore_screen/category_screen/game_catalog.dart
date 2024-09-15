@@ -77,7 +77,7 @@ class _GameCatalogState extends State<GameCatalog> {
                     child: PageView.builder(
                         controller: _pageController,
                         itemCount: totalPages,
-                        physics: BouncingScrollPhysics(),
+                        physics: ClampingScrollPhysics(),
                         itemBuilder: (context, pageIndex) {
                           int startIndex = pageIndex * itemsPerPage;
                           int endIndex =
@@ -94,8 +94,7 @@ class _GameCatalogState extends State<GameCatalog> {
                               double value = 1.0;
                               if (_pageController.position.haveDimensions) {
                                 value = _pageController.page! - pageIndex;
-                                value =
-                                    (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
+                                value = (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
                               }
 
                               return Transform.scale(
