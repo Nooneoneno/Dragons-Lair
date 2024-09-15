@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:DragOnPlay/controllers/api_controller.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/home_screen/popular_games/horizontal_game_card.dart';
-import 'package:flutter/material.dart';
 
 class PopularWidget extends StatefulWidget {
   final ApiController apiController = ApiController();
@@ -52,7 +52,7 @@ class _PopularWidgetState extends State<PopularWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Giochi Popolari',
+                'Popular Games',
                 style: TextStyle(
                   fontSize: screenWidth * 0.06,
                   fontWeight: FontWeight.bold,
@@ -72,44 +72,54 @@ class _PopularWidgetState extends State<PopularWidget> {
         ),
         SizedBox(
           height: screenHeight * 0.6,
-          child: PageView.builder(
-            controller: _pageController,
-            itemCount: totalPages,
-            onPageChanged: _handlePageChange,
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context, pageIndex) {
-              int startIndex = pageIndex * itemsPerPage;
-              int endIndex = (startIndex + itemsPerPage > games.length)
-                  ? games.length
-                  : startIndex + itemsPerPage;
-
-              List<VideoGamePartial> currentGames = games.sublist(startIndex, endIndex);
-
-              return AnimatedBuilder(
-                animation: _pageController,
-                builder: (context, child) {
-                  double value = 1.0;
-                  if (_pageController.position.haveDimensions) {
-                    value = _pageController.page! - pageIndex;
-                    value = (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
-                  }
-
-                  return Transform.scale(
-                    scale: value,
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: currentGames.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
-                          child: HorizontalGameCard(game: currentGames[index]),
-                        );
-                      },
-                    ),
-                  );
-                },
-              );
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (ScrollNotification notification) {
+              if (notification is OverscrollNotification) {
+                _pageController.position.jumpTo(
+                  _pageController.position.pixels + notification.overscroll,
+                );
+              }
+              return false;
             },
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: totalPages,
+              onPageChanged: _handlePageChange,
+              physics: ClampingScrollPhysics(), // Migliora la gestione dello scroll
+              itemBuilder: (context, pageIndex) {
+                int startIndex = pageIndex * itemsPerPage;
+                int endIndex = (startIndex + itemsPerPage > games.length)
+                    ? games.length
+                    : startIndex + itemsPerPage;
+
+                List<VideoGamePartial> currentGames = games.sublist(startIndex, endIndex);
+
+                return AnimatedBuilder(
+                  animation: _pageController,
+                  builder: (context, child) {
+                    double value = 1.0;
+                    if (_pageController.position.haveDimensions) {
+                      value = _pageController.page! - pageIndex;
+                      value = (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
+                    }
+
+                    return Transform.scale(
+                      scale: value,
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: currentGames.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
+                            child: HorizontalGameCard(game: currentGames[index]),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ),
       ],
