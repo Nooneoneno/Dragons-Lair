@@ -73,7 +73,18 @@ class ApiController {
 
     final videoGamePartialJsonList = await ApiService.fetchGamePartial(
         query: 'where id = (${gameIds.join(', ')});', limit: 'limit $limit;');
-    return Utility.mapToUniqueVideoGamePartialList(videoGamePartialJsonList);
+
+    // Need to reorder video games fetched because fetching by Ids return the games sorted by Id
+    final List<VideoGamePartial> videoGamePartials = Utility.mapToUniqueVideoGamePartialList(videoGamePartialJsonList);
+    final Map<int, VideoGamePartial> gameIdToPartialMap = {
+      for (var game in videoGamePartials) game.id: game
+    };
+
+    final List<VideoGamePartial> orderedVideoGamePartials = [
+      for (var id in gameIds) gameIdToPartialMap[id]!
+    ];
+
+    return orderedVideoGamePartials;
   }
 
   Future<List<VideoGamePartial>> fetchNewRelease() async {
