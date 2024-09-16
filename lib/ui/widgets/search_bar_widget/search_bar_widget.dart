@@ -7,7 +7,7 @@ class SearchBarWidget extends StatefulWidget {
   final Function(String) onChanged;
   final Function() onTap;
 
-  const SearchBarWidget({
+  const SearchBarWidget({super.key,
     required this.controller,
     required this.onChanged,
     required this.onTap,

@@ -42,7 +42,7 @@ class NewReleasesWidget extends StatelessWidget {
           items: games.map((game) {
             return Builder(
               builder: (BuildContext context) {
-                return Container(
+                return SizedBox(
                     width: screenWidth,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),

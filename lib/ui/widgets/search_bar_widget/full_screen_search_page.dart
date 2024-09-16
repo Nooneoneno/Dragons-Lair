@@ -14,7 +14,7 @@ class FullScreenSearch extends StatefulWidget {
 
 class _FullScreenSearchState extends State<FullScreenSearch> {
   final ApiController apiController = ApiController();
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   List<VideoGamePartial> suggestions = [];
   bool _isSearchActive = false;
 

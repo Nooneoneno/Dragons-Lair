@@ -28,7 +28,7 @@ class SearchSuggestionsList extends StatelessWidget {
         itemBuilder: (context, index) {
           final suggestion = suggestions[index];
           return ListTile(
-            leading: Container(
+            leading: SizedBox(
               width: 50,
               height: 50,
               child: NetworkImageWidget(
