@@ -57,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
               centerTitle: true,
               backgroundColor: Colors.transparent,
               title: Text(
-                'DragOn Play',
+                '''Dragon's Lair''',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 28,

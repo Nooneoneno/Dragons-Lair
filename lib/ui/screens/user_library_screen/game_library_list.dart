@@ -5,12 +5,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 class GameLibraryListView extends StatelessWidget {
   final Box userBox;
-  final List<VideoGamePartial> collection;
   final Function(int) onRemoveGame;
 
   const GameLibraryListView({
     super.key,
-    required this.collection,
     required this.onRemoveGame,
     required this.userBox,
   });
@@ -34,13 +32,13 @@ class GameLibraryListView extends StatelessWidget {
             );
           }
           return ListView.builder(
-            itemCount: collection.length,
+            itemCount: libraryGames.length,
             padding: EdgeInsets.symmetric(vertical: 8.0),
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ListItem(
-                  game: collection[index],
+                  game: libraryGames[index],
                   onRemoveGame: onRemoveGame,
                 ),
               );
