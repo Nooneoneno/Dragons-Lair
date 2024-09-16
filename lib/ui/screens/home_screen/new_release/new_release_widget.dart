@@ -38,7 +38,7 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
         Padding(
           padding: EdgeInsets.all(screenWidth * 0.02),
           child: Text(
-            'Nuove uscite',
+            'New releases',
             style: TextStyle(
               fontSize: screenWidth * 0.06,
               fontWeight: FontWeight.bold,

@@ -78,12 +78,10 @@ class _UserLibraryScreenState extends State<UserLibraryScreen>
                       controller: _tabController,
                       children: [
                         GameLibraryListView(
-                                collection: _library,
                                 onRemoveGame: _removeGame,
                                 userBox: Hive.box('userLibrary'),
                               ),
                         GameLibraryListView(
-                                collection: _favourites,
                                 onRemoveGame: _removeFavourite,
                                 userBox: Hive.box('userFavourites')),
                       ],
