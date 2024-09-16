@@ -1,5 +1,6 @@
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/game_details_widget/game_details_screen.dart';
+import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalGameCardWithRating extends StatelessWidget {
@@ -34,9 +35,9 @@ class HorizontalGameCardWithRating extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.0),
               child: Stack(
                 children: [
-                  Image.network(
-                    game.coverUrl,
-                    fit: BoxFit.cover,
+                  NetworkImageWidget(
+                    imageUrl: game.coverUrl,
+                    boxFit: BoxFit.cover,
                     width: cardWidth,
                     height: cardHeight,
                   ),

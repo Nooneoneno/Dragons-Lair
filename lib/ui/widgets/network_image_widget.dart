@@ -41,14 +41,14 @@ class NetworkImageWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return Container(
-                decoration: BoxDecoration(
-                  color: Colors.white
-                ),
+                decoration: BoxDecoration(color: Colors.white),
                 child: Center(
-                    child: Icon(
-                      Icons.image,
-                      size: 50,
-                      color: Colors.black,
+                    child: Text(
+                      "No image available",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 20),
                     )),
               );
             },
