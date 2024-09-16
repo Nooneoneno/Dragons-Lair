@@ -1,3 +1,5 @@
+import 'package:DragOnPlay/controllers/api_controller.dart';
+import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/explore_screen.dart';
 import 'package:DragOnPlay/ui/screens/home_screen/home_screen.dart';
 import 'package:DragOnPlay/ui/screens/user_library_screen/library_screen.dart';
@@ -12,13 +14,54 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final ApiController apiController = ApiController();
+  List<VideoGamePartial> newReleases = [];
+  List<VideoGamePartial> popularGames = [];
+  bool _isFetching = false;
   int _selectedIndex = 1;
 
-  static final List<Widget> _widgetOptions = <Widget>[
-    ExploreScreen(),
-    HomeScreen(),
-    UserLibraryScreen(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    if (newReleases.isEmpty || popularGames.isEmpty) {
+      _fetchGames();
+    }
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  Widget _getCurrentScreen() {
+    if (_isFetching) {
+      return Center(
+        child: CircularProgressIndicator(
+          color: Colors.white,
+        ),
+      );
+    }
+
+    switch (_selectedIndex) {
+      case 0:
+        return ExploreScreen();
+      case 1:
+        return HomeScreen(
+          fetchGames: _fetchGames,
+          newReleases: newReleases,
+          popularGames: popularGames,
+        );
+      case 2:
+        return UserLibraryScreen();
+      default:
+        return HomeScreen(
+          fetchGames: _fetchGames,
+          newReleases: newReleases,
+          popularGames: popularGames,
+        );
+    }
+  }
 
   void _openSearch() {
     Navigator.of(context).push(
@@ -29,16 +72,23 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  Future<void> _fetchGames() async {
+    if (!_isFetching) {
+      setState(() {
+        _isFetching = true;
+      });
+      var newGames = await apiController.fetchNewRelease();
+      var popGames = await apiController.fetchPopularGames(50, 0);
+      setState(() {
+        newReleases = newGames;
+        popularGames = popGames;
+        _isFetching = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: Stack(
         children: [
@@ -71,7 +121,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ],
             ),
-            body: _widgetOptions.elementAt(_selectedIndex),
+            body: _getCurrentScreen(),
             bottomNavigationBar: BottomNavigationBar(
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
