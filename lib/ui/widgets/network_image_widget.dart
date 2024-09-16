@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class NetworkImageWidget extends StatelessWidget {
   final String imageUrl;
@@ -8,13 +9,24 @@ class NetworkImageWidget extends StatelessWidget {
 
   NetworkImageWidget(
       {required this.imageUrl,
-      required this.boxFit,
-      required this.width,
-      required this.height});
+        required this.boxFit,
+        required this.width,
+        required this.height});
 
   @override
-  @override
   Widget build(BuildContext context) {
+    if (imageUrl == "loading") {
+      return Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: Container(
+          width: width,
+          height: height,
+          color: Colors.white,
+        ),
+      );
+    }
+
     return Stack(
       children: [
         Center(
@@ -29,12 +41,14 @@ class NetworkImageWidget extends StatelessWidget {
                 return child;
               }
               return Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                  value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes!
-                      : null,
+                child: Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    width: width,
+                    height: height,
+                    color: Colors.white,
+                  ),
                 ),
               );
             },
@@ -43,13 +57,14 @@ class NetworkImageWidget extends StatelessWidget {
               return Container(
                 decoration: BoxDecoration(color: Colors.white),
                 child: Center(
-                    child: Text(
-                      "No image available",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 20),
-                    )),
+                  child: Text(
+                    "No image available",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 20),
+                  ),
+                ),
               );
             },
           ),

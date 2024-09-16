@@ -109,7 +109,7 @@ class ApiController {
     return Utility.parseJson(rawResponse).map<Category>((categoryData) {
       return Category.fromJson({
         ...categoryData,
-        'imageUrl': '',
+        'imageUrl': 'loading',
         'categoryType': CategoryType.genre
       });
     }).toList();
