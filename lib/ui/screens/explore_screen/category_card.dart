@@ -11,13 +11,17 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
       child: Stack(
         children: [
-          NetworkImageWidget(
-            imageUrl: category.imageUrl!,
-            boxFit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12.0),
+            child: NetworkImageWidget(
+              imageUrl: category.imageUrl!,
+              boxFit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
           ),
           Positioned.fill(
             child: Container(
