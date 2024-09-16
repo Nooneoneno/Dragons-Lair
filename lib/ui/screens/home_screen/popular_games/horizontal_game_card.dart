@@ -1,5 +1,6 @@
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/game_details_widget/game_details_screen.dart';
+import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalGameCard extends StatelessWidget {
@@ -21,17 +22,17 @@ class HorizontalGameCard extends StatelessWidget {
       child: Container(
         height: 100,
         margin: EdgeInsets.symmetric(horizontal: 8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          image: DecorationImage(
-            image: game.coverUrl.isNotEmpty
-                ? NetworkImage(game.coverUrl)
-                : AssetImage('assets/placeholder.jpg') as ImageProvider, //TODO: gestire il caricamento
-            fit: BoxFit.cover,
-          ),
-        ),
         child: Stack(
           children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: NetworkImageWidget(
+                imageUrl: game.coverUrl,
+                boxFit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+            ),
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(

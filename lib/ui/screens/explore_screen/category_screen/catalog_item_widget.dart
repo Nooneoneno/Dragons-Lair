@@ -1,5 +1,6 @@
 import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/game_details_widget/game_details_screen.dart';
+import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class CatalogItem extends StatefulWidget {
@@ -52,25 +53,13 @@ class _CatalogItemState extends State<CatalogItem> {
           children: [
             if (_isExpanded)
               Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.black.withOpacity(0.6),
-                        Colors.black.withOpacity(0.3),
-                      ],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    ),
-                    image: DecorationImage(
-                      image: widget.game.coverUrl.isNotEmpty
-                          ? NetworkImage(widget.game.coverUrl)
-                          : AssetImage('assets/placeholder.jpg')
-                              as ImageProvider,
-                      //TODO: gestire il caricamento
-                      fit: BoxFit.cover,
-                    ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12.0),
+                  child: NetworkImageWidget(
+                    imageUrl: widget.game.coverUrl,
+                    boxFit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
                   ),
                 ),
               ),
