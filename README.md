@@ -1,16 +1,13 @@
-# DragOnPlay
+# Dragon's Lair
 
-A new Flutter project.
+Dragon's Lair is an application developed in Flutter that allows you to stay up-to-date with the latest video game releases, explore the most popular games and
+browse through different categories. 
 
-## Getting Started
+In addition, you can save your favourite games in your personal library and add them to your favourites for quick access.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Key features:
+- **New Releases:** View the latest video games and find out what's new.
+- **Popular Games:** Discover the most popular video games of the moment.
+- **Browse by Category:** Browse and filter video games by genres
+- **Personal Library:** Add the games you own to your library to easily keep track of them.
+- **Favourites:** Mark your favourite games to always have them at your fingertips.

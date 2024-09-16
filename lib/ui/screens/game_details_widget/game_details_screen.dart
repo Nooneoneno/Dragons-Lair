@@ -35,12 +35,6 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
               Navigator.pop(context);
             },
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.share, color: Colors.white),
-              onPressed: () {},
-            ),
-          ],
         ),
         body: FutureBuilder<VideoGame>(
             future: _fetchGame(),
