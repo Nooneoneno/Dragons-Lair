@@ -40,11 +40,9 @@ class ApiHandler {
       if (response.statusCode == 200) {
         return response.body;
       } else {
-        print('Failed to post data. Status code: ${response.statusCode}');
         return "ERROR";
       }
     } catch (e) {
-      print('Failed to post data. Error: $e');
       return "ERROR";
     }
   }

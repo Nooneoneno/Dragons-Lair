@@ -7,7 +7,7 @@ class SearchBarWidget extends StatefulWidget {
   final Function(String) onChanged;
   final Function() onTap;
 
-  SearchBarWidget({
+  const SearchBarWidget({
     required this.controller,
     required this.onChanged,
     required this.onTap,
@@ -34,7 +34,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       status = await Permission.microphone.request();
       if (!status.isGranted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Permission to access the microphone is required')),
+          const SnackBar(content: Text('Permission to access the microphone is required')),
         );
         return;
       }
@@ -56,7 +56,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('An error has occurred during speech recognition')),
+          const SnackBar(content: Text('An error has occurred during speech recognition')),
         );
       }
     }
@@ -74,7 +74,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.1),
         borderRadius: BorderRadius.circular(30.0),
@@ -88,7 +88,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                 color: Colors.white,
                 fontSize: screenWidth * 0.045,
               ),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search games...',
                 hintStyle: TextStyle(color: Colors.white54),
                 border: InputBorder.none,

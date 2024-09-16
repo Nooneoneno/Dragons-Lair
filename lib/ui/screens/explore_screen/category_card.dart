@@ -1,11 +1,11 @@
-import 'package:DragOnPlay/entities/category.dart';
-import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
+import 'package:dragon_lair/entities/category.dart';
+import 'package:dragon_lair/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatelessWidget {
   final Category category;
 
-  CategoryCard({required this.category});
+  const CategoryCard({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class CategoryCard extends StatelessWidget {
               category.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

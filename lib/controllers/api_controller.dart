@@ -1,9 +1,9 @@
-import 'package:DragOnPlay/api_service/api_handler.dart';
-import 'package:DragOnPlay/api_service/api_service.dart';
-import 'package:DragOnPlay/controllers/utility.dart';
-import 'package:DragOnPlay/entities/category.dart';
-import 'package:DragOnPlay/entities/video_game.dart';
-import 'package:DragOnPlay/entities/video_game_partial.dart';
+import 'package:dragon_lair/api_service/api_handler.dart';
+import 'package:dragon_lair/api_service/api_service.dart';
+import 'package:dragon_lair/controllers/utility.dart';
+import 'package:dragon_lair/entities/category.dart';
+import 'package:dragon_lair/entities/video_game.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
 
 class ApiController {
   Future<VideoGamePartial> getPartialGame(int id) async {

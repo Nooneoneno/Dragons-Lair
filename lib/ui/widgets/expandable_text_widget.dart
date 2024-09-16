@@ -6,7 +6,8 @@ class ExpandableText extends StatefulWidget {
   final String text;
   final int maxLines;
 
-  ExpandableText({required this.text, required this.maxLines});
+  // ignore: use_key_in_widget_constructors
+  const ExpandableText({required this.text, required this.maxLines});
 
   @override
   _ExpandableTextState createState() => _ExpandableTextState();
@@ -24,7 +25,7 @@ class _ExpandableTextState extends State<ExpandableText> {
 
         final span = TextSpan(
           text: decodedText,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white70,
             fontSize: 16,
           ),
@@ -56,7 +57,7 @@ class _ExpandableTextState extends State<ExpandableText> {
                   overflow: _isExpanded
                       ? TextOverflow.visible
                       : TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white70,
                     fontSize: 16,
                   ),
@@ -68,7 +69,7 @@ class _ExpandableTextState extends State<ExpandableText> {
                     _isExpanded = !_isExpanded;
                   });
                 },
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.all(4.0),
                   child: Center(
                     child: Text(

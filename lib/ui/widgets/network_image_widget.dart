@@ -7,8 +7,8 @@ class NetworkImageWidget extends StatelessWidget {
   final double width;
   final double height;
 
-  NetworkImageWidget(
-      {required this.imageUrl,
+  const NetworkImageWidget(
+      {super.key, required this.imageUrl,
         required this.boxFit,
         required this.width,
         required this.height});
@@ -55,8 +55,8 @@ class NetworkImageWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Center(
+                decoration: const BoxDecoration(color: Colors.white),
+                child: const Center(
                   child: Text(
                     "No image available",
                     style: TextStyle(

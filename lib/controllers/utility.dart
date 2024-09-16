@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:DragOnPlay/entities/video_game_partial.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
 
 class Utility{
   static dynamic parseJson(String rawResponse) => jsonDecode(rawResponse);

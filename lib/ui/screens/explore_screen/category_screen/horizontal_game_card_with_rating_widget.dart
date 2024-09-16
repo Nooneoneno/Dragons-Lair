@@ -1,6 +1,6 @@
-import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/game_details_widget/game_details_screen.dart';
-import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
+import 'package:dragon_lair/ui/screens/game_details_widget/game_details_screen.dart';
+import 'package:dragon_lair/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalGameCardWithRating extends StatelessWidget {
@@ -56,7 +56,7 @@ class HorizontalGameCardWithRating extends StatelessWidget {
               left: 10,
               child: Text(
                 game.name,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -68,7 +68,7 @@ class HorizontalGameCardWithRating extends StatelessWidget {
               right: 10,
               child: Text(
                 'Rating: ${game.rating}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   color: Colors.white70,
                 ),

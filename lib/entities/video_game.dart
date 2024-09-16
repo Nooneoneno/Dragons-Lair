@@ -1,4 +1,4 @@
-import 'package:DragOnPlay/entities/language_support.dart';
+import 'package:dragon_lair/entities/language_support.dart';
 
 class VideoGame {
   final int id;

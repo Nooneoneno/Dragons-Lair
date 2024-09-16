@@ -1,5 +1,5 @@
-import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/game_details_widget/game_details_screen.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
+import 'package:dragon_lair/ui/screens/game_details_widget/game_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class ListItem extends StatelessWidget {
@@ -21,13 +21,13 @@ class ListItem extends StatelessWidget {
       },
       child: Container(
         height: 100,
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           image: DecorationImage(
             image: game.coverUrl.isNotEmpty
                 ? NetworkImage(game.coverUrl)
-                : AssetImage('assets/placeholder.jpg') as ImageProvider,
+                : const AssetImage('assets/placeholder.jpg') as ImageProvider,
             fit: BoxFit.cover,
           ),
         ),
@@ -56,7 +56,7 @@ class ListItem extends StatelessWidget {
                 game.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -71,12 +71,12 @@ class ListItem extends StatelessWidget {
                   onRemoveGame(game.id);
                 },
                 child: Container(
-                  padding: EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.all(2.0),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.redAccent.withOpacity(0.9),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.remove,
                     color: Colors.white,
                     size: 24,

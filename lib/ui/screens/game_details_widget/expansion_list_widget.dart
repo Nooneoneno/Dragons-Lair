@@ -1,5 +1,5 @@
-import 'package:DragOnPlay/controllers/api_controller.dart';
-import 'package:DragOnPlay/entities/video_game_partial.dart';
+import 'package:dragon_lair/controllers/api_controller.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
 import 'package:flutter/material.dart';
 
 class GameExpansionList extends StatelessWidget {
@@ -29,13 +29,13 @@ class GameExpansionList extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 12),
+        const SizedBox(height: 12),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -47,23 +47,23 @@ class GameExpansionList extends StatelessWidget {
                     return Container(
                       width: 150,
                       height: 150,
-                      margin: EdgeInsets.only(right: 12),
+                      margin: const EdgeInsets.only(right: 12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.blueGrey.withOpacity(0.2),
                       ),
-                      child: Center(child: CircularProgressIndicator()),
+                      child: const Center(child: CircularProgressIndicator()),
                     );
                   } else if (snapshot.hasError) {
                     return Container(
                       width: 150,
                       height: 150,
-                      margin: EdgeInsets.only(right: 12),
+                      margin: const EdgeInsets.only(right: 12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.red.withOpacity(0.5),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Icon(Icons.error, color: Colors.white),
                       ),
                     );
@@ -73,7 +73,7 @@ class GameExpansionList extends StatelessWidget {
                       onTap: () => onGameTap(game.id),
                       child: Container(
                         width: 150,
-                        margin: EdgeInsets.only(right: 12),
+                        margin: const EdgeInsets.only(right: 12),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.blueGrey.withOpacity(0.2),
@@ -81,7 +81,7 @@ class GameExpansionList extends StatelessWidget {
                             BoxShadow(
                               color: Colors.black.withOpacity(0.3),
                               blurRadius: 6,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -89,7 +89,7 @@ class GameExpansionList extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ClipRRect(
-                                borderRadius: BorderRadius.vertical(
+                                borderRadius: const BorderRadius.vertical(
                                     top: Radius.circular(15)),
                                 child: game.coverUrl.isNotEmpty
                                     ? Image.network(
@@ -110,7 +110,7 @@ class GameExpansionList extends StatelessWidget {
                                 game.name,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -122,13 +122,13 @@ class GameExpansionList extends StatelessWidget {
                       ),
                     );
                   }
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 },
               );
             }).toList(),
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
       ],
     );
   }

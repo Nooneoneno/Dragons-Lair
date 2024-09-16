@@ -1,10 +1,10 @@
-import 'package:DragOnPlay/controllers/api_controller.dart';
-import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/common_screens/retry_page.dart';
-import 'package:DragOnPlay/ui/screens/explore_screen/explore_screen.dart';
-import 'package:DragOnPlay/ui/screens/home_screen/home_screen.dart';
-import 'package:DragOnPlay/ui/screens/user_library_screen/library_screen.dart';
-import 'package:DragOnPlay/ui/widgets/search_bar_widget/full_screen_search_page.dart';
+import 'package:dragon_lair/controllers/api_controller.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
+import 'package:dragon_lair/ui/screens/common_screens/retry_page.dart';
+import 'package:dragon_lair/ui/screens/explore_screen/explore_screen.dart';
+import 'package:dragon_lair/ui/screens/home_screen/home_screen.dart';
+import 'package:dragon_lair/ui/screens/user_library_screen/library_screen.dart';
+import 'package:dragon_lair/ui/widgets/search_bar_widget/full_screen_search_page.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -38,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _getCurrentScreen() {
     if (_isFetching) {
-      return Center(
+      return const Center(
         child: CircularProgressIndicator(
           color: Colors.white,
         ),
@@ -59,7 +59,7 @@ class _MainScreenState extends State<MainScreen> {
           popularGames: popularGames,
         );
       case 2:
-        return UserLibraryScreen();
+        return const UserLibraryScreen();
       default:
         return HomeScreen(
           fetchGames: _fetchGames,
@@ -73,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
-        pageBuilder: (BuildContext context, _, __) => FullScreenSearch(),
+        pageBuilder: (BuildContext context, _, __) => const FullScreenSearch(),
       ),
     );
   }
@@ -107,7 +107,7 @@ class _MainScreenState extends State<MainScreen> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.black87, Colors.black],
                 begin: Alignment.topCenter,
@@ -120,7 +120,7 @@ class _MainScreenState extends State<MainScreen> {
             appBar: AppBar(
               centerTitle: true,
               backgroundColor: Colors.transparent,
-              title: Text(
+              title: const Text(
                 '''Dragon's Lair''',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -129,7 +129,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               actions: [
                 IconButton(
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                   color: Colors.white,
                   onPressed: _openSearch,
                 ),

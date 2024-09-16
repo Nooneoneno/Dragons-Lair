@@ -1,5 +1,5 @@
-import 'package:DragOnPlay/api_service/api_handler.dart';
-import 'package:DragOnPlay/api_service/api_service.dart';
+import 'package:dragon_lair/api_service/api_handler.dart';
+import 'package:dragon_lair/api_service/api_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';

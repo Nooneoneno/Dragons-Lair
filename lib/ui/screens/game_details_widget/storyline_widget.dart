@@ -10,11 +10,11 @@ class StorylineText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+      margin: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Story',
             style: TextStyle(
               color: Colors.white,
@@ -22,7 +22,7 @@ class StorylineText extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           ExpandableText(text: storyline, maxLines: 8,)
         ],
       ),

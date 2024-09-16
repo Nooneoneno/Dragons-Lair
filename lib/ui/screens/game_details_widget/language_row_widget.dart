@@ -1,4 +1,4 @@
-import 'package:DragOnPlay/entities/language_support.dart';
+import 'package:dragon_lair/entities/language_support.dart';
 import 'package:flutter/material.dart';
 
 class SupportedLanguages extends StatefulWidget {
@@ -34,8 +34,8 @@ class _SupportedLanguagesState extends State<SupportedLanguages> {
       },
       child: Container(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Supported Languages',
             style: TextStyle(
               color: Colors.white,
@@ -43,7 +43,7 @@ class _SupportedLanguagesState extends State<SupportedLanguages> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -54,7 +54,7 @@ class _SupportedLanguagesState extends State<SupportedLanguages> {
                   children: uniqueLanguages.map((language) {
                     return Container(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                          const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
                       decoration: BoxDecoration(
                         color: Colors.blueGrey.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(20.0),
@@ -62,11 +62,11 @@ class _SupportedLanguagesState extends State<SupportedLanguages> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.language, color: Colors.white, size: 16),
-                          SizedBox(width: 4),
+                          const Icon(Icons.language, color: Colors.white, size: 16),
+                          const SizedBox(width: 4),
                           Text(
                             language,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -82,22 +82,22 @@ class _SupportedLanguagesState extends State<SupportedLanguages> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
                         entry.key,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Wrap(
                         spacing: 8.0,
                         runSpacing: 8.0,
                         children: entry.value.map((language) {
                           return Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 12.0, vertical: 4.0),
                             decoration: BoxDecoration(
                               color: Colors.blueGrey.withOpacity(0.3),
@@ -105,7 +105,7 @@ class _SupportedLanguagesState extends State<SupportedLanguages> {
                             ),
                             child: Text(
                               language,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -119,9 +119,9 @@ class _SupportedLanguagesState extends State<SupportedLanguages> {
                 }).toList(),
             ],
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           if (!_isExpanded)
-            Center(
+            const Center(
               child: Text(
                 'More Details',
                 style: TextStyle(

@@ -10,7 +10,7 @@ class RetryPage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.8),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20.0),
           topRight: Radius.circular(20.0),
         ),
@@ -20,13 +20,13 @@ class RetryPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.error_outline,
             color: Colors.redAccent,
             size: 60,
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Oops!',
             style: TextStyle(
               color: Colors.white,
@@ -34,8 +34,8 @@ class RetryPage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 8),
-          Text(
+          const SizedBox(height: 8),
+          const Text(
             'Something went wrong while loading the game info.',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -43,18 +43,18 @@ class RetryPage extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white12,
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                     horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              icon: Icon(Icons.refresh, color: Colors.white),
-              label: Text(
+              icon: const Icon(Icons.refresh, color: Colors.white),
+              label: const Text(
                 'Retry',
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),

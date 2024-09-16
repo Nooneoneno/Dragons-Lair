@@ -1,14 +1,16 @@
 import 'dart:io';
 
-import 'package:DragOnPlay/controllers/api_controller.dart';
-import 'package:DragOnPlay/entities/category.dart';
-import 'package:DragOnPlay/ui/screens/common_screens/retry_page.dart';
-import 'package:DragOnPlay/ui/screens/explore_screen/category_card.dart';
-import 'package:DragOnPlay/ui/screens/explore_screen/category_screen/category_screen.dart';
+import 'package:dragon_lair/controllers/api_controller.dart';
+import 'package:dragon_lair/entities/category.dart';
+import 'package:dragon_lair/ui/screens/common_screens/retry_page.dart';
+import 'package:dragon_lair/ui/screens/explore_screen/category_card.dart';
+import 'package:dragon_lair/ui/screens/explore_screen/category_screen/category_screen.dart';
 import 'package:flutter/material.dart';
 
 class ExploreScreen extends StatefulWidget {
   final ApiController apiController = ApiController();
+
+  ExploreScreen({super.key});
 
   @override
   _ExploreScreenState createState() => _ExploreScreenState();
@@ -90,16 +92,15 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (isLoading)
-            Expanded(
+            const Expanded(
               child: Center(
                   child: CircularProgressIndicator(
                 color: Colors.white,
@@ -108,7 +109,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
           else if (errorMessage != null)
             Expanded(child: RetryPage(retryFetching: _loadCategories))
           else if (categories.isEmpty)
-            Expanded(
+            const Expanded(
               child: Center(
                 child: Text('No categories available'),
               ),
@@ -118,7 +119,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
               child: CustomScrollView(
                 slivers: [
                   SliverGrid(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 16.0,
                       mainAxisSpacing: 16.0,

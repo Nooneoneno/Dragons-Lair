@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:DragOnPlay/controllers/api_controller.dart';
-import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/home_screen/popular_games/horizontal_game_card.dart';
+import 'package:dragon_lair/controllers/api_controller.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
+import 'package:dragon_lair/ui/screens/home_screen/popular_games/horizontal_game_card.dart';
 
 class PopularWidget extends StatefulWidget {
   final List<VideoGamePartial> games;
@@ -79,7 +79,7 @@ class _PopularWidgetState extends State<PopularWidget> {
               controller: _pageController,
               itemCount: totalPages,
               onPageChanged: _handlePageChange,
-              physics: ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               itemBuilder: (context, pageIndex) {
                 int startIndex = pageIndex * itemsPerPage;
                 int endIndex = (startIndex + itemsPerPage > widget.games.length)

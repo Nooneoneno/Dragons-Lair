@@ -1,5 +1,5 @@
-import 'package:DragOnPlay/api_service/api_handler.dart';
-import 'package:DragOnPlay/controllers/utility.dart';
+import 'package:dragon_lair/api_service/api_handler.dart';
+import 'package:dragon_lair/controllers/utility.dart';
 
 class ApiService{
   static const String GAME_ENDPOINT = "/games";

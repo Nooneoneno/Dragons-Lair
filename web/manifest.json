@@ -1,6 +1,6 @@
 {
-    "name": "DragOnPlay",
-    "short_name": "DragOnPlay",
+    "name": "Dragon's Lair",
+    "short_name": "DragonLair",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

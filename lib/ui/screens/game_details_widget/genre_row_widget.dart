@@ -12,14 +12,14 @@ class GenreRow extends StatelessWidget {
       runSpacing: 8.0,
       children: genres.map((genre) {
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
           decoration: BoxDecoration(
             color: Colors.white24,
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: Text(
             genre.toString(),
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 14,
               fontWeight: FontWeight.w600,

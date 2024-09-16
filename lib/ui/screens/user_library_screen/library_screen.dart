@@ -1,10 +1,12 @@
-import 'package:DragOnPlay/controllers/storage_controller.dart';
-import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/user_library_screen/game_library_list.dart';
+import 'package:dragon_lair/controllers/storage_controller.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
+import 'package:dragon_lair/ui/screens/user_library_screen/game_library_list.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class UserLibraryScreen extends StatefulWidget {
+  const UserLibraryScreen({super.key});
+
   @override
   _UserLibraryScreenState createState() => _UserLibraryScreenState();
 }
@@ -52,7 +54,7 @@ class _UserLibraryScreenState extends State<UserLibraryScreen>
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: (_library.isEmpty && _favourites.isEmpty)
-          ? Center(
+          ? const Center(
               child: Text(
               'Your library is empty!',
               style:
@@ -68,7 +70,7 @@ class _UserLibraryScreenState extends State<UserLibraryScreen>
                     labelColor: Colors.white,
                     dividerColor: Colors.transparent,
                     controller: _tabController,
-                    tabs: [
+                    tabs: const [
                       Tab(icon: Icon(Icons.library_books), text: 'Library'),
                       Tab(icon: Icon(Icons.favorite), text: 'Favourites'),
                     ],

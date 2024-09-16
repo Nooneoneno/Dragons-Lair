@@ -1,4 +1,4 @@
-import 'package:DragOnPlay/entities/video_game_partial.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
 import 'package:hive/hive.dart';
 
 class HiveController {

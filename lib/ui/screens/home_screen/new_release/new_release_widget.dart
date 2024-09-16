@@ -1,13 +1,12 @@
-import 'package:DragOnPlay/controllers/api_controller.dart';
-import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/home_screen/new_release/game_card.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
+import 'package:dragon_lair/ui/screens/home_screen/new_release/game_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class NewReleasesWidget extends StatelessWidget {
   final List<VideoGamePartial> games;
 
-  NewReleasesWidget({super.key, required this.games});
+  const NewReleasesWidget({super.key, required this.games});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class NewReleasesWidget extends StatelessWidget {
             enlargeCenterPage: true,
             enlargeFactor: 0.3,
             autoPlayCurve: Curves.fastOutSlowIn,
-            autoPlayInterval: Duration(seconds: 3),
+            autoPlayInterval: const Duration(seconds: 3),
           ),
           items: games.map((game) {
             return Builder(
@@ -46,7 +45,7 @@ class NewReleasesWidget extends StatelessWidget {
                 return Container(
                     width: screenWidth,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: GameCard(game: game),
                     ));
               },

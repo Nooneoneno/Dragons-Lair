@@ -1,6 +1,6 @@
-import 'package:DragOnPlay/controllers/api_controller.dart';
-import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/explore_screen/category_screen/catalog_item_widget.dart';
+import 'package:dragon_lair/controllers/api_controller.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
+import 'package:dragon_lair/ui/screens/explore_screen/category_screen/catalog_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class GameCatalog extends StatefulWidget {
@@ -28,11 +28,11 @@ class _GameCatalogState extends State<GameCatalog> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Catalogo: A-Z",
             style: TextStyle(
               fontSize: 22,
@@ -41,25 +41,25 @@ class _GameCatalogState extends State<GameCatalog> {
             ),
             textAlign: TextAlign.start,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           StreamBuilder<List<VideoGamePartial>>(
             stream: widget.apiController.getCatalog(widget.categoryId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(
                     color: Colors.white,
                   ),
                 );
               } else if (snapshot.hasError) {
-                return Center(
+                return const Center(
                   child: Text(
                     'Failed to load new releases. Please check your connection.',
                     style: TextStyle(color: Colors.red, fontSize: 16),
                   ),
                 );
               } else if (!snapshot.hasData) {
-                return Center(
+                return const Center(
                   child: Text(
                     'No games available for this category.',
                     style: TextStyle(color: Colors.white, fontSize: 16),
@@ -77,7 +77,7 @@ class _GameCatalogState extends State<GameCatalog> {
                     child: PageView.builder(
                         controller: _pageController,
                         itemCount: totalPages,
-                        physics: ClampingScrollPhysics(),
+                        physics: const ClampingScrollPhysics(),
                         itemBuilder: (context, pageIndex) {
                           int startIndex = pageIndex * itemsPerPage;
                           int endIndex =

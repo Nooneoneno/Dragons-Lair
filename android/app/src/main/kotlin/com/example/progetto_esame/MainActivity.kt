@@ -1,4 +1,4 @@
-package com.example.DragOnPlay
+package it.unimol.DragonsLair
 
 import io.flutter.embedding.android.FlutterActivity
 

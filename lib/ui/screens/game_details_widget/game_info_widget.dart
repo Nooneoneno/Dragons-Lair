@@ -1,16 +1,16 @@
 import 'dart:ui';
 
-import 'package:DragOnPlay/controllers/storage_controller.dart';
-import 'package:DragOnPlay/entities/video_game.dart';
-import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/game_details_widget/expansion_list_widget.dart';
-import 'package:DragOnPlay/ui/screens/game_details_widget/game_details_screen.dart';
-import 'package:DragOnPlay/ui/screens/game_details_widget/genre_row_widget.dart';
-import 'package:DragOnPlay/ui/screens/game_details_widget/language_row_widget.dart';
-import 'package:DragOnPlay/ui/screens/game_details_widget/platform_row_widget.dart';
-import 'package:DragOnPlay/ui/screens/game_details_widget/storyline_widget.dart';
-import 'package:DragOnPlay/ui/widgets/expandable_text_widget.dart';
-import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
+import 'package:dragon_lair/controllers/storage_controller.dart';
+import 'package:dragon_lair/entities/video_game.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
+import 'package:dragon_lair/ui/screens/game_details_widget/expansion_list_widget.dart';
+import 'package:dragon_lair/ui/screens/game_details_widget/game_details_screen.dart';
+import 'package:dragon_lair/ui/screens/game_details_widget/genre_row_widget.dart';
+import 'package:dragon_lair/ui/screens/game_details_widget/language_row_widget.dart';
+import 'package:dragon_lair/ui/screens/game_details_widget/platform_row_widget.dart';
+import 'package:dragon_lair/ui/screens/game_details_widget/storyline_widget.dart';
+import 'package:dragon_lair/ui/widgets/expandable_text_widget.dart';
+import 'package:dragon_lair/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -115,12 +115,12 @@ class _GameInfoState extends State<GameInfo> {
           return Container(
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.8),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20.0),
                 topRight: Radius.circular(20.0),
               ),
             ),
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: SingleChildScrollView(
               controller: scrollController,
               child: Column(
@@ -128,7 +128,7 @@ class _GameInfoState extends State<GameInfo> {
                 children: [
                   Container(
                     height: 25,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.transparent,
                     ),
                     child: Center(
@@ -142,14 +142,14 @@ class _GameInfoState extends State<GameInfo> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 12,),
+                  const SizedBox(height: 12,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: Text(
                           widget.game.name,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
@@ -161,7 +161,7 @@ class _GameInfoState extends State<GameInfo> {
                         children: [
                           IconButton(
                             icon: AnimatedSwitcher(
-                              duration: Duration(milliseconds: 300),
+                              duration: const Duration(milliseconds: 300),
                               transitionBuilder:
                                   (Widget child, Animation<double> animation) {
                                 return ScaleTransition(
@@ -181,7 +181,7 @@ class _GameInfoState extends State<GameInfo> {
                           ),
                           IconButton(
                             icon: AnimatedSwitcher(
-                              duration: Duration(milliseconds: 300),
+                              duration: const Duration(milliseconds: 300),
                               transitionBuilder:
                                   (Widget child, Animation<double> animation) {
                                 return ScaleTransition(
@@ -203,11 +203,11 @@ class _GameInfoState extends State<GameInfo> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   RichText(
                       text: TextSpan(
                           text: 'Release Date: ',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white70,
                             fontSize: 18,
                           ),
@@ -215,26 +215,26 @@ class _GameInfoState extends State<GameInfo> {
                         TextSpan(
                             text: DateFormat.yMMMMd()
                                 .format(widget.game.humanFirstReleaseDate),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white)),
                       ])),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   if (widget.game.summary.isNotEmpty)
                     Column(
                       children: [
                         ExpandableText(text: widget.game.summary, maxLines: 4),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                       ],
                     ),
                   GenreRow(genres: combinedGenresAndThemes),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   PlatformRow(platforms: widget.game.platforms),
                   if (widget.game.storyline.isNotEmpty)
                     StorylineText(storyline: widget.game.storyline),
                   if (widget.game.languageSupports.isNotEmpty)
                     SupportedLanguages(languages: widget.game.languageSupports),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   if (widget.game.dlcs.isNotEmpty)
                     GameExpansionList(
                         title: "DLCs",

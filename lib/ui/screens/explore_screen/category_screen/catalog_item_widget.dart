@@ -1,12 +1,12 @@
-import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/game_details_widget/game_details_screen.dart';
-import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
+import 'package:dragon_lair/ui/screens/game_details_widget/game_details_screen.dart';
+import 'package:dragon_lair/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class CatalogItem extends StatefulWidget {
   final VideoGamePartial game;
 
-  CatalogItem({required this.game});
+  const CatalogItem({super.key, required this.game});
 
   @override
   _CatalogItemState createState() => _CatalogItemState();
@@ -34,11 +34,11 @@ class _CatalogItemState extends State<CatalogItem> {
       },
       child: Container(
         height: _isExpanded ? 120 : 46,
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: !_isExpanded
-              ? LinearGradient(
+              ? const LinearGradient(
                   colors: [
                     Colors.purpleAccent,
                     Colors.blueAccent,
@@ -87,7 +87,7 @@ class _CatalogItemState extends State<CatalogItem> {
                       : widget.game.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -106,8 +106,8 @@ class _CatalogItemState extends State<CatalogItem> {
                     });
                   },
                   icon: _isExpanded
-                      ? Icon(Icons.keyboard_arrow_up)
-                      : Icon(Icons.keyboard_arrow_down),
+                      ? const Icon(Icons.keyboard_arrow_up)
+                      : const Icon(Icons.keyboard_arrow_down),
                 ),
               ),
             )

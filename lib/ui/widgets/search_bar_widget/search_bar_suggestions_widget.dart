@@ -1,5 +1,5 @@
-import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/widgets/network_image_widget.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
+import 'package:dragon_lair/ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class SearchSuggestionsList extends StatelessWidget {
@@ -7,10 +7,10 @@ class SearchSuggestionsList extends StatelessWidget {
   final ValueChanged<int> onSuggestionTap;
 
   const SearchSuggestionsList({
-    Key? key,
+    super.key,
     required this.suggestions,
     required this.onSuggestionTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class SearchSuggestionsList extends StatelessWidget {
         maxHeight: screenHeight * 0.6,
       ),
       child: ListView.builder(
-        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         shrinkWrap: true,
         itemCount: suggestions.length,
         itemBuilder: (context, index) {

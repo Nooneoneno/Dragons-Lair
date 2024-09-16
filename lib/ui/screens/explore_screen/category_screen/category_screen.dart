@@ -1,12 +1,12 @@
-import 'package:DragOnPlay/entities/category.dart';
-import 'package:DragOnPlay/ui/screens/explore_screen/category_screen/game_catalog.dart';
-import 'package:DragOnPlay/ui/screens/explore_screen/category_screen/most_rated_category_widget.dart';
+import 'package:dragon_lair/entities/category.dart';
+import 'package:dragon_lair/ui/screens/explore_screen/category_screen/game_catalog.dart';
+import 'package:dragon_lair/ui/screens/explore_screen/category_screen/most_rated_category_widget.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatefulWidget {
   final Category category;
 
-  CategoryScreen({required this.category});
+  const CategoryScreen({super.key, required this.category});
 
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
@@ -18,7 +18,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
         body: Stack(children: [
       Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.black87, Colors.black],
             begin: Alignment.topCenter,
@@ -33,13 +33,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
             backgroundColor: Colors.transparent,
             title: Text(
               widget.category.name,
-              style: TextStyle(
+              style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
                   color: Colors.white),
             ),
             leading: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 color: Colors.white,
                 onPressed: () {
                   Navigator.pop(context);
@@ -52,9 +52,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 MostRatedCategory(
                   categoryId: widget.category.id,
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 GameCatalog(categoryId: widget.category.id,),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
               ],
             ),
           )),

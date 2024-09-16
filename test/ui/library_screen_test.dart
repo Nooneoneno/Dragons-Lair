@@ -1,5 +1,5 @@
-import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/user_library_screen/library_screen.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
+import 'package:dragon_lair/ui/screens/user_library_screen/library_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
@@ -20,7 +20,7 @@ void main() {
     testWidgets('Shows empty library and favourites message',
         (WidgetTester tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: UserLibraryScreen(),
           ),
@@ -46,7 +46,7 @@ void main() {
         await libraryBox.put(mockLibraryGame.id, mockLibraryGame);
 
         await tester.pumpWidget(
-          MaterialApp(
+          const MaterialApp(
             home: UserLibraryScreen(),
           ),
         );
@@ -82,7 +82,7 @@ void main() {
         await favouriteBox.put(mockLibraryGame2.id, mockLibraryGame2);
 
         await tester.pumpWidget(
-          MaterialApp(
+          const MaterialApp(
             home: UserLibraryScreen(),
           ),
         );

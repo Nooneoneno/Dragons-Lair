@@ -1,6 +1,6 @@
-import 'package:DragOnPlay/entities/video_game_partial.dart';
-import 'package:DragOnPlay/ui/screens/home_screen/new_release/new_release_widget.dart';
-import 'package:DragOnPlay/ui/screens/home_screen/popular_games/popular_widget.dart';
+import 'package:dragon_lair/entities/video_game_partial.dart';
+import 'package:dragon_lair/ui/screens/home_screen/new_release/new_release_widget.dart';
+import 'package:dragon_lair/ui/screens/home_screen/popular_games/popular_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             NewReleasesWidget(games: newReleases),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             PopularWidget(games: popularGames),
           ],
         ),

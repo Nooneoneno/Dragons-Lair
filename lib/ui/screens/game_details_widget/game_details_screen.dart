@@ -1,13 +1,13 @@
-import 'package:DragOnPlay/controllers/api_controller.dart';
-import 'package:DragOnPlay/entities/video_game.dart';
-import 'package:DragOnPlay/ui/screens/common_screens/retry_page.dart';
-import 'package:DragOnPlay/ui/screens/game_details_widget/game_info_widget.dart';
+import 'package:dragon_lair/controllers/api_controller.dart';
+import 'package:dragon_lair/entities/video_game.dart';
+import 'package:dragon_lair/ui/screens/common_screens/retry_page.dart';
+import 'package:dragon_lair/ui/screens/game_details_widget/game_info_widget.dart';
 import 'package:flutter/material.dart';
 
 class GameDetailsPage extends StatefulWidget {
   final int gameId;
 
-  GameDetailsPage({required this.gameId});
+  const GameDetailsPage({super.key, required this.gameId});
 
   @override
   _GameDetailsPageState createState() => _GameDetailsPageState();
@@ -30,14 +30,14 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.share, color: Colors.white),
+              icon: const Icon(Icons.share, color: Colors.white),
               onPressed: () {},
             ),
           ],
@@ -47,8 +47,8 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
-                  decoration: BoxDecoration(color: Colors.black),
-                  child: Center(
+                  decoration: const BoxDecoration(color: Colors.black),
+                  child: const Center(
                       child: CircularProgressIndicator(
                     color: Colors.white,
                   )),
@@ -62,8 +62,8 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
                 );
               }
               return Container(
-                decoration: BoxDecoration(color: Colors.black),
-                child: Center(
+                decoration: const BoxDecoration(color: Colors.black),
+                child: const Center(
                     child: Text(
                   'ERROR: No game data found',
                   style: TextStyle(color: Colors.white),
