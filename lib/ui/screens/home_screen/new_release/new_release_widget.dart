@@ -4,28 +4,10 @@ import 'package:DragOnPlay/ui/screens/home_screen/new_release/game_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-class NewReleasesWidget extends StatefulWidget {
-  final ApiController apiController = ApiController();
+class NewReleasesWidget extends StatelessWidget {
+  final List<VideoGamePartial> games;
 
-  @override
-  _NewReleasesWidgetState createState() => _NewReleasesWidgetState();
-}
-
-class _NewReleasesWidgetState extends State<NewReleasesWidget> {
-  List<VideoGamePartial> games = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchNewReleases();
-  }
-
-  void _fetchNewReleases() async {
-    var newGames = await widget.apiController.fetchNewRelease();
-    setState(() {
-      games = newGames;
-    });
-  }
+  NewReleasesWidget({super.key, required this.games});
 
   @override
   Widget build(BuildContext context) {

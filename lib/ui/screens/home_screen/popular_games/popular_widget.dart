@@ -4,14 +4,16 @@ import 'package:DragOnPlay/entities/video_game_partial.dart';
 import 'package:DragOnPlay/ui/screens/home_screen/popular_games/horizontal_game_card.dart';
 
 class PopularWidget extends StatefulWidget {
+  final List<VideoGamePartial> games;
   final ApiController apiController = ApiController();
+
+  PopularWidget({super.key, required this.games});
 
   @override
   _PopularWidgetState createState() => _PopularWidgetState();
 }
 
 class _PopularWidgetState extends State<PopularWidget> {
-  List<VideoGamePartial> games = [];
   int currentPage = 0;
   late PageController _pageController;
 
@@ -19,14 +21,6 @@ class _PopularWidgetState extends State<PopularWidget> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: currentPage);
-    _fetchPopularGames();
-  }
-
-  void _fetchPopularGames() async {
-    var popularGames = await widget.apiController.fetchPopularGames(50, 0);
-    setState(() {
-      games = popularGames;
-    });
   }
 
   void _handlePageChange(int page) {
@@ -41,7 +35,7 @@ class _PopularWidgetState extends State<PopularWidget> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     int itemsPerPage = 10;
-    int totalPages = (games.length / itemsPerPage).ceil();
+    int totalPages = (widget.games.length / itemsPerPage).ceil();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,12 +82,11 @@ class _PopularWidgetState extends State<PopularWidget> {
               physics: ClampingScrollPhysics(),
               itemBuilder: (context, pageIndex) {
                 int startIndex = pageIndex * itemsPerPage;
-                int endIndex = (startIndex + itemsPerPage > games.length)
-                    ? games.length
+                int endIndex = (startIndex + itemsPerPage > widget.games.length)
+                    ? widget.games.length
                     : startIndex + itemsPerPage;
 
-                List<VideoGamePartial> currentGames =
-                    games.sublist(startIndex, endIndex);
+                List<VideoGamePartial> currentGames = widget.games.sublist(startIndex, endIndex);
 
                 return AnimatedBuilder(
                   animation: _pageController,
