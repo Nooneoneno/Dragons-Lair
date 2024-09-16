@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:DragOnPlay/controllers/api_controller.dart';
 import 'package:DragOnPlay/entities/category.dart';
+import 'package:DragOnPlay/ui/screens/common_screens/retry_page.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/category_card.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/category_screen/category_screen.dart';
 import 'package:flutter/material.dart';
@@ -105,21 +106,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
               )),
             )
           else if (errorMessage != null)
-            Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(errorMessage!),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _loadCategories,
-                      child: Text('Retry'),
-                    ),
-                  ],
-                ),
-              ),
-            )
+            Expanded(child: RetryPage(retryFetching: _loadCategories))
           else if (categories.isEmpty)
             Expanded(
               child: Center(

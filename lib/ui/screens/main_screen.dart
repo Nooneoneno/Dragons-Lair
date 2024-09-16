@@ -1,5 +1,6 @@
 import 'package:DragOnPlay/controllers/api_controller.dart';
 import 'package:DragOnPlay/entities/video_game_partial.dart';
+import 'package:DragOnPlay/ui/screens/common_screens/retry_page.dart';
 import 'package:DragOnPlay/ui/screens/explore_screen/explore_screen.dart';
 import 'package:DragOnPlay/ui/screens/home_screen/home_screen.dart';
 import 'package:DragOnPlay/ui/screens/user_library_screen/library_screen.dart';
@@ -18,6 +19,7 @@ class _MainScreenState extends State<MainScreen> {
   List<VideoGamePartial> newReleases = [];
   List<VideoGamePartial> popularGames = [];
   bool _isFetching = false;
+  bool _fetchFailed = false;
   int _selectedIndex = 1;
 
   @override
@@ -41,6 +43,10 @@ class _MainScreenState extends State<MainScreen> {
           color: Colors.white,
         ),
       );
+    }
+
+    if (_fetchFailed) {
+      return RetryPage(retryFetching: _fetchGames);
     }
 
     switch (_selectedIndex) {
@@ -73,16 +79,24 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> _fetchGames() async {
-    if (!_isFetching) {
-      setState(() {
-        _isFetching = true;
-      });
+    setState(() {
+      _isFetching = true;
+      _fetchFailed = false;
+    });
+
+    try {
       var newGames = await apiController.fetchNewRelease();
       var popGames = await apiController.fetchPopularGames(50, 0);
       setState(() {
         newReleases = newGames;
         popularGames = popGames;
         _isFetching = false;
+      });
+    } catch (e) {
+      // In caso di errore di fetching
+      setState(() {
+        _isFetching = false;
+        _fetchFailed = true; // Imposta lo stato di errore
       });
     }
   }
