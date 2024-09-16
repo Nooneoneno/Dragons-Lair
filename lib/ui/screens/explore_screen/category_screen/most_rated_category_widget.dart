@@ -11,14 +11,16 @@ class MostRatedCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     return FutureBuilder<List<VideoGamePartial>>(
       future: apiController.getMostRated(categoryId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+            color: Colors.white,
+          ));
         } else if (snapshot.hasError) {
           return Center(
             child: Text(
@@ -71,7 +73,6 @@ class MostRatedCategory extends StatelessWidget {
                     },
                   ),
                 ),
-
               ],
             ),
           );

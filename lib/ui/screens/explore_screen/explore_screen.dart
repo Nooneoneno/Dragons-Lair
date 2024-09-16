@@ -42,7 +42,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
         categories = [];
       });
 
-      List<Category> loadedCategories = await widget.apiController.getCategoriesName();
+      List<Category> loadedCategories =
+          await widget.apiController.getCategoriesName();
 
       // If categories is empty handles the error
       if (loadedCategories.isEmpty) {
@@ -79,7 +80,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
     await for (final updatedCategory
         in widget.apiController.fetchCategoryImages(categories)) {
       setState(() {
-        int index = categories.indexWhere((cat) => cat.id == updatedCategory.id);
+        int index =
+            categories.indexWhere((cat) => cat.id == updatedCategory.id);
         categories[index] = updatedCategory;
       });
     }
@@ -97,7 +99,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
         children: [
           if (isLoading)
             Expanded(
-              child: Center(child: CircularProgressIndicator()),
+              child: Center(
+                  child: CircularProgressIndicator(
+                color: Colors.white,
+              )),
             )
           else if (errorMessage != null)
             Expanded(
