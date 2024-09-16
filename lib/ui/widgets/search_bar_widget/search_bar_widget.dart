@@ -28,7 +28,7 @@ class SearchBarWidget extends StatelessWidget {
           fontSize: screenWidth * 0.045,
         ),
         decoration: InputDecoration(
-          hintText: 'Search games, genres or characters...',
+          hintText: 'Search games...',
           hintStyle: TextStyle(color: Colors.white54),
           border: InputBorder.none,
           icon: Icon(Icons.search, color: Colors.white54),
